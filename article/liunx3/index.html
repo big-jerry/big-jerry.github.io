@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          liunx基本命令使用方法（三） - 杰瑞的博客 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.ruozedata.com/article/liunx3/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+                        <h1>liunx基本命令使用方法（三）</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 杰瑞 on
+                            2017-09-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">杰瑞的博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="liunx基本命令使用方法三">liunx基本命令使用方法（三）</h1>
+<h2 id="liunx基本命令使用方法三"><strong>liunx基本命令使用方法（三）</strong></h2>
+<blockquote>
+<p><strong>用户、用户组</strong></p>
+<p>useradd 新增用户</p>
+<p>userdel 删除用户</p>
+<p>usermod 修改用户</p>
+<p>groupadd 新增用户组</p>
+<p>groupdel 删除用户组</p>
+<p>groupmod 修改用户组</p>
+<p>**添加用户 **</p>
+<p>[root@localhost ~]# useradd hadoop</p>
+<p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
+<p>创建一个普通用户，默认创建这个名称的用户组hadoop,且设置这个用户 主组为hadoop，且创建/home/hadoop</p>
+<p>[root@localhost home]# ll</p>
+<p>drwx------. 2 hadoop hadoop 59 11月 18 09:36 hadoop</p>
+<p><strong>删除用户</strong></p>
+<p>[root@localhost home]# userdel hadoop</p>
+<p>[root@localhost home]# id hadoop <br>
+id: hadoop: no such user</p>
+<p>[root@localhost home]# cat /etc/passwd | grep hadoop</p>
+<p>[root@localhost home]# cat /etc/group | grep hadoop</p>
+<p>因为hadoop该组只有hadoop用户，当这个用户删除时，组会校验是否存在其他用户，没有其他用户会自动删除</p>
+<p><strong>重新创建用户ruoze</strong></p>
+<p>[root@localhost home]# useradd hadoop</p>
+<p>useradd：警告：此主目录已经存在。 不从 skel 目录里向其中复制任何文件。 正在创建信箱文件: 文件已存在</p>
+<p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
+<p>**模拟切换用户丢失样式 **</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/20160906-81cd1cba7041cf30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<blockquote>
+<p><strong>修正样式</strong></p>
+<p>切回root用户将缺失的bash文件拷贝到用户的家目录，并修改文件的权限。如图：</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/20160906-417cc3d91e0c1e43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<blockquote>
+<p><strong>添加hadoop用户到另外一个组 bigdata</strong></p>
+<p>[root@localhost /]# usermod -a -G bigdata hadoop</p>
+<p>[root@localhost /]# id hadoop</p>
+<p>uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop),1001(bigdata)</p>
+<p><strong>修改bigdata为hadoop的主组</strong></p>
+<p>[root@localhost /]# usermod --gid bigdata hadoop</p>
+<p>[root@localhost /]# id hadoop</p>
+<p>uid=1000(hadoop) gid=1001(bigdata) 组=1001(bigdata)</p>
+<p>[root@ruozedata001 ruoze]# usermod -a -G ruoze ruoze</p>
+<p>[root@ruozedata001 ruoze]# id ruoze</p>
+<p>uid=1002(ruoze) gid=1003(bigdata) groups=1003(bigdata),1002(ruoze)</p>
+<p><strong>设置用户密码</strong></p>
+<p>passwd 用户名</p>
+<p><strong>切换用户（切换用户加&quot;-&quot;，和不加“-”的区别）</strong></p>
+<p>su hadoop</p>
+<p>su - hadoop代表切换该用户的家目录，且执行环境变量文件</p>
+<p>.bash_profile文件 su hadoop不会执行，su - hadoop 都执行</p>
+<p>.bashrc文件 su hadoop  执行 ，su - hadoop  都执行</p>
+<p><strong>普通用户获取root的最大权限</strong></p>
+<p>使用root用户修改sudoers文件配置</p>
+<p>vi /etc/sudoers</p>
+<p>找到root栏，添加用户配置：hadoop ALL=(root) NOPASSWD:ALL</p>
+<p>普通用户获取最大权限后，执行命令需在命令前加 sudo</p>
+<p><strong>passwd文件的使用方法</strong></p>
+<p>无法切换至已存在的用户时检查该文件。</p>
+<p>路径：/etc/passwd</p>
+<p>hadoop:x:1002:1003::/home/ruoze:/bin/falseruoze:x:1002:1003::/home/ruoze:/sbin/nologin</p>
+<p>如果文件里用户所对应的配置是上面的任意一种，该用户无法切换。</p>
+<p>解决方法： hadoop :x:1002:1003::/home/ruoze:/bin/bash</p>
+<p><strong>修改文件/文件夹权限</strong></p>
+<p>当修改文件提示Permission denied字样，表示是权限错误。需要修改文件/文件夹或用户/用户组权限。</p>
+<p>chmod -R 777 文件夹/文件路径</p>
+<p>chown -R 用户:用户组 文件夹/文件路径</p>
+<p>[root@localhost /]# ll</p>
+<p>drwxr-xr-x 2 root root 6 Nov 16 22:15 data</p>
+<p>-rw-r–r-- 1 root root 18 Nov 16 21:58 ab.log</p>
+<p>第一个字母: d文件夹 -文件 l连接</p>
+<p>rwx r-x r-x</p>
+<p>r: read 4 w: write 2 x: 执行 1 -: 没权限 0 7=rwx 3=wx 5=rx rwx</p>
+<p>第一组 7 代表文件或文件夹的用户root，读写执行 r-x</p>
+<p>第二组 5 代表文件或文件夹的用户组root，读执行 r-x</p>
+<p>第三组 5 代表其他组的所属用户对这个文件或文件夹的权限: 读执行</p>
+<p>d rwx r-x r-x 2 root root 6 Nov 16 22:15 data</p>
+<p>777 代表任意的用户用户组 都有读写执行权限</p>
+<p><strong>注：使用vi 编辑文件如果使用ctrl+x/z中断，系统会生成一个.swp后缀的隐藏文件，下次再次编辑需先删除该隐藏文件。</strong></p>
+<p><strong>查看文件/文件夹大小</strong></p>
+<p>文件:ll du -sh xxx.log 文件夹:du -sh yyy</p>
+<p>** find 搜索**</p>
+<p>history 历史记录</p>
+<p>ps -ef 查看进程（常见搭配管道符和grep使用）</p>
+<p>top 查看系统情况</p>
+<p>命令格式：find 路径 -name ‘文件名’，文件名可以使用 * 符合模糊匹配。</p>
+<p>find /usr/local -name ‘<em>hadoop</em>’</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/liunx4/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（四）">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法三"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E09;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#liunx基本命令使用方法三"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text"><strong>liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E09;&#xFF09;</strong></span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://www.ruozedata.com" target="_blank">若泽数据官网</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'rz'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杰瑞 2019 
+                    By <a href="http://www.ruozedata.com">若泽数据，企业在职</a> | BigData
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=ruozedata&repo=Bigdata&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.ruozedata.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.ruozedata.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

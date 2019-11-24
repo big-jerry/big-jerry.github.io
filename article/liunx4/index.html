@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          liunx基本命令使用方法（四） - 杰瑞的博客 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.ruozedata.com/article/liunx4/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/article_header/article_bg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+                        <h1>liunx基本命令使用方法（四）</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 杰瑞 on
+                            2017-09-12
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">杰瑞的博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="liunx基本命令使用方法四">liunx基本命令使用方法（四）</h1>
+<h3 id="liunx基本命令使用方法四"><strong>liunx基本命令使用方法（四）</strong></h3>
+<p>vi 命令的使用</p>
+<p>正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。</p>
+<p>注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。</p>
+<p>解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。</p>
+<p>使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。输入**：/关键词**，回车光标自动跳到关键词所在的行，按N键寻找下一个关键词</p>
+<p>设置行号</p>
+<p><strong>set nu  显示行号（按shift+:进入尾行模式输入：set nu）</strong></p>
+<blockquote>
+<p>20 # Root password</p>
+<p>21 rootpw --iscrypted $6$8TKBzKEIaOfvtp47$ecF0zJqdF5QSqUmNMsKT35aAAS0EstXE8fvP40uaXn7iYxqREd0QUqeh5inX88yAbYrqm6sEjLWPrlafE8E9l0</p>
+<p>22 # System services</p>
+<p>23 services --disabled=“chronyd”</p>
+<p>:set nu</p>
+</blockquote>
+<p><strong>set nonu   关闭显示 （按shift+:进入尾行模式输入：set nonu）</strong></p>
+<blockquote>
+<p>network --bootproto=dhcp --device=eno16777736 --ipv6=auto --activate</p>
+<p>network  --hostname=localhost.localdomain</p>
+<h1 id="root-password">Root password</h1>
+<p>rootpw --iscrypted $6$8TKBzKEIaOfvtp47$ecF0zJqdF5QSqUmNMsKT35aAAS0EstXE8fvP40uaXn7iYxqREd0QUqeh5inX88yAbYrqm6sEjLWPrlafE8E9l0</p>
+<h1 id="system-services">System services</h1>
+<p>services --disabled=“chronyd”</p>
+<p>:set nonu</p>
+</blockquote>
+<p><strong>vi 清空文件这个内容</strong></p>
+<blockquote>
+<p>命令行模式常见的快捷键:</p>
+<p>dd 删除当前行</p>
+<p>dG 删除光标当前及以下的所有行</p>
+<p>ndd 删除光标当前及以下的n行</p>
+<p>gg 跳转到第一行的第一个字母</p>
+<p>G  跳转到最后一行的第一个字母</p>
+<p>shift+$ 行尾</p>
+<p>gg + dG</p>
+<p>注意：使用VI编辑官方配置文件时，请先备份。</p>
+</blockquote>
+<p><strong>系统命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt; </span><br><span class="line">&gt; </span><br><span class="line">&gt; df -h 查看磁盘</span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# df -h</span><br><span class="line">&gt; </span><br><span class="line">&gt; 文件系统                容量  已用  可用 已用% 挂载点</span><br><span class="line">&gt; </span><br><span class="line">&gt; /dev/mapper/centos-root  18G  1.1G  17G    6% /</span><br><span class="line">&gt; </span><br><span class="line">&gt; devtmpfs                7.8G    0  7.8G    0% /dev</span><br><span class="line">&gt; </span><br><span class="line">&gt; tmpfs                    7.8G    0  7.8G    0% /dev/shm</span><br><span class="line">&gt; </span><br><span class="line">&gt; tmpfs                    7.8G  81M  7.7G    2% /run</span><br><span class="line">&gt; </span><br><span class="line">&gt; tmpfs                    7.8G    0  7.8G    0% /sys/fs/cgroup</span><br><span class="line">&gt; </span><br><span class="line">&gt; /dev/sda1                497M  125M  373M  25% /boot</span><br><span class="line">&gt; </span><br><span class="line">&gt; tmpfs                    1.6G    0  1.6G    0% /run/user/0</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>free -m 查看内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# free -m</span><br><span class="line">&gt; </span><br><span class="line">&gt;               total        used        free      shared  buff/cache  available</span><br><span class="line">&gt; </span><br><span class="line">&gt; Mem:          15872        238      15129          80        503      15282</span><br><span class="line">&gt; </span><br><span class="line">&gt; Swap:          2047          0        2047</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>top 查看负载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt; [root@localhost ~]# top</span><br><span class="line">&gt; </span><br><span class="line">&gt; top - 10:27:40 up 1 day, 13:25,  1 user,  **load average: 0.05, 0.03, 0.14 （ 后面三个数字分别代表不同时间段即一分钟、五分钟和十五分钟的系统平均负载。 超过10请及时检查服务器）**</span><br><span class="line">&gt; </span><br><span class="line">&gt; Tasks: 374 total,  1 running, 373 sleeping,  0 stopped,  0 zombie</span><br><span class="line">&gt; </span><br><span class="line">&gt; %Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">&gt; </span><br><span class="line">&gt; KiB Mem : 16253248 total, 15491340 free,  246108 used,  515800 buff/cache</span><br><span class="line">&gt; </span><br><span class="line">&gt; KiB Swap:  2097148 total,  2097148 free,        0 used. 15647308 avail Mem</span><br><span class="line">&gt; </span><br><span class="line">&gt;   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM    TIME+ COMMAND                                                         </span><br><span class="line">&gt; </span><br><span class="line">&gt; 50472 root      20  0      0      0      0 S  0.3  0.0  0:00.94 kworker/0:0                                                     </span><br><span class="line">&gt; </span><br><span class="line">&gt;     1 root      20  0  44908  7640  2608 S  0.0  0.0  0:34.58 systemd       </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p>注意：查看负载发现有一个进程CPU占用超过100%以上，可能是代码的问题，如果相同的代码在其他机器运行没问题，极可能是硬件问题，建议重启服务器。</p>
+<p><strong>查看进程 查看端口号</strong></p>
+<p>进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&gt; [root@localhost ~]# ps -ef|grep ssh</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      1497      1  0 11月16 ?      00:00:08 /usr/sbin/sshd -D</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      27971  1497  0 11月17 ?      00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      49315  1497  0 08:59 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      49607  1497  0 09:08 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      50297  1497  0 09:35 ?        00:00:00 sshd: root@pts/0</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      51921  1497  0 10:39 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      51979  1497  0 10:42 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      51993  1497  0 10:43 ?        00:00:00 sshd: unknown [priv]</span><br><span class="line">&gt; </span><br><span class="line">&gt; sshd      51994  51993  0 10:43 ?        00:00:00 sshd: unknown [net]</span><br><span class="line">&gt; </span><br><span class="line">&gt; 进程用户   进程的pid   父id                                    进程用户的内容（进程所属的目录 log -Xmx -Xms）</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">**查看端口号</span><br><span class="line">**</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">&gt; netstat -nlp </span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# netstat -nlp | grep ssh </span><br><span class="line">&gt; </span><br><span class="line">&gt; tcp        0      0 0.0.0.0:22              0.0.0.0:*              LISTEN      1497/sshd         </span><br><span class="line">&gt; </span><br><span class="line">&gt; tcp6      0      0 :::22                  :::*                    LISTEN      1497/sshd   </span><br><span class="line">&gt; </span><br><span class="line">&gt; 通过pid找port</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>运行、查看服务</strong></p>
+<blockquote>
+<p>centos 6.x运行服务的命令 service 服务名称 start</p>
+<p>centos 7.x运行服务的命令 systemctl start 服务名称1 名称2 …</p>
+<p>centos 6.x查看服务的命令 service 服务名称 status</p>
+<p>centos 7.x运行服务的命令 systemctl status服务名称1 名称2 …</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt; [root@localhost ~]# ps -ef | grep ssh</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      1497      1  0 11月16 ?      00:00:08 /usr/sbin/sshd -D</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      27971  1497  0 11月17 ?      00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      49315  1497  0 08:59 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      49607  1497  0 09:08 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      50297  1497  0 09:35 ?        00:00:00 sshd: root@pts/0</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      51921  1497  0 10:39 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      52063  1497  0 10:45 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      52191  1497  0 10:49 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      52235  1497  0 10:51 ?        00:00:00 sshd: root</span><br><span class="line">&gt; </span><br><span class="line">&gt; root      52270  1497  0 10:53 ?        00:00:00 sshd: [accepted]</span><br><span class="line">&gt; </span><br><span class="line">&gt; sshd      52271  52270  0 10:53 ?        00:00:00 sshd: [net]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意： 在centos部署大数据组件，发现一个错误 Connection refused 防火墙 web iptables</p>
+<p>使用以下方法检测IP和端口：</p>
+<p>ping ip</p>
+<p>telnet ip port   ip和端口号</p>
+<p>0.0.0.0:22 当前的ip</p>
+<p>:::22      当前的ip</p>
+<p>192.168.0.3:22 当前的ip</p>
+<hr>
+<p>127.0.0.1:22 本地自己访问自己  window和其他服务器无法进行访问</p>
+</blockquote>
+<p>高危的命令</p>
+<blockquote>
+<p>rm -rf /</p>
+<p>vi 修改或者情况文件内容</p>
+<p>kill -9   进程pid</p>
+<p>kill -9   进程pid 进程pid 进程pid</p>
+<p>kill -9  $(pgrep -f 匹配关键词)</p>
+<p>杀进程之前，先ps 找到相关的进程，搞清楚，哪些是你要杀的，不然造成生产事故</p>
+</blockquote>
+<p>安装 、卸载软件</p>
+<p><strong>安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; yum search xxx</span><br><span class="line">&gt; </span><br><span class="line">&gt; yum install -y xxx-yyy</span><br><span class="line">&gt; </span><br><span class="line">&gt; yum remove xxx-yyy</span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# yum install httpd -y</span><br></pre></td></tr></table></figure>
+<p><strong>卸载</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; rpm -qa | grep http</span><br><span class="line">&gt; </span><br><span class="line">&gt; rpm -e --nodeps httpd-tools-2.4.6-90.el7.centos.x86_64</span><br><span class="line">&gt; </span><br><span class="line">&gt; --nodeps  不校验，直接删除</span><br><span class="line">&gt; </span><br><span class="line">&gt; **wget ：下载文件**</span><br><span class="line">&gt; </span><br><span class="line">&gt; wget http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.16.2.tar.gz</span><br></pre></td></tr></table></figure>
+<p><strong>压缩解压</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; zip 压缩</span><br><span class="line">&gt; </span><br><span class="line">&gt; zip +文件名称 +路径</span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# zip -r 11 1/*   （在文件外面压缩）</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: 1/2/ (stored 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# zip -r 11 ./*   （）在文件里面压缩）</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: 1/ (stored 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: 1/2/ (stored 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: 1/2/3/ (stored 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: anaconda-ks.cfg (deflated 39%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: a.pl (deflated 74%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: bash.tgz (deflated 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt;   adding: perl.tar (stored 0%)</span><br><span class="line">&gt; </span><br><span class="line">&gt; unzip  解压缩</span><br><span class="line">&gt; </span><br><span class="line">&gt; [root@localhost ~]# unzip 11.zip</span><br></pre></td></tr></table></figure>
+<p>**tar **</p>
+<blockquote>
+<p><strong>参数说明 -c</strong>: 建立一个压缩文件的指令参数 （crate的缩写）；</p>
+<p>-x:解开一个压缩文件的参数指令；</p>
+<p>-t:查看tarfile里面的文件</p>
+<p>特别注意：c/x/t/ 只能存在一个！不能同时存在！</p>
+<p>-z:是否同时角有gzip的属性，即是否需要使用gzip压缩</p>
+<p>-j:是否同时具有bzip2的属性，即是否需要使用bzip2压缩</p>
+<p>-v:压缩的过程中显示文件！这个常用，但不建议用在背景执行过程！</p>
+<p>-f ：使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！</p>
+<p>例如使用『 tar -zcvfP tfile sfile』就是错误的写法，要写成</p>
+<p>『 tar -zcvPf tfile sfile』才正确</p>
+<p>-p ：使用原文件的原来属性（属性不会依据使用者而变）</p>
+<p>-P ：可以使用绝对路径来压缩！</p>
+<p>-N ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的文件中！</p>
+<p>–exclude FILE：在压缩的过程中，不要将 FILE 打包！</p>
+</blockquote>
+<p>** tar  -xzvf  压缩文件**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar -cvf /tmp/etc.tar /etc &lt;==仅打包，不压缩！</span><br><span class="line">&gt; </span><br><span class="line">&gt; tar -zcvf /tmp/etc.tar.gz /etc &lt;==打包后，以 gzip 压缩</span><br><span class="line">&gt; </span><br><span class="line">&gt; tar -jcvf /tmp/etc.tar.bz2 /etc &lt;==打包后，以 bzip2 压缩</span><br><span class="line">&gt; </span><br><span class="line">&gt; **查阅 /tmp/etc.tar.gz 文件内有哪些文件？**</span><br><span class="line">&gt; </span><br><span class="line">&gt; tar -ztvf /tmp/etc.tar.gz</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>由於我们使用 gzip 压缩，所以要查阅该 tar file 内的文件时，</p>
+<p>就得要加上 z 这个参数了！这很重要的！</p>
+</blockquote>
+<p><strong>tar -czvf 解压缩</strong></p>
+<blockquote>
+<p>将 /tmp/etc.tar.gz 文件解压缩在 /usr/local/src 底下<br>
+cd /usr/local/src</p>
+<p>tar -zxvf /tmp/etc.tar.gz</p>
+<p>在预设的情况下，我们可以将压缩档在任何地方解开的！以这个范例来说，</p>
+<p>我先将工作目录变换到 /usr/local/src 底下，并且解开 /tmp/etc.tar.gz ，</p>
+<p>则解开的目录会在 /usr/local/src/etc 呢！另外，如果您进入 /usr/local/src/etc</p>
+<p>则会发现，该目录下的文件属性与 /etc/ 可能会有所不同喔！</p>
+</blockquote>
+<p><strong>在 /tmp 底下，我只想要将 /tmp/etc.tar.gz 内的 etc/passwd 解开而已</strong></p>
+<blockquote>
+<p>cd /tmp</p>
+<p>tar -zxvf /tmp/etc.tar.gz etc/passwd</p>
+<p>我可以透过 tar -ztvf 来查阅 tarfile 内的文件名称，如果单只要一个文件，</p>
+<p>就可以透过这个方式来下达！注意到！ etc.tar.gz 内的根目录 / 是被拿掉了！</p>
+</blockquote>
+<p><strong>将 /etc/ 内的所有文件备份下来，并且保存其权限！</strong></p>
+<blockquote>
+<p>tar -zxvpf /tmp/etc.tar.gz /etc</p>
+<p>这个 -p 的属性是很重要的，尤其是当您要保留原本文件的属性时！</p>
+<p><strong>在 /home 当中，比 2005/06/01 新的文件才备份</strong></p>
+<p>tar -N ‘2005/06/01’ -zcvf home.tar.gz /home</p>
+</blockquote>
+<p><strong>我要备份 /home, /etc ，但不要 /home/dmtsai</strong></p>
+<blockquote>
+<p>tar --exclude /home/dmtsai -zcvf myfile.tar.gz /home/* /etc</p>
+</blockquote>
+<p><strong>将 /etc/ 打包后直接解开在 /tmp 底下，而不产生文件！</strong></p>
+<blockquote>
+<p>cd /tmp</p>
+<p>tar -cvf - /etc | tar -xvf -</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/liunx3/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（三）">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/article/mysql/" data-toggle="tooltip" data-placement="top" title="MySQL 5.6离线二进制部署">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法四"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x56DB;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#liunx基本命令使用方法四"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text"><strong>liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x56DB;&#xFF09;</strong></span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#root-password"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Root password</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#system-services"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">System services</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://www.ruozedata.com" target="_blank">若泽数据官网</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'rz'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+<!-- chrome Firefox 中文锚点定位失效-->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+<!-- smooth scroll behavior polyfill  -->
+<script type="text/javascript" src="/js/smoothscroll.js"></script>
+<script>
+        $('#toc').on('click','a',function(a){
+            // var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
+            // console.log(window.navigator.userAgent,isChrome)
+                // if(isChrome) {
+                    // console.log(a.currentTarget.outerHTML);
+                    // console.log($(a.currentTarget).attr("href"));
+                    //跳转到指定锚点
+                    // document.getElementById(a.target.innerText.toLowerCase()).scrollIntoView(true);
+                    document.getElementById($(a.currentTarget).attr("href").replace("#","")).scrollIntoView({behavior: 'smooth' });
+                // }
+        })  
+</script>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 杰瑞 2019 
+                    By <a href="http://www.ruozedata.com">若泽数据，企业在职</a> | BigData
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=ruozedata&repo=Bigdata&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.ruozedata.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.ruozedata.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
