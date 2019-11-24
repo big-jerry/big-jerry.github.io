@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://www.ruozedata.com</loc>
+        <loc>http://yoursite.com</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/sql/</loc>
+        <loc>http://yoursite.com/article/sql/</loc>
         <lastmod>2019-11-24T09:56:07.573Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -15,7 +15,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/ruozedata/</loc>
+        <loc>http://yoursite.com/article/ruozedata/</loc>
         <lastmod>2019-11-24T09:19:41.186Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -23,7 +23,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/hexo-theme-jepson/</loc>
+        <loc>http://yoursite.com/article/hexo-theme-jepson/</loc>
         <lastmod>2019-11-24T09:19:41.162Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -31,7 +31,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/liunx-shell/</loc>
+        <loc>http://yoursite.com/article/liunx-shell/</loc>
         <lastmod>2019-11-23T07:46:55.683Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -39,7 +39,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/liunx3/</loc>
+        <loc>http://yoursite.com/article/liunx3/</loc>
         <lastmod>2019-11-23T07:46:54.837Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -47,7 +47,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/mysql/</loc>
+        <loc>http://yoursite.com/article/mysql/</loc>
         <lastmod>2019-11-23T07:46:53.897Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -55,7 +55,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/liunx4/</loc>
+        <loc>http://yoursite.com/article/liunx4/</loc>
         <lastmod>2019-11-23T07:46:52.919Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -63,7 +63,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/liunx2/</loc>
+        <loc>http://yoursite.com/article/liunx2/</loc>
         <lastmod>2019-11-23T07:46:51.868Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -71,7 +71,7 @@
     </url>
 
     <url>
-        <loc>http://www.ruozedata.com/article/liunx/</loc>
+        <loc>http://yoursite.com/article/liunx/</loc>
         <lastmod>2019-11-23T07:46:50.660Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
