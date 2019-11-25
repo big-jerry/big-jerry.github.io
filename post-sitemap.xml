@@ -15,14 +15,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/article/ruozedata/</loc>
-        <lastmod>2019-11-24T09:19:41.186Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yoursite.com/article/hexo-theme-jepson/</loc>
         <lastmod>2019-11-24T09:19:41.162Z</lastmod>
         <changefreq>weekly</changefreq>
