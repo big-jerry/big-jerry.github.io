@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -211,7 +211,7 @@
 
 <div class="post-preview">
 
-    <a href="/article/sql1/">
+    <a href="/article/hexo-theme-jepson/">
         <h2 class="post-title">
             
                 <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
@@ -221,29 +221,31 @@
                 <!-- <font color=#F89E8C>置顶</font>  -->
                 <!-- <font color=#1CB7ED>置顶</font>  -->
                                  
-            SQL语句的使用（一）
+            [Hexo] Theme Jepson
         </h2>
         <h3 class="post-subtitle">
-            
+            This is hexo theme Demo.
         </h3>
         <div class="post-content-preview">
-            use hadoop;#切换到hadoop数据库
-**创建部门表并注释字段
-列：create table 表名 (
-	列名 定义数据类型 定义数据属性 注释，
-	列名 定义数据类型 定义数据属性 注释
-)；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
+            
+This Jepson theme created by Jepson modified from the original Porter YuHsuan
+
+Blog Demo
+ruozedata官网 : www.ruozedata.com
+
+Install Hexo
+Install Node.js  and Git
+12345678#For windowNode.js https://n......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 杰瑞 on
-            2017-09-12
+            2015-07-10
         </p>
         <div class="tags">
             
-              <a href="/tags/#mysql" title="mysql">mysql</a>
+              <a href="/tags/#Hexo" title="Hexo">Hexo</a>
             
         </div>
     
@@ -255,13 +257,6 @@
 
     <a href="/article/sql/">
         <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
                                  
             SQL语句的使用
         </h2>
@@ -291,55 +286,8 @@
 
 <div class="post-preview">
 
-    <a href="/article/mysql/">
-        <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
-                                 
-            MySQL 5.6离线二进制部署
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            MySQL 5.6离线二进制部署
-1、下载压缩包并上传至liunx
-下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
-百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
-提取码：fktz
-使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/article/liunx-shell/">
         <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
                                  
             liunx shell命令基础
         </h2>
@@ -375,143 +323,8 @@ date    命令行
 
 <div class="post-preview">
 
-    <a href="/article/liunx4/">
-        <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
-                                 
-            liunx基本命令使用方法（四）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（四）
-liunx基本命令使用方法（四）
-vi 命令的使用
-正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
-注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
-解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
-使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/liunx3/">
-        <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
-                                 
-            liunx基本命令使用方法（三）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（三）
-liunx基本命令使用方法（三）
-
-用户、用户组
-useradd 新增用户
-userdel 删除用户
-usermod 修改用户
-groupadd 新增用户组
-groupdel 删除用户组
-groupmod 修改用户组
-**添加用户 **
-[root@localhost ~]# useradd hadoop
-[root@localhost home]# id ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/liunx2/">
-        <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
-                                 
-            liunx基本命令使用方法（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（二）
-liunx基本命令使用方法（二）
-echo： 打印
-
-打印环境变量
-[root@localhost ~]# echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件
-[root@......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/article/liunx/">
         <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
                                  
             iunx基本命令使用方法（一）
         </h2>
@@ -549,41 +362,172 @@ cd /etc/sysco......
 
 <div class="post-preview">
 
-    <a href="/article/hexo-theme-jepson/">
+    <a href="/article/liunx2/">
         <h2 class="post-title">
-            
-                <i class="fa fa-thumb-tack" style="color:#F4711F" ></i>
-                <!-- <i class="fa fa-thumb-tack" style="color:#F89E8C" ></i> -->
-                <!-- <i class="fa fa-thumb-tack" style="color:#1CB7ED" ></i> -->
-                <font color=#F4711F>置顶</font>
-                <!-- <font color=#F89E8C>置顶</font>  -->
-                <!-- <font color=#1CB7ED>置顶</font>  -->
                                  
-            [Hexo] Theme Jepson
+            liunx基本命令使用方法（二）
         </h2>
         <h3 class="post-subtitle">
-            This is hexo theme Demo.
+            
         </h3>
         <div class="post-content-preview">
-            
-This Jepson theme created by Jepson modified from the original Porter YuHsuan
+            liunx基本命令使用方法（二）
+liunx基本命令使用方法（二）
+echo： 打印
 
-Blog Demo
-ruozedata官网 : www.ruozedata.com
-
-Install Hexo
-Install Node.js  and Git
-12345678#For windowNode.js https://n......
+打印环境变量
+[root@localhost ~]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件
+[root@......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 杰瑞 on
-            2015-07-10
+            2017-09-12
         </p>
         <div class="tags">
             
-              <a href="/tags/#Hexo" title="Hexo">Hexo</a>
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx4/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（四）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（四）
+liunx基本命令使用方法（四）
+vi 命令的使用
+正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
+注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
+解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
+使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/mysql/">
+        <h2 class="post-title">
+                                 
+            MySQL 5.6离线二进制部署
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            MySQL 5.6离线二进制部署
+1、下载压缩包并上传至liunx
+下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
+百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
+提取码：fktz
+使用rz命令上传至/usr/local目录。
+1234567[root@localhost local]......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx3/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（三）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（三）
+liunx基本命令使用方法（三）
+
+用户、用户组
+useradd 新增用户
+userdel 删除用户
+usermod 修改用户
+groupadd 新增用户组
+groupdel 删除用户组
+groupmod 修改用户组
+**添加用户 **
+[root@localhost ~]# useradd hadoop
+[root@localhost home]# id ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/sql1/">
+        <h2 class="post-title">
+                                 
+            SQL语句的使用（一）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            use hadoop;#切换到hadoop数据库
+**创建部门表并注释字段
+列：create table 表名 (
+	列名 定义数据类型 定义数据属性 注释，
+	列名 定义数据类型 定义数据属性 注释
+)；
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
             
         </div>
     
@@ -685,15 +629,15 @@ Install Node.js  and Git
         </li>
       
         <li>
-          <a href="/article/sql1/">SQL语句的使用（一）</a>
-        </li>
-      
-        <li>
-          <a href="/article/mysql/">MySQL 5.6离线二进制部署</a>
-        </li>
-      
-        <li>
           <a href="/article/liunx-shell/">liunx shell命令基础</a>
+        </li>
+      
+        <li>
+          <a href="/article/liunx/">iunx基本命令使用方法（一）</a>
+        </li>
+      
+        <li>
+          <a href="/article/liunx2/">liunx基本命令使用方法（二）</a>
         </li>
       
         <li>
