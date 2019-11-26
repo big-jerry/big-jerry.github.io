@@ -7,8 +7,48 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/article/mysql/</loc>
+        <lastmod>2019-11-26T16:13:24.919Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx-shell/</loc>
+        <lastmod>2019-11-26T16:13:24.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx4/</loc>
+        <lastmod>2019-11-26T16:13:24.900Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx3/</loc>
+        <lastmod>2019-11-26T16:13:24.888Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx2/</loc>
+        <lastmod>2019-11-26T16:13:24.880Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/article/sql/</loc>
-        <lastmod>2019-11-26T16:08:27.435Z</lastmod>
+        <lastmod>2019-11-26T16:13:24.872Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,46 +57,6 @@
     <url>
         <loc>http://yoursite.com/article/sql1/</loc>
         <lastmod>2019-11-26T16:08:25.123Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/mysql/</loc>
-        <lastmod>2019-11-26T06:23:40.582Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx-shell/</loc>
-        <lastmod>2019-11-26T06:23:40.568Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx4/</loc>
-        <lastmod>2019-11-26T06:23:40.556Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx3/</loc>
-        <lastmod>2019-11-26T06:23:40.547Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx2/</loc>
-        <lastmod>2019-11-26T06:23:40.536Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
