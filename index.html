@@ -134,7 +134,7 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -148,7 +148,7 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -227,15 +227,13 @@
             
         </h3>
         <div class="post-content-preview">
-            QL语句的使用（一）
-use hadoop;#切换到hadoop数据库
-
+            use hadoop;#切换到hadoop数据库
 **创建部门表并注释字段
 列：create table 表名 (
 	列名 定义数据类型 定义数据属性 注释，
 	列名 定义数据类型 定义数据属性 注释
 )；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,......
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
         </div>
     </a>
     
@@ -271,12 +269,11 @@ use hadoop;#切换到hadoop数据库
             
         </h3>
         <div class="post-content-preview">
-            ##SQL语句的使用(一)
-***创建DB user **
+            ***创建DB user **
 	create database hadoop; #创建hadoop数据库。
 	show databases; #查看数据库是否创建成功。
 	grant all privileges on . to jerry@’%’ identified by ‘centos’;
-	12345678910111213141516mysql&gt;......
+	12345678910111213141516mysql&gt; grant all pri......
         </div>
     </a>
     
