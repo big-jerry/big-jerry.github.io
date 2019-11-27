@@ -214,14 +214,13 @@
 
                 <h1 id="liunx基本命令使用方法三">liunx基本命令使用方法（三）</h1>
 <h2 id="liunx基本命令使用方法三"><strong>liunx基本命令使用方法（三）</strong></h2>
-<blockquote>
 <p><strong>用户、用户组</strong></p>
-<p>useradd 新增用户</p>
-<p>userdel 删除用户</p>
-<p>usermod 修改用户</p>
-<p>groupadd 新增用户组</p>
-<p>groupdel 删除用户组</p>
-<p>groupmod 修改用户组</p>
+<p>useradd 新增用户<br>
+userdel 删除用户<br>
+usermod 修改用户<br>
+groupadd 新增用户组<br>
+groupdel 删除用户组<br>
+groupmod 修改用户组</p>
 <p>**添加用户 **</p>
 <p>[root@localhost ~]# useradd hadoop</p>
 <p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
@@ -240,14 +239,10 @@ id: hadoop: no such user</p>
 <p>useradd：警告：此主目录已经存在。 不从 skel 目录里向其中复制任何文件。 正在创建信箱文件: 文件已存在</p>
 <p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
 <p>**模拟切换用户丢失样式 **</p>
-</blockquote>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-81cd1cba7041cf30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<blockquote>
 <p><strong>修正样式</strong></p>
 <p>切回root用户将缺失的bash文件拷贝到用户的家目录，并修改文件的权限。如图：</p>
-</blockquote>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-417cc3d91e0c1e43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<blockquote>
 <p><strong>添加hadoop用户到另外一个组 bigdata</strong></p>
 <p>[root@localhost /]# usermod -a -G bigdata hadoop</p>
 <p>[root@localhost /]# id hadoop</p>
@@ -301,7 +296,6 @@ id: hadoop: no such user</p>
 <p>top 查看系统情况</p>
 <p>命令格式：find 路径 -name ‘文件名’，文件名可以使用 * 符合模糊匹配。</p>
 <p>find /usr/local -name ‘<em>hadoop</em>’</p>
-</blockquote>
 
                 
 
@@ -310,12 +304,12 @@ id: hadoop: no such user</p>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">&larr; Previous Post</a>
+                            <a href="/article/liunx/" data-toggle="tooltip" data-placement="top" title="iunx基本命令使用方法（一）">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/liunx4/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（四）">Next Post &rarr;</a>
+                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
