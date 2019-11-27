@@ -212,10 +212,28 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>***创建DB user **<br>
+                <p><em><em>创建DB user<br>
 	create database hadoop; #创建hadoop数据库。<br>
 	show databases; #查看数据库是否创建成功。<br>
-	grant all privileges on <em>.</em> to jerry@’%’ identified by ‘centos’;<br>
+	grant all privileges on *.* to jerry@’%’ identified by ‘centos’;<br>
+	GRANT语法：<br>
+	GRANT 权限 ON 数据库.</em> TO 用户名@‘登录主机’ IDENTIFIED BY ‘密码’<br>
+	权限：<br>
+	ALL,ALTER,CREATE,DROP,SELECT,UPDATE,DELETE<br>
+	新增用户：权限为USAGE,即为：“无权限”,想要创建一个没有权限的用户时,可以指定USAGE<br>
+	数据库：<br>
+<em>.</em>              表示所有库的所有表<br>
+mylove.</em>         表示mylove库的所有表<br>
+mylove.loves     表示mylove库的loves表<br>
+	用户名：<br>
+	MySQL的账户名<br>
+	登陆主机：<br>
+允许登陆到MySQL Server的客户端ip<br>
+’%‘表示所有ip<br>
+’localhost’ 表示本机<br>
+’10.155.123.55’ 特定IP<br>
+	密码：<br>
+MySQL的账户名对应的登陆密码<br>
 	<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; grant all privileges on *.* to jerry@&apos;%&apos; identified by &apos;centos&apos;;#新增用户</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; use mysql</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; select user,password,host from user;#查看用户是否新增成功</span><br><span class="line">+-------+-------------------------------------------+-----------+</span><br><span class="line">| user  | password                                  | host      |</span><br><span class="line">+-------+-------------------------------------------+-----------+</span><br><span class="line">| root  | *128977E278358FF80A246B5046F51043A2B1FCED | localhost |</span><br><span class="line">| root  | *128977E278358FF80A246B5046F51043A2B1FCED | hadoop01  |</span><br><span class="line">| root  | *128977E278358FF80A246B5046F51043A2B1FCED | 127.0.0.1 |</span><br><span class="line">| root  | *128977E278358FF80A246B5046F51043A2B1FCED | ::1       |</span><br><span class="line">| root  | *128977E278358FF80A246B5046F51043A2B1FCED | %         |</span><br><span class="line">| jerry | *128977E278358FF80A246B5046F51043A2B1FCED | %         |</span><br><span class="line">+-------+-------------------------------------------+-----------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
 <pre><code>flush privileges;#
 mysql&gt; flush privileges;#刷新权限
@@ -224,13 +242,12 @@ Query OK, 0 rows affected (0.00 sec)
 <p>登录mysql数据库<br>
 	mysql -u root -p  -p不能有空格<br>
 	注意命令行不能带有密码 否则history查看泄露<br>
-*<strong>在mysql中杀进程</strong></p>
+**在mysql中杀进程</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist;#查看mysql进程</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">| Id  | User | Host                  | db    | Command | Time | State | Info             |</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">| 217 | root | 219.135.174.166:36468 | mysql | Sleep   |  711 |       | NULL             |</span><br><span class="line">| 218 | root | 219.135.174.166:36470 | mysql | Sleep   |  716 |       | NULL             |</span><br><span class="line">| 219 | root | localhost             | mysql | Query   |    0 | init  | show processlist |</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">3 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure>
-<pre><code>杀进程使用kill+进程ID号命令
-</code></pre>
+<p>**杀进程使用kill+进程ID号命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; kill 217;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show processlist;</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">| Id  | User | Host                  | db    | Command | Time | State | Info             |</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">| 218 | root | 219.135.174.166:36470 | mysql | Sleep   |  961 |       | NULL             |</span><br><span class="line">| 219 | root | localhost             | mysql | Query   |    0 | init  | show processlist |</span><br><span class="line">+-----+------+-----------------------+-------+---------+------+-------+------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 <p>注意：根据消耗时间判断进程是否有问题，核实当前执行的SQL是否可以kill。<br>
-*<strong>字段类型</strong><br>
+<strong>字段类型</strong><br>
 数值类型<br>
 	int 	整数<br>
 	long 	长整型<br>
@@ -245,7 +262,7 @@ Query OK, 0 rows affected (0.00 sec)
 	time 	时间 HH:MM:SS<br>
 	datetime  年月日时分秒 YYYY-MM-DD HH:MM:SS<br>
 	timestamp 年月日时分秒 YYYY-MM-DD HH:MM:SS<br>
-*<strong>timestamp与datetime的区别</strong><br>
+<strong>timestamp与datetime的区别</strong><br>
 a）DATETIME的默认值为null；TIMESTAMP的字段默认不为空（not null）,默认值为当前时间（CURRENT_TIMESTAMP），如果不做特殊处理，并且update语句中没有指定该列的更新值，则默认更新为当前时间。<br>
 这个区别就解释了为什么平时我们都不用管这个字段就能自动更新了，因为多数时候用的是timestamp；而此处用的是datetime，不会有自动更新当前时间的机制，所以需要在上层手动更新该字段</p>
 <p>b）DATETIME使用8字节的存储空间，TIMESTAMP的存储空间为4字节。因此，TIMESTAMP比DATETIME的空间利用率更高。</p>
@@ -254,26 +271,15 @@ a）DATETIME的默认值为null；TIMESTAMP的字段默认不为空（not null�
 <p>d）两者所能存储的时间范围不一样</p>
 <p>timestamp所能存储的时间范围为：’1970-01-01 00:00:01.000000’ 到 ‘2038-01-19 03:14:07.999999’；</p>
 <p>datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 ‘9999-12-31 23:59:59.999999’。<br>
-*<strong>sql语句类型</strong><br>
+**sql语句类型<br>
 DDL 数据定义语言: create drop<br>
 DML 数据操作语言: insert update delete select 增删改查<br>
 DCL 数据控制语言: grant<br>
-*<strong>使用SQL语句创建列表</strong><br>
-	use hadoop;#切换到hadoop数据库<br>
-	create table employee (<br>
--&gt; id int(11) not null auto_increment,<br>
--&gt; name varchar(200),<br>
--&gt; age int(3),<br>
--&gt; create_user varchar(200),<br>
--&gt; create_time timestamp not null default current_timestamp,<br>
--&gt; update_user varchar(200),<br>
--&gt; update_time timestamp not null default current_timestamp on update current_timestamp,<br>
--&gt; primary key (id)<br>
--&gt; );</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;#查看列表是否新增</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_hadoop |</span><br><span class="line">+------------------+</span><br><span class="line">| employee         |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-<p>往列表插入数据</p>
+**使用SQL语句创建列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">	use hadoop;#切换到hadoop数据库</span><br><span class="line">	create table employee (</span><br><span class="line">    -&gt; id int(11) not null auto_increment,</span><br><span class="line">    -&gt; name varchar(200),</span><br><span class="line">    -&gt; age int(3),</span><br><span class="line">    -&gt; create_user varchar(200),</span><br><span class="line">    -&gt; create_time timestamp not null default current_timestamp,</span><br><span class="line">    -&gt; update_user varchar(200),</span><br><span class="line">    -&gt; update_time timestamp not null default current_timestamp on update current_timestamp,</span><br><span class="line">    -&gt; primary key (id)</span><br><span class="line">    -&gt; );</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;#查看列表是否新增</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_hadoop |</span><br><span class="line">+------------------+</span><br><span class="line">| employee         |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>**往列表插入数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;insert into employee (name,age,create_user,update_user) values (&apos;jerry&apos;,&apos;22&apos;,&apos;admin&apos;,&apos;admin&apos;);</span><br><span class="line">mysql&gt; select * from employee ;</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">| id | name  | age  | create_user | create_time         | update_user | update_time         |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">|  1 | jerry |   22 | admin       | 2017-11-23 17:54:24 | admin       | 2017-11-23 17:54:24 |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line">mysql&gt; update employee set age=25 where id=&apos;1&apos;;#修改列表age字段的值</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line">mysql&gt; select * from employee ;#查询列表</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">| id | name  | age  | create_user | create_time         | update_user | update_time         |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">|  1 | jerry |   25 | admin       | 2019-11-23 17:54:24 | admin       | 2019-11-23 17:58:09 |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line">mysql&gt; delete from employee where name=&apos;kaka&apos;;#删除表格中名为kaka的数据行</span><br><span class="line">update,select,delete注意事项:</span><br><span class="line">	select * from #切记生产写查询sql不要加*。</span><br><span class="line">	#建议使用</span><br><span class="line">	select id,name,age from rzdata WHERE ID=1;  </span><br><span class="line">	select id,name,age from rzdata limit 1000;  </span><br><span class="line">	</span><br><span class="line">	执行update和delete语句必须加where条件。</span><br></pre></td></tr></table></figure>
-<p>创建列表需要注意的事项：<br>
+<p>**创建列表需要注意的事项：<br>
 b.统一风格：参照已经存在的表风格。<br>
 	create_user<br>
 	createuser<br>
@@ -283,7 +289,7 @@ b.统一风格：参照已经存在的表风格。<br>
 	cre_time<br>
 	create_time<br>
 c.第一个字段必然是id，设置为主键，数值类型为int自增长。<br>
-#有利于mysql实现高性能的存储和查询<br>
+**有利于mysql实现高性能的存储和查询<br>
 d.一张表只有一个主键 primary key</p>
 <p>例如设置name字段唯一约束<br>
 	ALTER TABLE ruozedata.rzdata ADD CONSTRAINT rzdata_un UNIQUE KEY (name) ;<br>
@@ -291,7 +297,7 @@ e.后四个字段建议都要加（create_user,create_time,update_user,update_ti
 f.业务字段 注释加上<br>
 ALTER TABLE hadoop.employee MODIFY COLUMN name varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL COMMENT ‘用户姓名’ ;<br>
 ALTER TABLE hadoop.employee MODIFY COLUMN age int(3) NULL COMMENT ‘用户年龄’ ;<br>
-*<strong>字符集</strong><br>
+**字符集<br>
 	database#数据库	字符集<br>
 	table#表		字符集<br>
 	column#列		字符集</p>
@@ -338,7 +344,7 @@ mysql&gt; show variables like '%char%'#查询变量的字符集
                     
                     
                         <li class="next">
-                            <a href="/article/liunx-shell/" data-toggle="tooltip" data-placement="top" title="liunx shell命令基础">Next Post &rarr;</a>
+                            <a href="/article/liunx/" data-toggle="tooltip" data-placement="top" title="iunx基本命令使用方法（一）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>

@@ -220,11 +220,12 @@
             
         </h3>
         <div class="post-content-preview">
-            ***创建DB user **
+            创建DB user
 	create database hadoop; #创建hadoop数据库。
 	show databases; #查看数据库是否创建成功。
-	grant all privileges on . to jerry@’%’ identified by ‘centos’;
-	12345678910111213141516mysql&gt; grant all pri......
+	grant all privileges on *.* to jerry@’%’ identified by ‘centos’;
+	GRANT语法：
+	GRANT 权限 ON 数据库. TO 用户名@‘登录主机’ IDENTIFIE......
         </div>
     </a>
     
@@ -235,6 +236,45 @@
         <div class="tags">
             
               <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx/">
+        <h2 class="post-title">
+                                 
+            iunx基本命令使用方法（一）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（一）
+liunx基本命令使用方法（一）
+
+PWD：显示当前所在路径。
+[root@localhost network-scripts]# pwd
+/etc/sysconfig/network-scripts  #当前所在的路径
+cd：切换路径的命令
+cd …/ 回退上一层目录
+cd …/…/ 回退上2层目录
+cd - 回退到上一次的目录
+cd /etc/sysco......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
             
         </div>
     
@@ -283,26 +323,24 @@ date    命令行
 
 <div class="post-preview">
 
-    <a href="/article/liunx/">
+    <a href="/article/liunx2/">
         <h2 class="post-title">
                                  
-            iunx基本命令使用方法（一）
+            liunx基本命令使用方法（二）
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            liunx基本命令使用方法（一）
-liunx基本命令使用方法（一）
+            liunx基本命令使用方法（二）
+liunx基本命令使用方法（二）
+echo： 打印
 
-PWD：显示当前所在路径。
-[root@localhost network-scripts]# pwd
-/etc/sysconfig/network-scripts  #当前所在的路径
-cd：切换路径的命令
-cd …/ 回退上一层目录
-cd …/…/ 回退上2层目录
-cd - 回退到上一次的目录
-cd /etc/sysco......
+打印环境变量
+[root@localhost ~]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件
+[root@......
         </div>
     </a>
     
@@ -362,43 +400,6 @@ groupmod 修改用户组
 
 <div class="post-preview">
 
-    <a href="/article/liunx2/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（二）
-liunx基本命令使用方法（二）
-echo： 打印
-
-打印环境变量
-[root@localhost ~]# echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件
-[root@......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/article/liunx4/">
         <h2 class="post-title">
                                  
@@ -434,22 +435,22 @@ vi 命令的使用
 
 <div class="post-preview">
 
-    <a href="/article/mysql/">
+    <a href="/article/sql1/">
         <h2 class="post-title">
                                  
-            MySQL 5.6离线二进制部署
+            SQL语句的使用（二）
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            MySQL 5.6离线二进制部署
-1、下载压缩包并上传至liunx
-下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
-百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
-提取码：fktz
-使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]......
+            use hadoop;#切换到hadoop数据库
+**创建部门表并注释字段
+列：create table 表名 (
+	列名 定义数据类型 定义数据属性 注释，
+	列名 定义数据类型 定义数据属性 注释
+)；
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
         </div>
     </a>
     
@@ -469,22 +470,22 @@ vi 命令的使用
 
 <div class="post-preview">
 
-    <a href="/article/sql1/">
+    <a href="/article/mysql/">
         <h2 class="post-title">
                                  
-            SQL语句的使用（二）
+            MySQL 5.6离线二进制部署
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            use hadoop;#切换到hadoop数据库
-**创建部门表并注释字段
-列：create table 表名 (
-	列名 定义数据类型 定义数据属性 注释，
-	列名 定义数据类型 定义数据属性 注释
-)；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
+            MySQL 5.6离线二进制部署
+1、下载压缩包并上传至liunx
+下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
+百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
+提取码：fktz
+使用rz命令上传至/usr/local目录。
+1234567[root@localhost local]......
         </div>
     </a>
     
@@ -592,19 +593,19 @@ vi 命令的使用
         </li>
       
         <li>
-          <a href="/article/liunx-shell/">liunx shell命令基础</a>
-        </li>
-      
-        <li>
           <a href="/article/liunx/">iunx基本命令使用方法（一）</a>
         </li>
       
         <li>
-          <a href="/article/liunx3/">liunx基本命令使用方法（三）</a>
+          <a href="/article/liunx-shell/">liunx shell命令基础</a>
         </li>
       
         <li>
           <a href="/article/liunx2/">liunx基本命令使用方法（二）</a>
+        </li>
+      
+        <li>
+          <a href="/article/liunx3/">liunx基本命令使用方法（三）</a>
         </li>
       
     </ul>

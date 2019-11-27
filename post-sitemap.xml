@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/article/sql/</loc>
+        <lastmod>2019-11-27T09:16:58.054Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/article/liunx3/</loc>
         <lastmod>2019-11-27T06:20:02.086Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -41,14 +49,6 @@
     <url>
         <loc>http://yoursite.com/article/liunx2/</loc>
         <lastmod>2019-11-26T16:13:24.880Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/sql/</loc>
-        <lastmod>2019-11-26T16:13:24.872Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
