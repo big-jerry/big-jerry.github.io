@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -245,26 +245,22 @@
 
 <div class="post-preview">
 
-    <a href="/article/liunx/">
+    <a href="/article/hadoop/">
         <h2 class="post-title">
                                  
-            iunx基本命令使用方法（一）
+            hadoop-2.6.0伪分布式部署
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            liunx基本命令使用方法（一）
-liunx基本命令使用方法（一）
-
-PWD：显示当前所在路径。
-[root@localhost network-scripts]# pwd
-/etc/sysconfig/network-scripts  #当前所在的路径
-cd：切换路径的命令
-cd …/ 回退上一层目录
-cd …/…/ 回退上2层目录
-cd - 回退到上一次的目录
-cd /etc/sysco......
+            #hadoop-2.6.0伪分布式部署
+*1.准备压缩包并上传至Linux系统
+hadoop-2.6.0-cdh5.16.2.tar.gz
+jdk-8u45-linux-x64.gz的压缩包
+下载地址：https://pan.baidu.com/s/10VohWHPuZTOvgbYM1WYuyQ
+提取码：usqj
+*2.新增hadoop用户由于hadoop服务使用,在hadoop家目录新建文......
         </div>
     </a>
     
@@ -274,7 +270,7 @@ cd /etc/sysco......
         </p>
         <div class="tags">
             
-              <a href="/tags/#liunx" title="liunx">liunx</a>
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
             
         </div>
     
@@ -304,6 +300,45 @@ liunx shell命令基础
 #!/bin/bash   声明#!/bin/bash 解释器
 date    命令行
 [root@hadoop01 ~]# ./test.......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx/">
+        <h2 class="post-title">
+                                 
+            iunx基本命令使用方法（一）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（一）
+liunx基本命令使用方法（一）
+
+PWD：显示当前所在路径。
+[root@localhost network-scripts]# pwd
+/etc/sysconfig/network-scripts  #当前所在的路径
+cd：切换路径的命令
+cd …/ 回退上一层目录
+cd …/…/ 回退上2层目录
+cd - 回退到上一次的目录
+cd /etc/sysco......
         </div>
     </a>
     
@@ -400,6 +435,41 @@ groupmod 修改用户组
 
 <div class="post-preview">
 
+    <a href="/article/mysql/">
+        <h2 class="post-title">
+                                 
+            MySQL 5.6离线二进制部署
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            MySQL 5.6离线二进制部署
+1、下载压缩包并上传至liunx
+下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
+百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
+提取码：fktz
+使用rz命令上传至/usr/local目录。
+1234567[root@localhost local]......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/liunx4/">
         <h2 class="post-title">
                                  
@@ -468,41 +538,6 @@ vi 命令的使用
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/mysql/">
-        <h2 class="post-title">
-                                 
-            MySQL 5.6离线二进制部署
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            MySQL 5.6离线二进制部署
-1、下载压缩包并上传至liunx
-下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
-百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
-提取码：fktz
-使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -538,6 +573,10 @@ vi 命令的使用
     <!-- no hr -->
     <h5><a href="/tags/">FEATURED TAGS</a></h5>
     <div class="tags">
+        
+            
+            <a href="/tags/#hadoop" title="hadoop" rel="1">hadoop</a>
+            
         
             
             <a href="/tags/#liunx" title="liunx" rel="5">liunx</a>
@@ -593,7 +632,7 @@ vi 命令的使用
         </li>
       
         <li>
-          <a href="/article/liunx/">iunx基本命令使用方法（一）</a>
+          <a href="/article/hadoop/">hadoop-2.6.0伪分布式部署</a>
         </li>
       
         <li>
@@ -601,11 +640,11 @@ vi 命令的使用
         </li>
       
         <li>
-          <a href="/article/liunx2/">liunx基本命令使用方法（二）</a>
+          <a href="/article/liunx/">iunx基本命令使用方法（一）</a>
         </li>
       
         <li>
-          <a href="/article/liunx3/">liunx基本命令使用方法（三）</a>
+          <a href="/article/liunx2/">liunx基本命令使用方法（二）</a>
         </li>
       
     </ul>
@@ -628,7 +667,7 @@ vi 命令的使用
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li></ul>
     </div>
 
         <hr>

@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/article/hadoop/</loc>
+        <lastmod>2019-11-29T06:37:37.059Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/article/sql/</loc>
         <lastmod>2019-11-27T09:16:58.054Z</lastmod>
         <changefreq>weekly</changefreq>
