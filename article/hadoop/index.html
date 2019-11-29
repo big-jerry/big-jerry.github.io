@@ -95,7 +95,7 @@
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-09-12
+                            2017-09-25
                         </span>
                     </div>
                 
@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -212,82 +212,81 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>#hadoop-2.6.0伪分布式部署<br>
-*1.准备压缩包并上传至Linux系统<br>
-hadoop-2.6.0-cdh5.16.2.tar.gz<br>
+                <h1 id="hadoop-260伪分布式部署">hadoop-2.6.0伪分布式部署</h1>
+<h2 id="准备压缩包并上传至linux系统">准备压缩包并上传至Linux系统</h2>
+<p>hadoop-2.6.0-cdh5.16.2.tar.gz<br>
 jdk-8u45-linux-x64.gz的压缩包<br>
 下载地址：<a href="https://pan.baidu.com/s/10VohWHPuZTOvgbYM1WYuyQ" target="_blank" rel="noopener">https://pan.baidu.com/s/10VohWHPuZTOvgbYM1WYuyQ</a><br>
 提取码：usqj</p>
-<p>*2.新增hadoop用户由于hadoop服务使用,在hadoop家目录新建文件夹</p>
+<h2 id="新增hadoop用户由于hadoop服务使用在hadoop家目录新建文件夹">新增hadoop用户由于hadoop服务使用,在hadoop家目录新建文件夹</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 ~]# useradd hadoop</span><br><span class="line">[root@hadoop01 home]# su - hadoop</span><br><span class="line">[hadoop@hadoop01 ~]$ mkdir app software sourcecode log tmp data lib</span><br><span class="line">[hadoop@hadoop01 ~]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 app		#存放Hadoop解压文件及软链接</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 data		#存放数据</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 lib		#存放第三方的jar包</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 log		#日志文件夹</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 software		#压缩包</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 sourcecode	#源代码编译</span><br><span class="line">drwxrwxr-x 2 hadoop hadoop 6 11月 28 14:26 tmp		#存放临时文件</span><br></pre></td></tr></table></figure>
-<p>*2.1解压hadoop文件，创建软链接</p>
+<h3 id="解压hadoop文件创建软链接">解压hadoop文件，创建软链接</h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 software]$ tar -xvzf hadoop-2.6.0-cdh5.16.2.tar.gz -C /home/hadoop/app/</span><br><span class="line">[hadoop@hadoop01 app]$ ln -s hadoop-2.6.0-cdh5.16.2/ hadoop</span><br><span class="line">[hadoop@hadoop01 app]$ ll</span><br><span class="line">总用量 4</span><br><span class="line">lrwxrwxrwx  1 hadoop hadoop   23 11月 28 14:40 hadoop -&gt; hadoop-2.6.0-cdh5.16.2/</span><br><span class="line">drwxr-xr-x 14 hadoop hadoop 4096 6月   3 19:11 hadoop-2.6.0-cdh5.16.2</span><br></pre></td></tr></table></figure>
-<p>2.2安装hadoop的环境要求<br>
-需要安装以下服务<br>
-a.JAVA	#安装JDK</p>
+<h3 id="安装hadoop的环境要求">安装hadoop的环境要求</h3>
+<p><code>需要安装以下服务</code><br>
+<code>a.JAVA	#安装JDK</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 java]# cd /usr/java</span><br><span class="line">将jdk压缩包上传至该文件夹</span><br><span class="line">[root@hadoop01 java]# ll</span><br><span class="line">总用量 169212</span><br><span class="line">-rw-r--r-- 1 root root 173271626 11月 28 10:17 jdk-8u45-linux-x64.gz</span><br><span class="line">[root@hadoop01 java]# tar -xvzf jdk-8u45-linux-x64.gz </span><br><span class="line">[root@hadoop01 java]# ll</span><br><span class="line">总用量 169216</span><br><span class="line">drwxr-xr-x 8   10  143      4096 4月  11 2015 jdk1.8.0_45	#检查解压文件的用户、用户组权限</span><br><span class="line">-rw-r--r-- 1 root root 173271626 11月 28 10:17 jdk-8u45-linux-x64.gz</span><br><span class="line">[root@hadoop01 java]# chown -R root:root jdk1.8.0_45</span><br><span class="line">[root@hadoop01 java]# ll</span><br><span class="line">总用量 169216</span><br><span class="line">drwxr-xr-x 8 root root      4096 4月  11 2015 jdk1.8.0_45</span><br><span class="line">-rw-r--r-- 1 root root 173271626 11月 28 10:17 jdk-8u45-linux-x64.gz</span><br><span class="line"></span><br><span class="line">[root@hadoop01 java]# vi /etc/profile</span><br><span class="line"></span><br><span class="line">#env</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">[root@hadoop01 java]# source /etc/profile</span><br><span class="line">[root@hadoop01 java]# which java</span><br><span class="line">/usr/java/jdk1.8.0_45/bin/java</span><br></pre></td></tr></table></figure>
-<p>b.SSh	#必须安装，一般系统已经默认安装</p>
-<p>*2.3 JAVA_HOME 显性配置</p>
+<p><code>b.SSh	#必须安装，一般系统已经默认安装</code></p>
+<h3 id="java_home-显性配置">JAVA_HOME 显性配置</h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 app]$ vi hadoop/etc/hadoop/hadoop-env.sh </span><br><span class="line">#修改该文件的JAVA路径</span><br><span class="line">#The java implementation to use.</span><br><span class="line">#export JAVA_HOME=$&#123;JAVA_HOME&#125;#替换这个配置</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</span><br></pre></td></tr></table></figure>
-<p>*2.4配置文件</p>
+<h3 id="配置文件">配置文件</h3>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 app]$ vi hadoop/etc/hadoop/core-site.xml </span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;property&gt;</span><br><span class="line">			&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">			&lt;value&gt;hdfs://hadoop01:9000&lt;/value&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br><span class="line">[hadoop@hadoop01 app]$ vi hadoop/etc/hadoop/hdfs-site.xml</span><br><span class="line">	&lt;configuration&gt;</span><br><span class="line">		&lt;property&gt;</span><br><span class="line">			&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">			&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<p>*2.5 SSH无密码信任关系配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 ~]$ rm -rf .ssh 	#生产环境建议备份ssh文件，不要删除</span><br><span class="line">[hadoop@hadoop01 ~]$ ssh-keygen 	#生成ssh-key</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/home/hadoop/.ssh/id_rsa): </span><br><span class="line">Created directory &apos;/home/hadoop/.ssh&apos;.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /home/hadoop/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /home/hadoop/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">8c:4a:31:db:c4:48:90:6d:ca:cd:66:e9:f1:2b:93:c1 hadoop@hadoop01</span><br><span class="line">The key&apos;s randomart image is:</span><br><span class="line">+--[ RSA 2048]----+</span><br><span class="line">|  .+.            |</span><br><span class="line">|  ..oo           |</span><br><span class="line">| . =+.o          |</span><br><span class="line">|  o B* o         |</span><br><span class="line">|   =ooo S        |</span><br><span class="line">|   .E..          |</span><br><span class="line">|    .o .         |</span><br><span class="line">|    + .          |</span><br><span class="line">|     o           |</span><br><span class="line">+-----------------+</span><br><span class="line">[hadoop@hadoop01 .ssh]$ cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">[hadoop@hadoop01 .ssh]$ ll</span><br><span class="line">总用量 12</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop  397 11月 28 17:16 authorized_keys</span><br><span class="line">-rw------- 1 hadoop hadoop 1675 11月 28 17:14 id_rsa</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  397 11月 28 17:14 id_rsa.pub</span><br><span class="line">[hadoop@hadoop01 .ssh]$ chmod 600 authorized_keys 	</span><br><span class="line">#修改密钥文件权限，切记root用户下不需要修改权限，其他普通用户下必须修改为600权限</span><br><span class="line">关于SSh故障的文章：</span><br><span class="line">http://blog.itpub.net/30089851/viewspace-2127102/  </span><br><span class="line">http://blog.itpub.net/30089851/viewspace-1992210/ </span><br><span class="line">关于SSH密钥更新后通过ssh命令无法访问的处理方法</span><br><span class="line">[hadoop@hadoop01 .ssh]$ ll</span><br><span class="line">总用量 16</span><br><span class="line">-rw------- 1 hadoop hadoop  397 11月 28 17:16 authorized_keys</span><br><span class="line">-rw------- 1 hadoop hadoop 1675 11月 28 17:14 id_rsa</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  397 11月 28 17:14 id_rsa.pub</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  524 11月 28 18:41 known_hosts</span><br><span class="line">[hadoop@hadoop01 .ssh]$ cat known_hosts </span><br><span class="line">#该文件记录了第一次ssh访问时输入yes的记录，如果更新了密钥须将该文件对应的旧密钥记录删掉，否则会报错。</span><br><span class="line">hadoop01,192.168.0.253 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">0.0.0.0 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">``` </span><br><span class="line">*2.6 配置hadoop环境变量</span><br></pre></td></tr></table></figure>
+<h3 id="ssh无密码信任关系配置">SSH无密码信任关系配置</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 ~]$ rm -rf .ssh 	#生产环境建议备份ssh文件，不要删除</span><br><span class="line">[hadoop@hadoop01 ~]$ ssh-keygen 	#生成ssh-key</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/home/hadoop/.ssh/id_rsa): </span><br><span class="line">Created directory &apos;/home/hadoop/.ssh&apos;.</span><br><span class="line">Enter passphrase (empty for no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /home/hadoop/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /home/hadoop/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">8c:4a:31:db:c4:48:90:6d:ca:cd:66:e9:f1:2b:93:c1 hadoop@hadoop01</span><br><span class="line">The key&apos;s randomart image is:</span><br><span class="line">+--[ RSA 2048]----+</span><br><span class="line">|  .+.            |</span><br><span class="line">|  ..oo           |</span><br><span class="line">| . =+.o          |</span><br><span class="line">|  o B* o         |</span><br><span class="line">|   =ooo S        |</span><br><span class="line">|   .E..          |</span><br><span class="line">|    .o .         |</span><br><span class="line">|    + .          |</span><br><span class="line">|     o           |</span><br><span class="line">+-----------------+</span><br><span class="line">[hadoop@hadoop01 .ssh]$ cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">[hadoop@hadoop01 .ssh]$ ll</span><br><span class="line">总用量 12</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop  397 11月 28 17:16 authorized_keys</span><br><span class="line">-rw------- 1 hadoop hadoop 1675 11月 28 17:14 id_rsa</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  397 11月 28 17:14 id_rsa.pub</span><br><span class="line">[hadoop@hadoop01 .ssh]$ chmod 600 authorized_keys 	</span><br><span class="line">#修改密钥文件权限，切记root用户下不需要修改权限，其他普通用户下必须修改为600权限</span><br><span class="line">关于SSh故障的文章：</span><br><span class="line">http://blog.itpub.net/30089851/viewspace-2127102/  </span><br><span class="line">http://blog.itpub.net/30089851/viewspace-1992210/ </span><br><span class="line">关于SSH密钥更新后通过ssh命令无法访问的处理方法</span><br><span class="line">[hadoop@hadoop01 .ssh]$ ll</span><br><span class="line">总用量 16</span><br><span class="line">-rw------- 1 hadoop hadoop  397 11月 28 17:16 authorized_keys</span><br><span class="line">-rw------- 1 hadoop hadoop 1675 11月 28 17:14 id_rsa</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  397 11月 28 17:14 id_rsa.pub</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop  524 11月 28 18:41 known_hosts</span><br><span class="line">[hadoop@hadoop01 .ssh]$ cat known_hosts </span><br><span class="line">#该文件记录了第一次ssh访问时输入yes的记录，如果更新了密钥须将该文件对应的旧密钥记录删掉，否则会报错。</span><br><span class="line">hadoop01,192.168.0.253 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">0.0.0.0 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCiM4xNRUMxT5jXGy6U4HZUgDR6SSz7/qhdO3j6vqx+NJiqpyhw0/qAGi2zNue79yTMHpSEby0LdAsAkjZhdgBg=</span><br><span class="line">``` </span><br><span class="line">### 配置hadoop环境变量</span><br></pre></td></tr></table></figure>
 <p>[hadoop@hadoop01 home]$ cd hadoop/<br>
-[hadoop@hadoop01 ~]$ vi .bashrc</p>
-<h1 id="bashrc">.bashrc</h1>
-<h1 id="source-global-definitions">Source global definitions</h1>
-<p>if [ -f /etc/bashrc ]; then<br>
+[hadoop@hadoop01 ~]$ vi .bashrc<br>
+/#.bashrc<br>
+/#Source global definitions<br>
+if [ -f /etc/bashrc ]; then<br>
 . /etc/bashrc<br>
-fi</p>
-<h1 id="uncomment-the-following-line-if-you-dont-like-systemctls-auto-paging-feature">Uncomment the following line if you don’t like systemctl’s auto-paging feature:</h1>
-<h1 id="export-systemd_pager">export SYSTEMD_PAGER=</h1>
-<h1 id="user-specific-aliases-and-functions">User specific aliases and functions</h1>
-<p>export HADOOP_HOME=/home/hadoop/app/hadoop<br>
+fi<br>
+/#Uncomment the following line if you don’t like systemctl’s auto-paging feature:<br>
+/#export SYSTEMD_PAGER=<br>
+/#User specific aliases and functions<br>
+export HADOOP_HOME=/home/hadoop/app/hadoop<br>
 export PATH=${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:$PATH<br>
 ~<br>
 [hadoop@hadoop01 ~]$ source .bashrc<br>
 [hadoop@hadoop01 ~]$ which hadoop</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*2.7格式化</span><br><span class="line">[hadoop@hadoop01 bin]$ hdfs namenode -format</span><br><span class="line">*2.8启动hadoop</span><br></pre></td></tr></table></figure>
-<pre><code>[hadoop@hadoop01 sbin]$ start-dfs.sh 
-19/11/28 18:41:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Starting namenodes on [hadoop01]
-hadoop01: starting namenode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-namenode-hadoop01.out
-The authenticity of host 'localhost (::1)' can't be established.
-ECDSA key fingerprint is be:fa:e9:eb:52:20:37:9b:00:42:d8:08:90:3c:1e:db.
-Are you sure you want to continue connecting (yes/no)? yes
-localhost: Warning: Permanently added 'localhost' (ECDSA) to the list of known hosts.
-localhost: starting datanode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-datanode-hadoop01.out
-Starting secondary namenodes [0.0.0.0]
-The authenticity of host '0.0.0.0 (0.0.0.0)' can't be established.
-ECDSA key fingerprint is be:fa:e9:eb:52:20:37:9b:00:42:d8:08:90:3c:1e:db.
-Are you sure you want to continue connecting (yes/no)? yes
-0.0.0.0: Warning: Permanently added '0.0.0.0' (ECDSA) to the list of known hosts.
-0.0.0.0: starting secondarynamenode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-secondarynamenode-hadoop01.out
-19/11/28 18:41:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-[hadoop@hadoop01 sbin]$ jps
-128537 NameNode
-54424 Jps
-128746 DataNode
-128957 SecondaryNameNode
-</code></pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*2.9 配置datanode,secondarynamenode都以hadoop01启动</span><br></pre></td></tr></table></figure>
-<p>配置datanode以hadoop01启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### 格式化</span><br><span class="line">`[hadoop@hadoop01 bin]$ hdfs namenode -format`</span><br><span class="line"></span><br><span class="line">### 启动hadoop</span><br></pre></td></tr></table></figure>
+<p>[hadoop@hadoop01 sbin]$ <a href="http://start-dfs.sh" target="_blank" rel="noopener">start-dfs.sh</a><br>
+19/11/28 18:41:02 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
+Starting namenodes on [hadoop01]<br>
+hadoop01: starting namenode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-namenode-hadoop01.out<br>
+The authenticity of host ‘localhost (::1)’ can’t be established.<br>
+ECDSA key fingerprint is be:fa:e9:eb:52:20:37:9b:00:42:d8:08:90:3c:1e:db.<br>
+Are you sure you want to continue connecting (yes/no)? yes<br>
+localhost: Warning: Permanently added ‘localhost’ (ECDSA) to the list of known hosts.<br>
+localhost: starting datanode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-datanode-hadoop01.out<br>
+Starting secondary namenodes [0.0.0.0]<br>
+The authenticity of host ‘0.0.0.0 (0.0.0.0)’ can’t be established.<br>
+ECDSA key fingerprint is be:fa:e9:eb:52:20:37:9b:00:42:d8:08:90:3c:1e:db.<br>
+Are you sure you want to continue connecting (yes/no)? yes<br>
+0.0.0.0: Warning: Permanently added ‘0.0.0.0’ (ECDSA) to the list of known hosts.<br>
+0.0.0.0: starting secondarynamenode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-secondarynamenode-hadoop01.out<br>
+19/11/28 18:41:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
+[hadoop@hadoop01 sbin]$ jps<br>
+128537 NameNode<br>
+54424 Jps<br>
+128746 DataNode<br>
+128957 SecondaryNameNode</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">### 配置datanode,secondarynamenode都以hadoop01启动</span><br><span class="line"></span><br><span class="line">`配置datanode以hadoop01启动`</span><br></pre></td></tr></table></figure>
 <p>[hadoop@hadoop01 hadoop]$ cd /home/hadoop/app/hadoop/etc/hadoop<br>
 [hadoop@hadoop01 hadoop]$ vi slaves<br>
 将里面的localhost改成主机名称hadoop01<br>
-配置secondarynamenode以hadoop01启动<br>
-hadoop01:hadoop:/home/hadoop/app/hadoop/etc/hadoop:&gt;vi hdfs-site.xml<br>
-<property><br>
-<name>dfs.namenode.secondary.http-address</name><br>
-<value>hadoop01:50090</value><br>
-</property><br>
-<property><br>
-<name>dfs.namenode.secondary.https-address</name><br>
-<value>hadoop01:50091</value><br>
-</property><br>
-配置完该文件后重新启动hadoop服务。<br>
-hadoop01:hadoop:/home/hadoop/app/hadoop/sbin:&gt;<a href="http://start-dfs.sh" target="_blank" rel="noopener">start-dfs.sh</a><br>
+配置secondarynamenode以hadoop01启动</p>
+<pre><code>hadoop01:hadoop:/home/hadoop/app/hadoop/etc/hadoop:&gt;vi hdfs-site.xml 
+ &lt;property&gt;
+		&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
+		&lt;value&gt;hadoop01:50090&lt;/value&gt;
+	&lt;/property&gt;
+ &lt;property&gt;
+		&lt;name&gt;dfs.namenode.secondary.https-address&lt;/name&gt;
+		&lt;value&gt;hadoop01:50091&lt;/value&gt;
+	&lt;/property&gt;
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`配置完该文件后重新启动hadoop服务。`</span><br></pre></td></tr></table></figure>
+<p>hadoop01:hadoop:/home/hadoop/app/hadoop/sbin:&gt;<a href="http://start-dfs.sh" target="_blank" rel="noopener">start-dfs.sh</a><br>
 19/11/29 14:19:07 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
 Starting namenodes on [hadoop01]<br>
 hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;<br>
@@ -298,7 +297,7 @@ Starting secondary namenodes [hadoop01]<br>
 hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;<br>
 hadoop01: starting secondarynamenode, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/hadoop-hadoop-secondarynamenode-hadoop01.out<br>
 19/11/29 14:19:22 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable</p>
-<pre><code>*2.10
+<pre><code>### 节点介绍
 namenode 名称节点 老大  读写请求先经过它   主节点
 datanode 数据节点 小弟  存储数据 检索数据  从节点
 secondarynamenode 第二名称节点 
@@ -311,13 +310,9 @@ hbase读写请求不经过老大</code></pre>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/sql/" data-toggle="tooltip" data-placement="top" title="SQL语句的使用(一)">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/liunx-shell/" data-toggle="tooltip" data-placement="top" title="liunx shell命令基础">Next Post &rarr;</a>
+                            <a href="/article/sql/" data-toggle="tooltip" data-placement="top" title="SQL语句的使用(一)">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -367,7 +362,7 @@ hbase读写请求不经过老大</code></pre>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#bashrc"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">.bashrc</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#source-global-definitions"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Source global definitions</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#uncomment-the-following-line-if-you-dont-like-systemctls-auto-paging-feature"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Uncomment the following line if you don&#x2019;t like systemctl&#x2019;s auto-paging feature:</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#export-systemd_pager"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">export SYSTEMD_PAGER=</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#user-specific-aliases-and-functions"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">User specific aliases and functions</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hadoop-260伪分布式部署"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">hadoop-2.6.0&#x4F2A;&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#准备压缩包并上传至linux系统"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x51C6;&#x5907;&#x538B;&#x7F29;&#x5305;&#x5E76;&#x4E0A;&#x4F20;&#x81F3;Linux&#x7CFB;&#x7EDF;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#新增hadoop用户由于hadoop服务使用在hadoop家目录新建文件夹"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x65B0;&#x589E;hadoop&#x7528;&#x6237;&#x7531;&#x4E8E;hadoop&#x670D;&#x52A1;&#x4F7F;&#x7528;,&#x5728;hadoop&#x5BB6;&#x76EE;&#x5F55;&#x65B0;&#x5EFA;&#x6587;&#x4EF6;&#x5939;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解压hadoop文件创建软链接"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x89E3;&#x538B;hadoop&#x6587;&#x4EF6;&#xFF0C;&#x521B;&#x5EFA;&#x8F6F;&#x94FE;&#x63A5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装hadoop的环境要求"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">&#x5B89;&#x88C5;hadoop&#x7684;&#x73AF;&#x5883;&#x8981;&#x6C42;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#java_home-显性配置"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">JAVA_HOME &#x663E;&#x6027;&#x914D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#配置文件"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#ssh无密码信任关系配置"><span class="toc-nav-number">1.2.5.</span> <span class="toc-nav-text">SSH&#x65E0;&#x5BC6;&#x7801;&#x4FE1;&#x4EFB;&#x5173;&#x7CFB;&#x914D;&#x7F6E;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

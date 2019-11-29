@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -211,6 +211,42 @@
 
 <div class="post-preview">
 
+    <a href="/article/hadoop/">
+        <h2 class="post-title">
+                                 
+            hadoop-2.6.0伪分布式部署
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            hadoop-2.6.0伪分布式部署
+准备压缩包并上传至Linux系统
+hadoop-2.6.0-cdh5.16.2.tar.gz
+jdk-8u45-linux-x64.gz的压缩包
+下载地址：https://pan.baidu.com/s/10VohWHPuZTOvgbYM1WYuyQ
+提取码：usqj
+新增hadoop用户由于hadoop服务使用,在hadoop家目录新建文件夹
+1234......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/sql/">
         <h2 class="post-title">
                                  
@@ -220,12 +256,13 @@
             
         </h3>
         <div class="post-content-preview">
-            创建DB user
-	create database hadoop; #创建hadoop数据库。
-	show databases; #查看数据库是否创建成功。
-	grant all privileges on *.* to jerry@’%’ identified by ‘centos’;
-	GRANT语法：
-	GRANT 权限 ON 数据库. TO 用户名@‘登录主机’ IDENTIFIE......
+            SQL语句的使用(一)
+创建DB user
+create database hadoop; #创建hadoop数据库。
+show databases; #查看数据库是否创建成功。
+grant all privileges on \*.\* to jerry@'%' identified by 'centos';
+GRANT语法：     
+GRANT 权限 ON 数据库.* TO 用户名@'......
         </div>
     </a>
     
@@ -245,41 +282,6 @@
 
 <div class="post-preview">
 
-    <a href="/article/hadoop/">
-        <h2 class="post-title">
-                                 
-            hadoop-2.6.0伪分布式部署
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            #hadoop-2.6.0伪分布式部署
-*1.准备压缩包并上传至Linux系统
-hadoop-2.6.0-cdh5.16.2.tar.gz
-jdk-8u45-linux-x64.gz的压缩包
-下载地址：https://pan.baidu.com/s/10VohWHPuZTOvgbYM1WYuyQ
-提取码：usqj
-*2.新增hadoop用户由于hadoop服务使用,在hadoop家目录新建文......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/article/liunx-shell/">
         <h2 class="post-title">
                                  
@@ -290,16 +292,14 @@ jdk-8u45-linux-x64.gz的压缩包
         </h3>
         <div class="post-content-preview">
             liunx shell命令基础
-liunx shell命令基础
 1、执行shell脚本的命令
-**shell脚本执行需要 x权限
-**
-
+shell脚本执行需要 x权限
 ./xxx.sh
 [root@hadoop01 ~]# vi test.log   #创建shell脚本，打印时间
 #!/bin/bash   声明#!/bin/bash 解释器
 date    命令行
-[root@hadoop01 ~]# ./test.......
+[root@hadoop01 ~]# ./test.log
+-bash: ./test.log:......
         </div>
     </a>
     
@@ -329,53 +329,13 @@ date    命令行
         </h3>
         <div class="post-content-preview">
             liunx基本命令使用方法（一）
-liunx基本命令使用方法（一）
-
 PWD：显示当前所在路径。
-[root@localhost network-scripts]# pwd
-/etc/sysconfig/network-scripts  #当前所在的路径
-cd：切换路径的命令
+ 123[root@localhost network-scripts]# pwd/etc/sysconfig/network-scripts  #当前所在的路径
+cd：切换路径的命令**
 cd …/ 回退上一层目录
 cd …/…/ 回退上2层目录
 cd - 回退到上一次的目录
-cd /etc/sysco......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/liunx2/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（二）
-liunx基本命令使用方法（二）
-echo： 打印
-
-打印环境变量
-[root@localhost ~]# echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件
-[root@......
+cd /etc/sysconfig/network-......
         </div>
     </a>
     
@@ -405,7 +365,6 @@ which：命令用于查找文件。which指令会在环境变量$PATH设置的�
         </h3>
         <div class="post-content-preview">
             liunx基本命令使用方法（三）
-liunx基本命令使用方法（三）
 用户、用户组
 useradd 新增用户
 userdel 删除用户
@@ -413,9 +372,78 @@ usermod 修改用户
 groupadd 新增用户组
 groupdel 删除用户组
 groupmod 修改用户组
-**添加用户 **
+添加用户
 [root@localhost ~]# useradd hadoop
-[root@localhost home]# id h......
+[root@localhost home]# id hadoop uid=1000(hadoop)......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx2/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（二）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（二）
+echo： 打印**
+打印环境变量
+[root@localhost ~]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件**
+[root@localhost ~]# ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx4/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（四）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（四）
+vi 命令的使用
+正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
+注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
+解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
+使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。输入**：/关键词**，回车光标自......
         </div>
     </a>
     
@@ -445,12 +473,12 @@ groupmod 修改用户组
         </h3>
         <div class="post-content-preview">
             MySQL 5.6离线二进制部署
-1、下载压缩包并上传至liunx
+下载压缩包并上传至liunx
 下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
 百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
 提取码：fktz
 使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]......
+1234567[root@localhost local]# ......
         </div>
     </a>
     
@@ -470,41 +498,6 @@ groupmod 修改用户组
 
 <div class="post-preview">
 
-    <a href="/article/liunx4/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（四）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（四）
-liunx基本命令使用方法（四）
-vi 命令的使用
-正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
-注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
-解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
-使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
     <a href="/article/sql1/">
         <h2 class="post-title">
                                  
@@ -514,13 +507,15 @@ vi 命令的使用
             
         </h3>
         <div class="post-content-preview">
-            use hadoop;#切换到hadoop数据库
-**创建部门表并注释字段
+            SQL语句的使用（二）
+创建数据库
+use hadoop;#切换到hadoop数据库
+创建部门表并注释字段
 列：create table 表名 (
 	列名 定义数据类型 定义数据属性 注释，
 	列名 定义数据类型 定义数据属性 注释
 )；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apos; ,dname varcha......
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apo......
         </div>
     </a>
     
@@ -575,11 +570,11 @@ vi 命令的使用
     <div class="tags">
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="1">hadoop</a>
+            <a href="/tags/#liunx" title="liunx" rel="5">liunx</a>
             
         
             
-            <a href="/tags/#liunx" title="liunx" rel="5">liunx</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="1">hadoop</a>
             
         
             
@@ -628,11 +623,11 @@ vi 命令的使用
     <ul>
       
         <li>
-          <a href="/article/sql/">SQL语句的使用(一)</a>
+          <a href="/article/hadoop/">hadoop-2.6.0伪分布式部署</a>
         </li>
       
         <li>
-          <a href="/article/hadoop/">hadoop-2.6.0伪分布式部署</a>
+          <a href="/article/sql/">SQL语句的使用(一)</a>
         </li>
       
         <li>
@@ -644,7 +639,7 @@ vi 命令的使用
         </li>
       
         <li>
-          <a href="/article/liunx2/">liunx基本命令使用方法（二）</a>
+          <a href="/article/liunx3/">liunx基本命令使用方法（三）</a>
         </li>
       
     </ul>

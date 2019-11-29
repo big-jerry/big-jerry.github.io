@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -213,66 +213,65 @@
                 post-container">
 
                 <h1 id="liunx基本命令使用方法三">liunx基本命令使用方法（三）</h1>
-<h2 id="liunx基本命令使用方法三"><strong>liunx基本命令使用方法（三）</strong></h2>
-<p><strong>用户、用户组</strong></p>
+<h2 id="用户-用户组">用户、用户组</h2>
 <p>useradd 新增用户<br>
 userdel 删除用户<br>
 usermod 修改用户<br>
 groupadd 新增用户组<br>
 groupdel 删除用户组<br>
 groupmod 修改用户组</p>
-<p>**添加用户 **</p>
+<h2 id="添加用户">添加用户</h2>
 <p>[root@localhost ~]# useradd hadoop</p>
 <p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
 <p>创建一个普通用户，默认创建这个名称的用户组hadoop,且设置这个用户 主组为hadoop，且创建/home/hadoop</p>
 <p>[root@localhost home]# ll</p>
 <p>drwx------. 2 hadoop hadoop 59 11月 18 09:36 hadoop</p>
-<p><strong>删除用户</strong></p>
+<h2 id="删除用户">删除用户</h2>
 <p>[root@localhost home]# userdel hadoop</p>
 <p>[root@localhost home]# id hadoop <br>
 id: hadoop: no such user</p>
 <p>[root@localhost home]# cat /etc/passwd | grep hadoop</p>
 <p>[root@localhost home]# cat /etc/group | grep hadoop</p>
 <p>因为hadoop该组只有hadoop用户，当这个用户删除时，组会校验是否存在其他用户，没有其他用户会自动删除</p>
-<p><strong>重新创建用户ruoze</strong></p>
+<h2 id="重新创建用户ruoze">重新创建用户ruoze</h2>
 <p>[root@localhost home]# useradd hadoop</p>
 <p>useradd：警告：此主目录已经存在。 不从 skel 目录里向其中复制任何文件。 正在创建信箱文件: 文件已存在</p>
 <p>[root@localhost home]# id hadoop uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop)</p>
-<p>**模拟切换用户丢失样式 **</p>
+<h2 id="模拟切换用户丢失样式">模拟切换用户丢失样式</h2>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-81cd1cba7041cf30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><strong>修正样式</strong></p>
+<h2 id="修正样式">修正样式</h2>
 <p>切回root用户将缺失的bash文件拷贝到用户的家目录，并修改文件的权限。如图：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-417cc3d91e0c1e43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><strong>添加hadoop用户到另外一个组 bigdata</strong></p>
+<h2 id="添加hadoop用户到另外一个组-bigdata">添加hadoop用户到另外一个组 bigdata</h2>
 <p>[root@localhost /]# usermod -a -G bigdata hadoop</p>
 <p>[root@localhost /]# id hadoop</p>
 <p>uid=1000(hadoop) gid=1000(hadoop) 组=1000(hadoop),1001(bigdata)</p>
-<p><strong>修改bigdata为hadoop的主组</strong></p>
+<h2 id="修改bigdata为hadoop的主组">修改bigdata为hadoop的主组</h2>
 <p>[root@localhost /]# usermod --gid bigdata hadoop</p>
 <p>[root@localhost /]# id hadoop</p>
 <p>uid=1000(hadoop) gid=1001(bigdata) 组=1001(bigdata)</p>
 <p>[root@ruozedata001 ruoze]# usermod -a -G ruoze ruoze</p>
 <p>[root@ruozedata001 ruoze]# id ruoze</p>
 <p>uid=1002(ruoze) gid=1003(bigdata) groups=1003(bigdata),1002(ruoze)</p>
-<p><strong>设置用户密码</strong></p>
+<h2 id="设置用户密码">设置用户密码</h2>
 <p>passwd 用户名</p>
-<p><strong>切换用户（切换用户加&quot;-&quot;，和不加“-”的区别）</strong></p>
+<h2 id="切换用户切换用户加quot-quot和不加-的区别">切换用户（切换用户加&quot;-&quot;，和不加“-”的区别）</h2>
 <p>su hadoop</p>
 <p>su - hadoop代表切换该用户的家目录，且执行环境变量文件</p>
 <p>.bash_profile文件 su hadoop不会执行，su - hadoop 都执行</p>
 <p>.bashrc文件 su hadoop  执行 ，su - hadoop  都执行</p>
-<p><strong>普通用户获取root的最大权限</strong></p>
+<h2 id="普通用户获取root的最大权限">普通用户获取root的最大权限</h2>
 <p>使用root用户修改sudoers文件配置</p>
 <p>vi /etc/sudoers</p>
 <p>找到root栏，添加用户配置：hadoop ALL=(root) NOPASSWD:ALL</p>
 <p>普通用户获取最大权限后，执行命令需在命令前加 sudo</p>
-<p><strong>passwd文件的使用方法</strong></p>
+<h2 id="passwd文件的使用方法">passwd文件的使用方法</h2>
 <p>无法切换至已存在的用户时检查该文件。</p>
 <p>路径：/etc/passwd</p>
 <p>hadoop:x:1002:1003::/home/ruoze:/bin/falseruoze:x:1002:1003::/home/ruoze:/sbin/nologin</p>
 <p>如果文件里用户所对应的配置是上面的任意一种，该用户无法切换。</p>
 <p>解决方法： hadoop :x:1002:1003::/home/ruoze:/bin/bash</p>
-<p><strong>修改文件/文件夹权限</strong></p>
+<h2 id="修改文件文件夹权限">修改文件/文件夹权限</h2>
 <p>当修改文件提示Permission denied字样，表示是权限错误。需要修改文件/文件夹或用户/用户组权限。</p>
 <p>chmod -R 777 文件夹/文件路径</p>
 <p>chown -R 用户:用户组 文件夹/文件路径</p>
@@ -287,10 +286,10 @@ id: hadoop: no such user</p>
 <p>第三组 5 代表其他组的所属用户对这个文件或文件夹的权限: 读执行</p>
 <p>d rwx r-x r-x 2 root root 6 Nov 16 22:15 data</p>
 <p>777 代表任意的用户用户组 都有读写执行权限</p>
-<p><strong>注：使用vi 编辑文件如果使用ctrl+x/z中断，系统会生成一个.swp后缀的隐藏文件，下次再次编辑需先删除该隐藏文件。</strong></p>
-<p><strong>查看文件/文件夹大小</strong></p>
+<p><code>注：使用vi 编辑文件如果使用ctrl+x/z中断，系统会生成一个.swp后缀的隐藏文件，下次再次编辑需先删除该隐藏文件。</code></p>
+<h2 id="查看文件文件夹大小">查看文件/文件夹大小</h2>
 <p>文件:ll du -sh xxx.log 文件夹:du -sh yyy</p>
-<p>** find 搜索**</p>
+<h2 id="find-搜索">find 搜索</h2>
 <p>history 历史记录</p>
 <p>ps -ef 查看进程（常见搭配管道符和grep使用）</p>
 <p>top 查看系统情况</p>
@@ -304,12 +303,12 @@ id: hadoop: no such user</p>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">&larr; Previous Post</a>
+                            <a href="/article/liunx/" data-toggle="tooltip" data-placement="top" title="iunx基本命令使用方法（一）">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/mysql/" data-toggle="tooltip" data-placement="top" title="MySQL 5.6离线二进制部署">Next Post &rarr;</a>
+                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -359,7 +358,7 @@ id: hadoop: no such user</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法三"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E09;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#liunx基本命令使用方法三"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text"><strong>liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E09;&#xFF09;</strong></span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法三"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E09;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#用户-用户组"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x7528;&#x6237;&#x3001;&#x7528;&#x6237;&#x7EC4;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#添加用户"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x6DFB;&#x52A0;&#x7528;&#x6237;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#删除用户"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x5220;&#x9664;&#x7528;&#x6237;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#重新创建用户ruoze"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x91CD;&#x65B0;&#x521B;&#x5EFA;&#x7528;&#x6237;ruoze</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#模拟切换用户丢失样式"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">&#x6A21;&#x62DF;&#x5207;&#x6362;&#x7528;&#x6237;&#x4E22;&#x5931;&#x6837;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#修正样式"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">&#x4FEE;&#x6B63;&#x6837;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#添加hadoop用户到另外一个组-bigdata"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">&#x6DFB;&#x52A0;hadoop&#x7528;&#x6237;&#x5230;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7EC4; bigdata</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#修改bigdata为hadoop的主组"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;bigdata&#x4E3A;hadoop&#x7684;&#x4E3B;&#x7EC4;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#设置用户密码"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">&#x8BBE;&#x7F6E;&#x7528;&#x6237;&#x5BC6;&#x7801;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#切换用户切换用户加quot-quot和不加-的区别"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">&#x5207;&#x6362;&#x7528;&#x6237;&#xFF08;&#x5207;&#x6362;&#x7528;&#x6237;&#x52A0;&quot;-&quot;&#xFF0C;&#x548C;&#x4E0D;&#x52A0;&#x201C;-&#x201D;&#x7684;&#x533A;&#x522B;&#xFF09;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#普通用户获取root的最大权限"><span class="toc-nav-number">1.11.</span> <span class="toc-nav-text">&#x666E;&#x901A;&#x7528;&#x6237;&#x83B7;&#x53D6;root&#x7684;&#x6700;&#x5927;&#x6743;&#x9650;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#passwd文件的使用方法"><span class="toc-nav-number">1.12.</span> <span class="toc-nav-text">passwd&#x6587;&#x4EF6;&#x7684;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#修改文件文件夹权限"><span class="toc-nav-number">1.13.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;&#x6587;&#x4EF6;/&#x6587;&#x4EF6;&#x5939;&#x6743;&#x9650;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#查看文件文件夹大小"><span class="toc-nav-number">1.14.</span> <span class="toc-nav-text">&#x67E5;&#x770B;&#x6587;&#x4EF6;/&#x6587;&#x4EF6;&#x5939;&#x5927;&#x5C0F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#find-搜索"><span class="toc-nav-number">1.15.</span> <span class="toc-nav-text">find &#x641C;&#x7D22;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

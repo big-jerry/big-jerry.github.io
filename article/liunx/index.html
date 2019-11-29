@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -213,12 +213,9 @@
                 post-container">
 
                 <h1 id="liunx基本命令使用方法一">liunx基本命令使用方法（一）</h1>
-<h3 id="liunx基本命令使用方法一">liunx基本命令使用方法（一）</h3>
-<blockquote>
-<p><strong>PWD：显示当前所在路径。</strong></p>
-<p>[root@localhost network-scripts]# pwd</p>
-<p>/etc/sysconfig/network-scripts  #当前所在的路径</p>
-<p><strong>cd：切换路径的命令</strong></p>
+<h2 id="pwd显示当前所在路径"><strong>PWD：显示当前所在路径。</strong></h2>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost network-scripts]# pwd</span><br><span class="line"></span><br><span class="line">/etc/sysconfig/network-scripts  #当前所在的路径</span><br></pre></td></tr></table></figure>
+<h2 id="cd切换路径的命令">cd：切换路径的命令**</h2>
 <p>cd …/ 回退上一层目录</p>
 <p>cd …/…/ 回退上2层目录</p>
 <p>cd - 回退到上一次的目录</p>
@@ -226,62 +223,51 @@
 <p>[root@localhost network-scripts]#</p>
 <p>绝对路径 /根目录  以根目录为开始</p>
 <p>例如： cd /etc/sysconfig/network-scripts</p>
-<p>相对路径 不以根目录为开始， 以当前光标所在的目录为开始</p>
+<p><code>相对路径 不以根目录为开始， 以当前光标所在的目录为开始</code></p>
 <p>例如： cd bin</p>
 <p>cd ./bin</p>
-<p><strong>clear： 清空屏幕</strong></p>
-</blockquote>
-<p><strong>ls：查看当前光标所在的目录 文件有哪些</strong></p>
-<blockquote>
-<p>ls -l ==&gt; 等价于ll</p>
+<h2 id="clear-清空屏幕">clear： 清空屏幕**</h2>
+<h2 id="ls查看当前光标所在的目录-文件有哪些">ls：查看当前光标所在的目录 文件有哪些**</h2>
+<p>ls -l == 等价于ll</p>
 <p>ls -l -a 查看当前的文件文件夹+ 隐藏文件文件夹 以.开头</p>
 <p>ll -h 文件的大小</p>
 <p>ll -rt 按时间排序</p>
 <p>ls --help 命令帮助</p>
 <p>Usage: ls [OPTION]… [FILE]…</p>
 <p>ls 可选参数</p>
-</blockquote>
-<p><strong>mkdir ：创建文件夹</strong></p>
-<blockquote>
+<h2 id="mkdir-创建文件夹">mkdir ：创建文件夹**</h2>
 <p>mkdir a  创建一个文件夹名称为‘a’.</p>
 <p>mkdir -p b/c/d 创建一个目录</p>
 <p>mkdir 1 2 3  创建3个文件夹名称分别为‘1,2,3’</p>
-<p><strong>mv ：移动 和 cp：拷贝</strong></p>
+<h2 id="mv-移动-和-cp拷贝">mv ：移动 和 cp：拷贝**</h2>
 <p>mv 和 cp 区别： mv：始终只有1份 ，cp：拷贝 原文件不动，新增一份</p>
 <p>mv data.log 1/data.log20191110 移动+修改名称</p>
 <p>cp data.log20191111 …/data.log20191113 拷贝+修改名称</p>
-</blockquote>
-<p><strong>如何创建一个空文件 或者把一个文件设置为空</strong></p>
-<blockquote>
+<h2 id="如何创建一个空文件-或者把一个文件设置为空">如何创建一个空文件 或者把一个文件设置为空**</h2>
 <p>touch rz.log 如何创建一个空文件</p>
-<p>echo “” &gt; rz.log1 此方法创建的文件中有一个空格字符，慎用。</p>
-<p>cat /dev/null &gt; ruoze.log20191113 把一个文件设置为空，注意该命令中&quot;&gt;“是新增或覆盖，”&gt;&gt;’'是追加。</p>
-</blockquote>
-<p><strong>查看文件内容</strong></p>
-<blockquote>
-<p><strong>cat ：查看文件全部内容</strong></p>
+<p>echo “”  rz.log1 此方法创建的文件中有一个空格字符，慎用。</p>
+<p>cat /dev/null  ruoze.log20191113 把一个文件设置为空，注意该命令中&quot;“是新增或覆盖，”’'是追加。</p>
+<h2 id="查看文件内容">查看文件内容**</h2>
+<h2 id="cat-查看文件全部内容">cat ：查看文件全部内容**</h2>
 <p>more ：文件内容一页一页的往下翻，按空格键往下，回退不了，按q退出</p>
 <p>less ：文件内容 往下 往上 按上下箭头的按键浏览 按q键退出</p>
 <p>log日志内容较少 ，建议使用cat， more ，less 三个命令查看文件。</p>
 <p>log日志内容较多需要实时查看，请使用tail -f xxx.log，tail -F xxx.log     -f+ retry</p>
-<p>注意：flume exec source 切记使用 -F</p>
-</blockquote>
-<p><strong>当服务运行报错 如何通过查看日志Error定位 ?</strong></p>
-<blockquote>
-<p>1.文件内容很小 ，上传给window，用editplus工具打开</p>
+<p><code>注意：flume exec source 切记使用 -F</code></p>
+<h2 id="当服务运行报错-如何通过查看日志error定位">当服务运行报错 如何通过查看日志Error定位 ?**</h2>
+<p><code>1.文件内容很小 ，上传给window，用editplus工具打开</code></p>
 <p>安装lrzsz，通过该服务上传下载</p>
 <p>yum install -y lrzsz</p>
 <p>rz：上传</p>
 <p>sz：下载</p>
-<p>2.文件内容很大 ，通过命令+管道符+过滤关键字+参数的方式查看</p>
+<p><code>2.文件内容很大 ，通过命令+管道符+过滤关键字+参数的方式查看</code></p>
 <p>cat xxx.log | grep ERROR</p>
 <p>cat xxx.log | grep -A 10 ERROR 后10行</p>
 <p>cat xxx.log | grep -B 10 ERROR 前10行</p>
 <p>cat xxx.log | grep -C 30 ERROR 前后各30行</p>
 <p>tail -300f log.log实时查看倒数300行文件</p>
 <p>tail -300F log.log 不能用大写F 会报错：tail: option used in invalid context – 3</p>
-<p>使用以上方法基本可以迅速定位ERROR上下文</p>
-</blockquote>
+<p><code>使用以上方法基本可以迅速定位ERROR上下文</code></p>
 <hr>
 
                 
@@ -296,7 +282,7 @@
                     
                     
                         <li class="next">
-                            <a href="/article/liunx2/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（二）">Next Post &rarr;</a>
+                            <a href="/article/liunx3/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（三）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -346,7 +332,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法一"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E00;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#liunx基本命令使用方法一"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E00;&#xFF09;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法一"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E00;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#pwd显示当前所在路径"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text"><strong>PWD&#xFF1A;&#x663E;&#x793A;&#x5F53;&#x524D;&#x6240;&#x5728;&#x8DEF;&#x5F84;&#x3002;</strong></span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#cd切换路径的命令"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">cd&#xFF1A;&#x5207;&#x6362;&#x8DEF;&#x5F84;&#x7684;&#x547D;&#x4EE4;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#clear-清空屏幕"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">clear&#xFF1A; &#x6E05;&#x7A7A;&#x5C4F;&#x5E55;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#ls查看当前光标所在的目录-文件有哪些"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">ls&#xFF1A;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x5149;&#x6807;&#x6240;&#x5728;&#x7684;&#x76EE;&#x5F55; &#x6587;&#x4EF6;&#x6709;&#x54EA;&#x4E9B;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mkdir-创建文件夹"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">mkdir &#xFF1A;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x5939;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#mv-移动-和-cp拷贝"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">mv &#xFF1A;&#x79FB;&#x52A8; &#x548C; cp&#xFF1A;&#x62F7;&#x8D1D;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何创建一个空文件-或者把一个文件设置为空"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x6587;&#x4EF6; &#x6216;&#x8005;&#x628A;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x8BBE;&#x7F6E;&#x4E3A;&#x7A7A;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#查看文件内容"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5185;&#x5BB9;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#cat-查看文件全部内容"><span class="toc-nav-number">1.9.</span> <span class="toc-nav-text">cat &#xFF1A;&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5168;&#x90E8;&#x5185;&#x5BB9;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#当服务运行报错-如何通过查看日志error定位"><span class="toc-nav-number">1.10.</span> <span class="toc-nav-text">&#x5F53;&#x670D;&#x52A1;&#x8FD0;&#x884C;&#x62A5;&#x9519; &#x5982;&#x4F55;&#x901A;&#x8FC7;&#x67E5;&#x770B;&#x65E5;&#x5FD7;Error&#x5B9A;&#x4F4D; ?**</span></a></li></ol></li></ol>
         
         </div>
       </aside>

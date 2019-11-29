@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -213,24 +213,20 @@
                 post-container">
 
                 <h1 id="liunx基本命令使用方法二">liunx基本命令使用方法（二）</h1>
-<h2 id="liunx基本命令使用方法二"><strong>liunx基本命令使用方法（二）</strong></h2>
-<p><strong>echo： 打印</strong></p>
-<blockquote>
+<h2 id="echo-打印">echo： 打印**</h2>
 <p>打印环境变量</p>
 <p>[root@localhost ~]# echo $PATH</p>
 <p>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin</p>
-<p><strong>which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件</strong></p>
+<h2 id="which命令用于查找文件-which指令会在环境变量path设置的目录里查找符合条件的文件">which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件**</h2>
 <p>[root@localhost ~]# which java</p>
 <p>/usr/bin/which: no java in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)</p>
 <p>未找到JAVA的环境变量 ，需要配置/ect/profile文件中的java环境变量。</p>
 <p>参数：</p>
-<p>-n&lt;文件名长度&gt; 　指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。</p>
-<p>-p&lt;文件名长度&gt; 　与-n参数相同，但此处的&lt;文件名长度&gt;包括了文件的路径。</p>
+<p>-n&lt;文件名长度 　指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。</p>
+<p>-p&lt;文件名长度 　与-n参数相同，但此处的&lt;文件名长度包括了文件的路径。</p>
 <p>-w 　指定输出时栏位的宽度。</p>
 <p>-V 　显示版本信息。</p>
-</blockquote>
-<p><strong>环境变量配置</strong></p>
-<blockquote>
+<h2 id="环境变量配置">环境变量配置**</h2>
 <p>全局：/etc/profile 所有人都使用</p>
 <p>个人： ~/.bash_profile</p>
 <p>~/.bashrc 仅当前用户使用 （这两个文件在当前用户家目录下的隐藏文件）</p>
@@ -245,40 +241,30 @@
 <p>e. 按“ shift+: ”  键，进入尾行模式</p>
 <p>f. 输入 wq 保存退出</p>
 <p>g.source /etc/profile，使变量生效。</p>
-<p>注：每次配置变量环境后执行报错，建议检查变量配置是否存在错误，或者变量环境未生效。</p>
+<p><code>注：每次配置变量环境后执行报错，建议检查变量配置是否存在错误，或者变量环境未生效。</code></p>
 <p>总结: 1.command not found 没有部署安装包，部署了没有配置环境变量 。</p>
 <p>2.当我们以后部署一个软件，bin目录的可执行文件 ，比如java  当生效环境变量文件，习惯性使用 which java 检查变量环境是否配置成功</p>
-</blockquote>
-<p><strong>alias 别名</strong></p>
-<blockquote>
+<h2 id="alias-别名">alias 别名**</h2>
 <p>[root@ruozedata001 ~]# alias</p>
-</blockquote>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-c551a85b2098bfc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<blockquote>
 <p>设置别名的文件&quot;.bashrc&quot;</p>
 <p>vi /root/.bashrc</p>
-</blockquote>
 <p><img src="http://upload-images.jianshu.io/upload_images/20160906-8aad7820a31d9929.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<blockquote>
 <p>可在文件末行增加别名，例如：alias a=‘cd /etc/’，设置完成后需要使用source命令使其生效。</p>
-</blockquote>
-<p><strong>history：显示历史命令</strong></p>
-<blockquote>
-<p>该命令单独使用时，仅显示历史命令，在命令行中，可以使用符号!执行指定序号的历史命令。例如，要执行第2个历史命令，则输入!2。</p>
+<h2 id="history显示历史命令">history：显示历史命令**</h2>
+<p><code>该命令单独使用时，仅显示历史命令，在命令行中，可以使用符号!执行指定序号的历史命令。</code><br>
+例如，要执行第2个历史命令，则输入!2。</p>
 <p><strong>参数</strong></p>
 <p>-c：清空当前历史命令；</p>
 <p>-a：将历史命令缓冲区中命令写入历史命令文件中；</p>
 <p>-r：将历史命令文件中的命令读入当前历史命令缓冲区；</p>
 <p>-w：将当前历史命令缓冲区命令写入历史命令文件中</p>
-</blockquote>
-<p><strong>rm：命令用于删除一个文件或者目录</strong><br>
-<strong>参数</strong></p>
-<blockquote>
+<h2 id="rm命令用于删除一个文件或者目录">rm：命令用于删除一个文件或者目录**</h2>
+<p><strong>参数</strong></p>
 <p>-i 删除前逐一询问确认。</p>
 <p>-f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。</p>
 <p>-r 将目录及以下之档案亦逐一删除。</p>
 <p>注意：该命令属于高危命令，建议在使用的时候搭配绝对路径使用。例如：rm -rf /tmp/111.log</p>
-</blockquote>
 
                 
 
@@ -287,12 +273,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/liunx/" data-toggle="tooltip" data-placement="top" title="iunx基本命令使用方法（一）">&larr; Previous Post</a>
+                            <a href="/article/liunx3/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（三）">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/liunx3/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（三）">Next Post &rarr;</a>
+                            <a href="/article/liunx4/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（四）">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -342,7 +328,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法二"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E8C;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#liunx基本命令使用方法二"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text"><strong>liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E8C;&#xFF09;</strong></span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法二"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E8C;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#echo-打印"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">echo&#xFF1A; &#x6253;&#x5370;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#which命令用于查找文件-which指令会在环境变量path设置的目录里查找符合条件的文件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">which&#xFF1A;&#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x67E5;&#x627E;&#x6587;&#x4EF6;&#x3002;which&#x6307;&#x4EE4;&#x4F1A;&#x5728;&#x73AF;&#x5883;&#x53D8;&#x91CF;$PATH&#x8BBE;&#x7F6E;&#x7684;&#x76EE;&#x5F55;&#x91CC;&#x67E5;&#x627E;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x6587;&#x4EF6;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境变量配置"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x914D;&#x7F6E;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#alias-别名"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">alias &#x522B;&#x540D;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#history显示历史命令"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">history&#xFF1A;&#x663E;&#x793A;&#x5386;&#x53F2;&#x547D;&#x4EE4;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#rm命令用于删除一个文件或者目录"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">rm&#xFF1A;&#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6216;&#x8005;&#x76EE;&#x5F55;**</span></a></li></ol></li></ol>
         
         </div>
       </aside>

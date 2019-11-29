@@ -7,48 +7,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/article/hadoop/</loc>
-        <lastmod>2019-11-29T06:37:37.059Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/sql/</loc>
-        <lastmod>2019-11-27T09:16:58.054Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yoursite.com/article/liunx3/</loc>
-        <lastmod>2019-11-27T06:20:02.086Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/mysql/</loc>
-        <lastmod>2019-11-26T16:13:24.919Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx-shell/</loc>
-        <lastmod>2019-11-26T16:13:24.910Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/liunx4/</loc>
-        <lastmod>2019-11-26T16:13:24.900Z</lastmod>
+        <lastmod>2019-11-29T07:56:25.657Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -56,15 +16,7 @@
 
     <url>
         <loc>http://yoursite.com/article/liunx2/</loc>
-        <lastmod>2019-11-26T16:13:24.880Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/sql1/</loc>
-        <lastmod>2019-11-26T16:08:25.123Z</lastmod>
+        <lastmod>2019-11-29T07:52:31.479Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -72,7 +24,55 @@
 
     <url>
         <loc>http://yoursite.com/article/liunx/</loc>
-        <lastmod>2019-11-26T06:23:40.524Z</lastmod>
+        <lastmod>2019-11-29T07:50:17.926Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/sql/</loc>
+        <lastmod>2019-11-29T07:49:23.402Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/hadoop/</loc>
+        <lastmod>2019-11-29T07:47:49.392Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/mysql/</loc>
+        <lastmod>2019-11-29T07:43:20.089Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx-shell/</loc>
+        <lastmod>2019-11-29T07:41:13.320Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/liunx4/</loc>
+        <lastmod>2019-11-29T07:38:04.171Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/sql1/</loc>
+        <lastmod>2019-11-29T07:30:10.330Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
