@@ -211,6 +211,36 @@
 
 <div class="post-preview">
 
+    <a href="/article/hadoop1/">
+        <h2 class="post-title">
+                                 
+            hadoop fs 命令介绍
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            hadoop 命令介绍
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-27
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/hadoop/">
         <h2 class="post-title">
                                  
@@ -247,6 +277,43 @@ jdk-8u45-linux-x64.gz的压缩包
 
 <div class="post-preview">
 
+    <a href="/article/sql1/">
+        <h2 class="post-title">
+                                 
+            SQL语句的使用（二）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            SQL语句的使用（二）
+创建数据库
+use hadoop;#切换到hadoop数据库
+创建部门表并注释字段
+列：create table 表名 (
+	列名 定义数据类型 定义数据属性 注释，
+	列名 定义数据类型 定义数据属性 注释
+)；
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apo......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/sql/">
         <h2 class="post-title">
                                  
@@ -268,7 +335,42 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 杰瑞 on
-            2017-09-14
+            2017-09-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/mysql/">
+        <h2 class="post-title">
+                                 
+            MySQL 5.6离线二进制部署
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            MySQL 5.6离线二进制部署
+下载压缩包并上传至liunx
+下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
+百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
+提取码：fktz
+使用rz命令上传至/usr/local目录。
+1234567[root@localhost local]# ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-17
         </p>
         <div class="tags">
             
@@ -305,7 +407,115 @@ date    命令行
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 杰瑞 on
-            2017-09-12
+            2017-09-16
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx4/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（四）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（四）
+vi 命令的使用
+正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
+注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
+解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
+使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。输入**：/关键词**，回车光标自......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx3/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（三）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（三）
+用户、用户组
+useradd 新增用户
+userdel 删除用户
+usermod 修改用户
+groupadd 新增用户组
+groupdel 删除用户组
+groupmod 修改用户组
+添加用户
+[root@localhost ~]# useradd hadoop
+[root@localhost home]# id hadoop uid=1000(hadoop)......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-14
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#liunx" title="liunx">liunx</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/liunx2/">
+        <h2 class="post-title">
+                                 
+            liunx基本命令使用方法（二）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            liunx基本命令使用方法（二）
+echo： 打印**
+打印环境变量
+[root@localhost ~]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件**
+[root@localhost ~]# ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-13
         </p>
         <div class="tags">
             
@@ -353,186 +563,6 @@ cd /etc/sysconfig/network-......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/liunx3/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（三）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（三）
-用户、用户组
-useradd 新增用户
-userdel 删除用户
-usermod 修改用户
-groupadd 新增用户组
-groupdel 删除用户组
-groupmod 修改用户组
-添加用户
-[root@localhost ~]# useradd hadoop
-[root@localhost home]# id hadoop uid=1000(hadoop)......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/liunx2/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（二）
-echo： 打印**
-打印环境变量
-[root@localhost ~]# echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
-which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件**
-[root@localhost ~]# ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/liunx4/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（四）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（四）
-vi 命令的使用
-正常编辑的步骤第二篇博客已经阐述。接下来说下在vi中复制粘贴遇到的坑。
-注：很多小伙伴从其他文档复制内容粘贴到使用vi命令打开的文件中，出现首行丢失等内容不完整的现象。
-解决办法：vi打开的文件必须按 i 键进入编辑模式，再进行粘贴。
-使用vi打开文件查找关键词：vi打开文件，按shift+:进入尾行模式。输入**：/关键词**，回车光标自......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/mysql/">
-        <h2 class="post-title">
-                                 
-            MySQL 5.6离线二进制部署
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            MySQL 5.6离线二进制部署
-下载压缩包并上传至liunx
-下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
-百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
-提取码：fktz
-使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]# ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/sql1/">
-        <h2 class="post-title">
-                                 
-            SQL语句的使用（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            SQL语句的使用（二）
-创建数据库
-use hadoop;#切换到hadoop数据库
-创建部门表并注释字段
-列：create table 表名 (
-	列名 定义数据类型 定义数据属性 注释，
-	列名 定义数据类型 定义数据属性 注释
-)；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apo......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-12
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -570,11 +600,11 @@ use hadoop;#切换到hadoop数据库
     <div class="tags">
         
             
-            <a href="/tags/#liunx" title="liunx" rel="5">liunx</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="2">hadoop</a>
             
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="1">hadoop</a>
+            <a href="/tags/#liunx" title="liunx" rel="5">liunx</a>
             
         
             
@@ -623,7 +653,15 @@ use hadoop;#切换到hadoop数据库
     <ul>
       
         <li>
+          <a href="/article/hadoop1/">hadoop fs 命令介绍</a>
+        </li>
+      
+        <li>
           <a href="/article/hadoop/">hadoop-2.6.0伪分布式部署</a>
+        </li>
+      
+        <li>
+          <a href="/article/sql1/">SQL语句的使用（二）</a>
         </li>
       
         <li>
@@ -631,15 +669,7 @@ use hadoop;#切换到hadoop数据库
         </li>
       
         <li>
-          <a href="/article/liunx-shell/">liunx shell命令基础</a>
-        </li>
-      
-        <li>
-          <a href="/article/liunx/">iunx基本命令使用方法（一）</a>
-        </li>
-      
-        <li>
-          <a href="/article/liunx3/">liunx基本命令使用方法（三）</a>
+          <a href="/article/mysql/">MySQL 5.6离线二进制部署</a>
         </li>
       
     </ul>
@@ -662,7 +692,7 @@ use hadoop;#切换到hadoop数据库
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">9</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">10</span></li></ul>
     </div>
 
         <hr>
