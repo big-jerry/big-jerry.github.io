@@ -142,7 +142,7 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -156,7 +156,7 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -227,37 +227,131 @@
 <h2 id="启动yarn">启动yarn</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 sbin]$ cd /home/hadoop/app/hadoop/sbin/</span><br><span class="line">[hadoop@hadoop01 sbin]$ start-yarn.sh </span><br><span class="line">starting yarn daemons</span><br><span class="line">starting resourcemanager, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/yarn-hadoop-resourcemanager-hadoop01.out</span><br><span class="line">hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;</span><br><span class="line">hadoop01: starting nodemanager, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/yarn-hadoop-nodemanager-hadoop01.out</span><br><span class="line">[hadoop@hadoop01 sbin]$ jps</span><br><span class="line">128725 DataNode</span><br><span class="line">23301 ResourceManager</span><br><span class="line">23397 NodeManager</span><br><span class="line">23720 Jps</span><br><span class="line">128571 NameNode</span><br><span class="line">128908 SecondaryNameNode</span><br></pre></td></tr></table></figure>
 <h2 id="做个简单的单词统计的案例">做个简单的单词统计的案例</h2>
-<pre><code>[hadoop@hadoop01 ~]$ find ./ -name '*example*.jar'#查找需要使用的jar包
-./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce1/hadoop-examples-2.6.0-mr1-cdh5.16.2.jar
-./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-test-sources.jar
-./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-sources.jar
-./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar
-[hadoop@hadoop01 ~]$ hadoop jar /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar
-An example program must be given as the first argument.
-Valid program names are:
-  aggregatewordcount: An Aggregate based map/reduce program that counts the words in the input files.
-  aggregatewordhist: An Aggregate based map/reduce program that computes the histogram of the words in the input files.
-  bbp: A map/reduce program that uses Bailey-Borwein-Plouffe to compute exact digits of Pi.
-  dbcount: An example job that count the pageview counts from a database.
-  distbbp: A map/reduce program that uses a BBP-type formula to compute exact bits of Pi.
-  grep: A map/reduce program that counts the matches of a regex in the input.
-  join: A job that effects a join over sorted, equally partitioned datasets
-  multifilewc: A job that counts words from several files.
-  pentomino: A map/reduce tile laying program to find solutions to pentomino problems.
-  pi: A map/reduce program that estimates Pi using a quasi-Monte Carlo method.
-  randomtextwriter: A map/reduce program that writes 10GB of random textual data per node.
-  randomwriter: A map/reduce program that writes 10GB of random data per node.
-  secondarysort: An example defining a secondary sort to the reduce.
-  sort: A map/reduce program that sorts the data written by the random writer.
-  sudoku: A sudoku solver.
-  teragen: Generate data for the terasort
-  terasort: Run the terasort
-  teravalidate: Checking results of terasort
-  wordcount: A map/reduce program that counts the words in the input files.
-  wordmean: A map/reduce program that counts the average length of the words in the input files.
-  wordmedian: A map/reduce program that counts the median length of the words in the input files.
-  wordstandarddeviation: A map/reduce program that counts the standard deviation of the length of the words in the input files.
-</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 ~]$ find ./ -name &apos;*example*.jar&apos;#查找需要使用的jar包</span><br><span class="line">./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce1/hadoop-examples-2.6.0-mr1-cdh5.16.2.jar</span><br><span class="line">./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-test-sources.jar</span><br><span class="line">./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-sources.jar</span><br><span class="line">./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar</span><br><span class="line">[hadoop@hadoop01 ~]$ hadoop jar /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar</span><br><span class="line">An example program must be given as the first argument.</span><br><span class="line">Valid program names are:#提示缺省参数，系统自动将可用的参数列出</span><br><span class="line">  aggregatewordcount: An Aggregate based map/reduce program that counts the words in the input files.</span><br><span class="line">  aggregatewordhist: An Aggregate based map/reduce program that computes the histogram of the words in the input files.</span><br><span class="line">  bbp: A map/reduce program that uses Bailey-Borwein-Plouffe to compute exact digits of Pi.</span><br><span class="line">  dbcount: An example job that count the pageview counts from a database.</span><br><span class="line">  distbbp: A map/reduce program that uses a BBP-type formula to compute exact bits of Pi.</span><br><span class="line">  grep: A map/reduce program that counts the matches of a regex in the input.</span><br><span class="line">  join: A job that effects a join over sorted, equally partitioned datasets</span><br><span class="line">  multifilewc: A job that counts words from several files.</span><br><span class="line">  pentomino: A map/reduce tile laying program to find solutions to pentomino problems.</span><br><span class="line">  pi: A map/reduce program that estimates Pi using a quasi-Monte Carlo method.</span><br><span class="line">  randomtextwriter: A map/reduce program that writes 10GB of random textual data per node.</span><br><span class="line">  randomwriter: A map/reduce program that writes 10GB of random data per node.</span><br><span class="line">  secondarysort: An example defining a secondary sort to the reduce.</span><br><span class="line">  sort: A map/reduce program that sorts the data written by the random writer.</span><br><span class="line">  sudoku: A sudoku solver.</span><br><span class="line">  teragen: Generate data for the terasort</span><br><span class="line">  terasort: Run the terasort</span><br><span class="line">  teravalidate: Checking results of terasort</span><br><span class="line">  wordcount: A map/reduce program that counts the words in the input files.</span><br><span class="line">  wordmean: A map/reduce program that counts the average length of the words in the input files.</span><br><span class="line">  wordmedian: A map/reduce program that counts the median length of the words in the input files.</span><br><span class="line">  wordstandarddeviation: A map/reduce program that counts the standard deviation of the length of the words in the input files.</span><br></pre></td></tr></table></figure>
+<h3 id="创建hdfs存放上传文件的目录">创建hdfs存放上传文件的目录</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> [hadoop@hadoop01 data]$ hdfs dfs -mkdir -p /wordcount1/input</span><br><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -ls /</span><br><span class="line">19/12/01 23:31:31 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 3 items</span><br><span class="line">drwx------   - hadoop supergroup          0 2019-12-01 23:11 /tmp</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-12-01 23:13 /wordcount</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-12-01 23:30 /wordcount1</span><br></pre></td></tr></table></figure>
+<h3 id="上传11log文件至hdfs">上传11.log文件至hdfs</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> [hadoop@hadoop01 data]$ hdfs dfs -put 1.log /wordcount1/input</span><br><span class="line">19/12/01 23:33:00 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -ls /wordcount1/input/</span><br><span class="line">19/12/01 23:33:47 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 1 items</span><br><span class="line">-rw-r--r--   3 hadoop supergroup        251 2019-12-01 23:33 /wordcount1/input/1.log</span><br></pre></td></tr></table></figure>
+<h3 id="运行jar包计算文件的单词数量">运行jar包计算文件的单词数量</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 sbin]$ hadoop jar \</span><br><span class="line">&gt; /home/hadoop/app/hadoop/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar \</span><br><span class="line">&gt; wordcount \</span><br><span class="line">&gt; /wordcount/input /wordcount/output2</span><br><span class="line">19/12/02 22:02:11 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">19/12/02 22:02:12 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032</span><br><span class="line">19/12/02 22:02:14 INFO input.FileInputFormat: Total input paths to process : 1</span><br><span class="line">19/12/02 22:02:15 INFO mapreduce.JobSubmitter: number of splits:1</span><br><span class="line">19/12/02 22:02:15 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1575295188493_0001</span><br><span class="line">19/12/02 22:02:16 INFO impl.YarnClientImpl: Submitted application application_1575295188493_0001</span><br><span class="line">19/12/02 22:02:16 INFO mapreduce.Job: The url to track the job: http://hadoop01:38088/proxy/application_1575295188493_0001/</span><br><span class="line">19/12/02 22:02:16 INFO mapreduce.Job: Running job: job_1575295188493_0001</span><br><span class="line">19/12/02 22:02:25 INFO mapreduce.Job: Job job_1575295188493_0001 running in uber mode : false</span><br><span class="line">19/12/02 22:02:25 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">19/12/02 22:02:33 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">19/12/02 22:02:39 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">19/12/02 22:02:40 INFO mapreduce.Job: Job job_1575295188493_0001 completed successfully</span><br><span class="line">19/12/02 22:02:40 INFO mapreduce.Job: Counters: 49</span><br><span class="line">	File System Counters</span><br><span class="line">		FILE: Number of bytes read=185</span><br><span class="line">		FILE: Number of bytes written=286363</span><br><span class="line">		FILE: Number of read operations=0</span><br><span class="line">		FILE: Number of large read operations=0</span><br><span class="line">		FILE: Number of write operations=0</span><br><span class="line">		HDFS: Number of bytes read=358</span><br><span class="line">		HDFS: Number of bytes written=119</span><br><span class="line">		HDFS: Number of read operations=6</span><br><span class="line">		HDFS: Number of large read operations=0</span><br><span class="line">		HDFS: Number of write operations=2</span><br><span class="line">	Job Counters </span><br><span class="line">		Launched map tasks=1</span><br><span class="line">		Launched reduce tasks=1</span><br><span class="line">		Data-local map tasks=1</span><br><span class="line">		Total time spent by all maps in occupied slots (ms)=4522</span><br><span class="line">		Total time spent by all reduces in occupied slots (ms)=3621</span><br><span class="line">		Total time spent by all map tasks (ms)=4522</span><br><span class="line">		Total time spent by all reduce tasks (ms)=3621</span><br><span class="line">		Total vcore-milliseconds taken by all map tasks=4522</span><br><span class="line">		Total vcore-milliseconds taken by all reduce tasks=3621</span><br><span class="line">		Total megabyte-milliseconds taken by all map tasks=4630528</span><br><span class="line">		Total megabyte-milliseconds taken by all reduce tasks=3707904</span><br><span class="line">	Map-Reduce Framework</span><br><span class="line">		Map input records=42</span><br><span class="line">		Map output records=42</span><br><span class="line">		Map output bytes=419</span><br><span class="line">		Map output materialized bytes=185</span><br><span class="line">		Input split bytes=107</span><br><span class="line">		Combine input records=42</span><br><span class="line">		Combine output records=15</span><br><span class="line">		Reduce input groups=15</span><br><span class="line">		Reduce shuffle bytes=185</span><br><span class="line">		Reduce input records=15</span><br><span class="line">		Reduce output records=15</span><br><span class="line">		Spilled Records=30</span><br><span class="line">		Shuffled Maps =1</span><br><span class="line">		Failed Shuffles=0</span><br><span class="line">		Merged Map outputs=1</span><br><span class="line">		GC time elapsed (ms)=383</span><br><span class="line">		CPU time spent (ms)=2240</span><br><span class="line">		Physical memory (bytes) snapshot=503480320</span><br><span class="line">		Virtual memory (bytes) snapshot=5566611456</span><br><span class="line">		Total committed heap usage (bytes)=542113792</span><br><span class="line">	Shuffle Errors</span><br><span class="line">		BAD_ID=0</span><br><span class="line">		CONNECTION=0</span><br><span class="line">		IO_ERROR=0</span><br><span class="line">		WRONG_LENGTH=0</span><br><span class="line">		WRONG_MAP=0</span><br><span class="line">		WRONG_REDUCE=0</span><br><span class="line">	File Input Format Counters </span><br><span class="line">		Bytes Read=251</span><br><span class="line">	File Output Format Counters </span><br><span class="line">		Bytes Written=119</span><br></pre></td></tr></table></figure>
+<h3 id="查看计算结果">查看计算结果</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 sbin]$ hadoop fs -ls /wordcount/output2/</span><br><span class="line">19/12/02 22:05:27 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   3 hadoop supergroup          0 2019-12-02 22:02 /wordcount/output2/_SUCCESS #通过这个0字节的文件可以判断文件已经计算成功</span><br><span class="line">-rw-r--r--   3 hadoop supergroup        119 2019-12-02 22:02 /wordcount/output2/part-r-00000</span><br><span class="line">#该文件就是统计的结果。</span><br><span class="line">[hadoop@hadoop01 sbin]$ hadoop fs -cat /wordcount/output2/part-r-00000</span><br><span class="line">19/12/02 22:05:54 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">ADAMS	3</span><br><span class="line">ALLEN	3</span><br><span class="line">BLAKE	3</span><br><span class="line">CLARK	3</span><br><span class="line">COTT	1</span><br><span class="line">FORD	3</span><br><span class="line">JAMES	3</span><br><span class="line">JONES	3</span><br><span class="line">KING	3</span><br><span class="line">MARTIN	3</span><br><span class="line">MILLER	3</span><br><span class="line">SCOTT	2</span><br><span class="line">SMITH	3</span><br><span class="line">TURNER	3</span><br><span class="line">WARD	3</span><br><span class="line">可以发现统计的结果是按照字典排序的。</span><br></pre></td></tr></table></figure>
+<h3 id="通过以上统计单词的案例可以发现">通过以上统计单词的案例可以发现</h3>
+<p>1、HDFS：分布式文件系统用来做存储<br>
+2、mapreduce jar：包是做计算逻辑<br>
+3、yarn ：是资源+作业调度<br>
+4、计算的结果返回到HDFS</p>
+<h1 id="jps-原理解析">jps 原理解析</h1>
+<h2 id="jps位置">jps位置</h2>
+<p>先思考jps在哪？用来干嘛的？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 sbin]$ which jps</span><br><span class="line">/usr/java/jdk1.8.0_45/bin/jps</span><br><span class="line">[hadoop@hadoop01 sbin]$ jps</span><br><span class="line">120337 NameNode</span><br><span class="line">120483 DataNode</span><br><span class="line">128819 Jps</span><br><span class="line">120695 SecondaryNameNode</span><br><span class="line">120968 ResourceManager</span><br><span class="line">121080 NodeManager</span><br><span class="line">[hadoop@hadoop01 sbin]$</span><br></pre></td></tr></table></figure>
+<p>jps是在jdk目录下，用来查询java进程的。</p>
+<h2 id="对应的进程的标识文件位置在哪">对应的进程的标识文件位置在哪？</h2>
+<p>[root@hadoop01 ~]# cd /tmp/<br>
+[root@hadoop01 tmp]# ll<br>
+总用量 36<br>
+drwx------  2 root   root    41 12月  1 18:08 easy_install-LpIhoD<br>
+-rwxr-xr-x. 1 root   root     4 12月  2 12:20 gates.lod<br>
+drwxrwxr-x  4 hadoop hadoop  35 12月  1 17:07 hadoop-hadoop<br>
+-rw-rw-r--  1 hadoop hadoop   7 12月  2 21:59 hadoop-hadoop-datanode.pid<br>
+-rw-rw-r--  1 hadoop hadoop   7 12月  2 21:59 hadoop-hadoop-namenode.pid<br>
+-rw-rw-r--  1 hadoop hadoop   7 12月  2 21:59 hadoop-hadoop-secondarynamenode.pid<br>
+drwxr-xr-x  2 hadoop hadoop  71 12月  2 22:32 hsperfdata_hadoop<br>
+[root@hadoop01 tmp]# cd /tmp/hsperfdata_hadoop/<br>
+jps进程是通过hadoop用户启动的，默认的目录：/tmp/hsperfdata_hadoop/<br>
+[root@hadoop01 hsperfdata_hadoop]# ll<br>
+总用量 160<br>
+-rw------- 1 hadoop hadoop 32768 12月  2 22:38 120337<br>
+-rw------- 1 hadoop hadoop 32768 12月  2 22:39 120483<br>
+-rw------- 1 hadoop hadoop 32768 12月  2 22:38 120695<br>
+-rw------- 1 hadoop hadoop 32768 12月  2 22:38 120968<br>
+-rw------- 1 hadoop hadoop 32768 12月  2 22:38 121080</p>
+<h2 id="jps的作用">jps的作用</h2>
+<p>查询PID进程的名称<br>
+[hadoop@hadoop01 sbin]$ jps<br>
+120337 NameNode<br>
+120483 DataNode<br>
+128819 Jps<br>
+120695 SecondaryNameNode<br>
+120968 ResourceManager<br>
+121080 NodeManager</p>
+<h2 id="为什么root用户使用jps查看的进程显示process-information-unavailable其他用户则不显示进程信息">为什么root用户使用jps查看的进程显示（process information unavailable），其他用户则不显示进程信息？</h2>
+<p>[root@hadoop01 hsperfdata_hadoop]# jps<br>
+120337 – process information unavailable<br>
+120483 – process information unavailable<br>
+120695 – process information unavailable<br>
+1127 Jps<br>
+120968 – process information unavailable<br>
+121080 – process information unavailable<br>
+[root@hadoop01 ~]# su - mysqladmin<br>
+[mysqladmin@hadoop01 ~]$ jps<br>
+1953 Jps<br>
+[mysqladmin@hadoop01 ~]$<br>
+结论：1、进程所属用户执行jps命令只显示自己的相关进程信息。<br>
+	  2、root用户执行jps命令可以查看所有用户的进程信息，但显示不可用<br>
+	  3、普通用户没有sudo权限的执行jps命令则无法查看其他用户进程信息</p>
+<h2 id="显示-process-information-unavailable如何判断真假">显示 <code>process information unavailable</code>如何判断真假？</h2>
+<p>[root@hadoop01 hsperfdata_hadoop]# jps<br>
+120337 – process information unavailable<br>
+120483 – process information unavailable<br>
+120695 – process information unavailable<br>
+1127 Jps<br>
+120968 – process information unavailable<br>
+121080 – process information unavailable<br>
+[root@hadoop01 hsperfdata_hadoop]# ps -ef |grep 120337<br>
+root       4677 129850  0 23:03 pts/1    00:00:00 grep --color=auto 120337<br>
+hadoop   120337      1  0 21:59 ?        00:00:14 /usr/java/jdk1.8.0_45/bin/java<br>
+[root@hadoop01 hsperfdata_hadoop]# ps -ef |grep 120968<br>
+root       4755 129850  0 23:03 pts/1    00:00:00 grep --color=auto 120968<br>
+hadoop   120968      1  0 21:59 pts/0    00:00:32 /usr/java/jdk1.8.0_45/bin/java<br>
+[root@hadoop01 hsperfdata_hadoop]# ps -ef |grep 120968 |grep -v grep | wc -l<br>
+1</p>
+<h2 id="如果tmphsperfdata_hadoop目录下的文件被删除了会出现什么现象是否影响进程的启动和停止">如果/tmp/hsperfdata_hadoop/目录下的文件被删除了会出现什么现象？是否影响进程的启动和停止？</h2>
+<p>删除前<br>
+[hadoop@hadoop01 sbin]$ jps<br>
+120337 NameNode<br>
+120483 DataNode<br>
+128819 Jps<br>
+120695 SecondaryNameNode<br>
+120968 ResourceManager<br>
+121080 NodeManager<br>
+[root@hadoop01 hsperfdata_hadoop]# mv 120337 …/#把120337这个文件移到上级目录<br>
+删除后发现NameNode进程不见了。<br>
+[hadoop@hadoop01 sbin]$ jps<br>
+120483 DataNode<br>
+6242 Jps<br>
+120695 SecondaryNameNode<br>
+120968 ResourceManager<br>
+121080 NodeManager<br>
+停止dfs进程<br>
+[hadoop@hadoop01 sbin]$ <a href="http://stop-dfs.sh" target="_blank" rel="noopener">stop-dfs.sh</a><br>
+19/12/02 23:20:32 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
+Stopping namenodes on [hadoop01]<br>
+hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;<br>
+hadoop01: stopping namenode<br>
+hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;<br>
+hadoop01: stopping datanode<br>
+Stopping secondary namenodes [hadoop01]<br>
+hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;<br>
+hadoop01: stopping secondarynamenode<br>
+19/12/02 23:20:50 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
+[hadoop@hadoop01 sbin]$ ps -ef | grep namenod<br>
+hadoop     8968 119516  0 23:21 pts/0    00:00:00 grep --color=auto namenod<br>
+[hadoop@hadoop01 sbin]$ jps<br>
+120968 ResourceManager<br>
+121080 NodeManager<br>
+8873 Jps</p>
+<p>结论：1、jps命令就是查看/tmp/hsperfdata_hadoop/目录的文件记录。<br>
+	  2、不能像ps -ef命令一样瞬间查询出进程结果。<br>
+	  3、在生产上不建议写shell脚本用jps查询进程，建议使用ps -ef命令。<br>
+4、/tmp/hsperfdata_hadoop/文件丢失不影响dfs进程的启动和停止</p>
+<h1 id="linux的oom-kill机制">linux的oom-kill机制</h1>
+<h2 id="oom-kill机制">oom-kill机制:</h2>
+<p>linux内核有个机制叫<code>OOM-killer,该机制会监控那些占用内存过大，尤其是瞬间很快消耗大量内存的 进程，为了防止内存耗尽而内核会把该进程杀掉，典型的大数据程序需要占用大量内存，而在</code>Linux<code>内核检测到系统内存不足后，会触发</code>oom-killer<code>，挑选占用最大内存的进程杀掉。首先查看日志找</code>EROOR<code>，有</code>ERROR<code>具体分析，没有</code>ERROR<code>但是</code>INFO<code>信息断了，很可能就是触发了</code>oom-killer<code>机制，使用</code>free -h<code>命令查看内存使用情况，再使用</code>cat/var/log/messages | grep kill<code>命令查看 有没有</code>Kill process` 的关键字。</p>
+<h2 id="clean机制">clean机制</h2>
+<p>clean机制: Linux的/tmp目录是一个临时目录，它有一个机制，默认清理超过30天的内容，而前面使用jps命令的时候就发现，hadoop的进程pid都存放在/tmp目录中，启动进程的时候去/tmp目录下创建对应的pid文件，结束进程的时候去/tmp目录下找到程序对应的pid用来结束进程并删除pid文件，那么引申出来一个问题，如果我们的hadoop组件进程启动时间超过了30天了呢，pid文件被清理，结束命令找不到pid号，会再重新创建一个pid，结果就是pid号紊乱，进程无法正常结束。</p>
+<p>解决的办法:就是在家目录下面创建一个tmp目录，然后把hdfs和yarn的pid号管理文件夹设置成家目录下的tmp目录即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">修改hadoop-env.sh </span><br><span class="line">修改如下，如果没有下面的设置，可以直接添加：</span><br><span class="line">[hadoop@hadoop01 hadoop]$ vi hadoop-env.sh </span><br><span class="line">export HADOOP_PID_DIR=/home/hadoop/tmp</span><br><span class="line">修改yarn-env.sh </span><br><span class="line">修改或者添加（不存在此项配置时），这里面我没有找到pid的环境设置变量，所以就直接添加了 </span><br><span class="line">[hadoop@hadoop01 hadoop]$ vi yarn-env.sh </span><br><span class="line">export YARN_PID_DIR=/home/hadoop/tmp</span><br></pre></td></tr></table></figure>
 
                 
 
@@ -317,7 +411,7 @@ Valid program names are:
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn伪分布式部署"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x4F2A;&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置mapred-sitexml文件参数"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;mapred-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置yarn-sitexml文件参数"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;yarn-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#启动yarn"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x542F;&#x52A8;yarn</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#做个简单的单词统计的案例"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x505A;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5355;&#x8BCD;&#x7EDF;&#x8BA1;&#x7684;&#x6848;&#x4F8B;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn伪分布式部署"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x4F2A;&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置mapred-sitexml文件参数"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;mapred-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置yarn-sitexml文件参数"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;yarn-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#启动yarn"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x542F;&#x52A8;yarn</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#做个简单的单词统计的案例"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x505A;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5355;&#x8BCD;&#x7EDF;&#x8BA1;&#x7684;&#x6848;&#x4F8B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建hdfs存放上传文件的目录"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;hdfs&#x5B58;&#x653E;&#x4E0A;&#x4F20;&#x6587;&#x4EF6;&#x7684;&#x76EE;&#x5F55;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#上传11log文件至hdfs"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">&#x4E0A;&#x4F20;11.log&#x6587;&#x4EF6;&#x81F3;hdfs</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#运行jar包计算文件的单词数量"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#x8FD0;&#x884C;jar&#x5305;&#x8BA1;&#x7B97;&#x6587;&#x4EF6;&#x7684;&#x5355;&#x8BCD;&#x6570;&#x91CF;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#查看计算结果"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">&#x67E5;&#x770B;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#通过以上统计单词的案例可以发现"><span class="toc-nav-number">1.4.5.</span> <span class="toc-nav-text">&#x901A;&#x8FC7;&#x4EE5;&#x4E0A;&#x7EDF;&#x8BA1;&#x5355;&#x8BCD;&#x7684;&#x6848;&#x4F8B;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#jps-原理解析"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">jps &#x539F;&#x7406;&#x89E3;&#x6790;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jps位置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">jps&#x4F4D;&#x7F6E;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#对应的进程的标识文件位置在哪"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">&#x5BF9;&#x5E94;&#x7684;&#x8FDB;&#x7A0B;&#x7684;&#x6807;&#x8BC6;&#x6587;&#x4EF6;&#x4F4D;&#x7F6E;&#x5728;&#x54EA;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#jps的作用"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">jps&#x7684;&#x4F5C;&#x7528;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#为什么root用户使用jps查看的进程显示process-information-unavailable其他用户则不显示进程信息"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">&#x4E3A;&#x4EC0;&#x4E48;root&#x7528;&#x6237;&#x4F7F;&#x7528;jps&#x67E5;&#x770B;&#x7684;&#x8FDB;&#x7A0B;&#x663E;&#x793A;&#xFF08;process information unavailable&#xFF09;&#xFF0C;&#x5176;&#x4ED6;&#x7528;&#x6237;&#x5219;&#x4E0D;&#x663E;&#x793A;&#x8FDB;&#x7A0B;&#x4FE1;&#x606F;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#显示-process-information-unavailable如何判断真假"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">&#x663E;&#x793A; <code>process information unavailable</code>&#x5982;&#x4F55;&#x5224;&#x65AD;&#x771F;&#x5047;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如果tmphsperfdata_hadoop目录下的文件被删除了会出现什么现象是否影响进程的启动和停止"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">&#x5982;&#x679C;/tmp/hsperfdata_hadoop/&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x88AB;&#x5220;&#x9664;&#x4E86;&#x4F1A;&#x51FA;&#x73B0;&#x4EC0;&#x4E48;&#x73B0;&#x8C61;&#xFF1F;&#x662F;&#x5426;&#x5F71;&#x54CD;&#x8FDB;&#x7A0B;&#x7684;&#x542F;&#x52A8;&#x548C;&#x505C;&#x6B62;&#xFF1F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#linux的oom-kill机制"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">linux&#x7684;oom-kill&#x673A;&#x5236;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#oom-kill机制"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">oom-kill&#x673A;&#x5236;:</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#clean机制"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">clean&#x673A;&#x5236;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
