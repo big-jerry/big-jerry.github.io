@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          liunx基本命令使用方法（二） - 杰瑞的博客 | Blog
+          Yarn伪分布式部署+jps原理+oom kill和clear机制 - 杰瑞的博客 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/liunx2/">
+    <link rel="canonical" href="http://yoursite.com/article/Yarn/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#liunx" title="liunx">liunx</a>
+                              <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
                             
                         </div>
-                        <h1>liunx基本命令使用方法（二）</h1>
+                        <h1>Yarn伪分布式部署+jps原理+oom kill和clear机制</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-09-13
+                            2017-09-30
                         </span>
                     </div>
                 
@@ -212,59 +212,52 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="liunx基本命令使用方法二">liunx基本命令使用方法（二）</h1>
-<h2 id="echo-打印">echo： 打印**</h2>
-<p>打印环境变量</p>
-<p>[root@localhost ~]# echo $PATH</p>
-<p>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin</p>
-<h2 id="which命令用于查找文件-which指令会在环境变量path设置的目录里查找符合条件的文件">which：命令用于查找文件。which指令会在环境变量$PATH设置的目录里查找符合条件的文件**</h2>
-<p>[root@localhost ~]# which java</p>
-<p>/usr/bin/which: no java in (/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin)</p>
-<p>未找到JAVA的环境变量 ，需要配置/ect/profile文件中的java环境变量。</p>
-<p>参数：</p>
-<p>-n&lt;文件名长度 　指定文件名长度，指定的长度必须大于或等于所有文件中最长的文件名。</p>
-<p>-p&lt;文件名长度 　与-n参数相同，但此处的&lt;文件名长度包括了文件的路径。</p>
-<p>-w 　指定输出时栏位的宽度。</p>
-<p>-V 　显示版本信息。</p>
-<h2 id="环境变量配置">环境变量配置**</h2>
-<p>全局：/etc/profile 所有人都使用</p>
-<p>个人： ~/.bash_profile</p>
-<p>~/.bashrc 仅当前用户使用 （这两个文件在当前用户家目录下的隐藏文件）</p>
-<p>生效文件： source      xxxx</p>
-<p>~/.bashrc</p>
-<p>步骤：</p>
-<p>vi /etc/profile</p>
-<p>a. 上下键 移动光标</p>
-<p>b. 按 i键insert 进入 编辑模式</p>
-<p>c. 开始编辑</p>
-<p>d. 编辑完成，按 esc键退出编辑模式，进入命令行模式</p>
-<p>e. 按“ shift+: ”  键，进入尾行模式</p>
-<p>f. 输入 wq 保存退出</p>
-<p>g.source /etc/profile，使变量生效。</p>
-<p><code>注：每次配置变量环境后执行报错，建议检查变量配置是否存在错误，或者变量环境未生效。</code></p>
-<p>总结: 1.command not found 没有部署安装包，部署了没有配置环境变量 。</p>
-<p>2.当我们以后部署一个软件，bin目录的可执行文件 ，比如java  当生效环境变量文件，习惯性使用 which java 检查变量环境是否配置成功</p>
-<h2 id="alias-别名">alias 别名**</h2>
-<p>[root@ruozedata001 ~]# alias</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/20160906-c551a85b2098bfc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>设置别名的文件&quot;.bashrc&quot;</p>
-<p>vi /root/.bashrc</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/20160906-8aad7820a31d9929.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>可在文件末行增加别名，例如：alias a=‘cd /etc/’，设置完成后需要使用source命令使其生效。</p>
-<h2 id="history显示历史命令">history：显示历史命令**</h2>
-<p><code>该命令单独使用时，仅显示历史命令，在命令行中，可以使用符号!执行指定序号的历史命令。</code><br>
-例如，要执行第2个历史命令，则输入!2。</p>
-<p><strong>参数</strong></p>
-<p>-c：清空当前历史命令；</p>
-<p>-a：将历史命令缓冲区中命令写入历史命令文件中；</p>
-<p>-r：将历史命令文件中的命令读入当前历史命令缓冲区；</p>
-<p>-w：将当前历史命令缓冲区命令写入历史命令文件中</p>
-<h2 id="rm命令用于删除一个文件或者目录">rm：命令用于删除一个文件或者目录**</h2>
-<p><strong>参数</strong></p>
-<p>-i 删除前逐一询问确认。</p>
-<p>-f 即使原档案属性设为唯读，亦直接删除，无需逐一确认。</p>
-<p>-r 将目录及以下之档案亦逐一删除。</p>
-<p>注意：该命令属于高危命令，建议在使用的时候搭配绝对路径使用。例如：rm -rf /tmp/111.log</p>
+                <h1 id="yarn伪分布式部署">Yarn伪分布式部署</h1>
+<p>由于我之前已经部署好了<code>hadoop</code>的伪分布，现在只需要根据官方文件参数配置好<br>
+<code>mapred-site.xml</code>和<code>yarn-site.xml</code>这两个文件。</p>
+<h2 id="配置mapred-sitexml文件参数">配置mapred-site.xml文件参数</h2>
+<p>默认的是一个空的模板，需要做复制并更改名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hadoop01:hadoop:#/home/hadoop/app/hadoop/etc/hadoop:&gt;ll mapred-site.xml.template </span><br><span class="line">-rw-r--r-- 1 hadoop hadoop 758 6月   3 19:04 mapred-site.xml.template</span><br><span class="line">hadoop01:hadoop:/home/hadoop/app/hadoop/etc/hadoop:&gt;cp mapred-site.xml.template  mapred-site.xml</span><br><span class="line">[hadoop@hadoop01 hadoop]$ ll mapred-site.xml*</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop 758 12月  1 16:16 mapred-site.xml</span><br><span class="line">-rw-r--r-- 1 hadoop hadoop 758 6月   3 19:04 mapred-site.xml.template</span><br></pre></td></tr></table></figure>
+<p>将官方文件参数粘贴到mapred-site.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 hadoop]$ vi mapred-site.xml</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span><br><span class="line">  you may not use this file except in compliance with the License.</span><br><span class="line">  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">    http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"></span><br><span class="line">  Unless required by applicable law or agreed to in writing, software</span><br><span class="line">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">  See the License for the specific language governing permissions and</span><br><span class="line">  limitations under the License. See accompanying LICENSE file.</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Put site-specific property overrides in this file. --&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置yarn-sitexml文件参数">配置yarn-site.xml文件参数</h2>
+<p>yarn默认web地址是8088端口，为了防止病毒攻击8088端口，建议更改端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 hadoop]$ vi yarn-site.xml </span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hadoop01:38088&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>注意：如需外网访问该端口，需要配置防火墙并将端口映射</p>
+<h2 id="启动yarn">启动yarn</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 sbin]$ cd /home/hadoop/app/hadoop/sbin/</span><br><span class="line">[hadoop@hadoop01 sbin]$ start-yarn.sh </span><br><span class="line">starting yarn daemons</span><br><span class="line">starting resourcemanager, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/yarn-hadoop-resourcemanager-hadoop01.out</span><br><span class="line">hadoop01: /etc/ssh/ssh_config line 59: Unsupported option &quot;GSSAPIAuthentication&quot;</span><br><span class="line">hadoop01: starting nodemanager, logging to /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/logs/yarn-hadoop-nodemanager-hadoop01.out</span><br><span class="line">[hadoop@hadoop01 sbin]$ jps</span><br><span class="line">128725 DataNode</span><br><span class="line">23301 ResourceManager</span><br><span class="line">23397 NodeManager</span><br><span class="line">23720 Jps</span><br><span class="line">128571 NameNode</span><br><span class="line">128908 SecondaryNameNode</span><br></pre></td></tr></table></figure>
+<h2 id="做个简单的单词统计的案例">做个简单的单词统计的案例</h2>
+<pre><code>[hadoop@hadoop01 ~]$ find ./ -name '*example*.jar'#查找需要使用的jar包
+./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce1/hadoop-examples-2.6.0-mr1-cdh5.16.2.jar
+./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-test-sources.jar
+./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/sources/hadoop-mapreduce-examples-2.6.0-cdh5.16.2-sources.jar
+./app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar
+[hadoop@hadoop01 ~]$ hadoop jar /home/hadoop/app/hadoop-2.6.0-cdh5.16.2/share/hadoop/mapreduce2/hadoop-mapreduce-examples-2.6.0-cdh5.16.2.jar
+An example program must be given as the first argument.
+Valid program names are:
+  aggregatewordcount: An Aggregate based map/reduce program that counts the words in the input files.
+  aggregatewordhist: An Aggregate based map/reduce program that computes the histogram of the words in the input files.
+  bbp: A map/reduce program that uses Bailey-Borwein-Plouffe to compute exact digits of Pi.
+  dbcount: An example job that count the pageview counts from a database.
+  distbbp: A map/reduce program that uses a BBP-type formula to compute exact bits of Pi.
+  grep: A map/reduce program that counts the matches of a regex in the input.
+  join: A job that effects a join over sorted, equally partitioned datasets
+  multifilewc: A job that counts words from several files.
+  pentomino: A map/reduce tile laying program to find solutions to pentomino problems.
+  pi: A map/reduce program that estimates Pi using a quasi-Monte Carlo method.
+  randomtextwriter: A map/reduce program that writes 10GB of random textual data per node.
+  randomwriter: A map/reduce program that writes 10GB of random data per node.
+  secondarysort: An example defining a secondary sort to the reduce.
+  sort: A map/reduce program that sorts the data written by the random writer.
+  sudoku: A sudoku solver.
+  teragen: Generate data for the terasort
+  terasort: Run the terasort
+  teravalidate: Checking results of terasort
+  wordcount: A map/reduce program that counts the words in the input files.
+  wordmean: A map/reduce program that counts the average length of the words in the input files.
+  wordmedian: A map/reduce program that counts the median length of the words in the input files.
+  wordstandarddeviation: A map/reduce program that counts the standard deviation of the length of the words in the input files.
+</code></pre>
 
                 
 
@@ -272,13 +265,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/liunx3/" data-toggle="tooltip" data-placement="top" title="liunx基本命令使用方法（三）">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/liunx/" data-toggle="tooltip" data-placement="top" title="iunx基本命令使用方法（一）">Next Post &rarr;</a>
+                            <a href="/article/hadoop3/" data-toggle="tooltip" data-placement="top" title="block+小文件+dnfs架构+SecondaryNameNode流程的梳理">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -328,7 +317,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#liunx基本命令使用方法二"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">liunx&#x57FA;&#x672C;&#x547D;&#x4EE4;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;&#xFF08;&#x4E8C;&#xFF09;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#echo-打印"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">echo&#xFF1A; &#x6253;&#x5370;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#which命令用于查找文件-which指令会在环境变量path设置的目录里查找符合条件的文件"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">which&#xFF1A;&#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x67E5;&#x627E;&#x6587;&#x4EF6;&#x3002;which&#x6307;&#x4EE4;&#x4F1A;&#x5728;&#x73AF;&#x5883;&#x53D8;&#x91CF;$PATH&#x8BBE;&#x7F6E;&#x7684;&#x76EE;&#x5F55;&#x91CC;&#x67E5;&#x627E;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x6587;&#x4EF6;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#环境变量配置"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x914D;&#x7F6E;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#alias-别名"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">alias &#x522B;&#x540D;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#history显示历史命令"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">history&#xFF1A;&#x663E;&#x793A;&#x5386;&#x53F2;&#x547D;&#x4EE4;**</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#rm命令用于删除一个文件或者目录"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">rm&#xFF1A;&#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6216;&#x8005;&#x76EE;&#x5F55;**</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn伪分布式部署"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x4F2A;&#x5206;&#x5E03;&#x5F0F;&#x90E8;&#x7F72;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置mapred-sitexml文件参数"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;mapred-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置yarn-sitexml文件参数"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x914D;&#x7F6E;yarn-site.xml&#x6587;&#x4EF6;&#x53C2;&#x6570;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#启动yarn"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x542F;&#x52A8;yarn</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#做个简单的单词统计的案例"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">&#x505A;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x5355;&#x8BCD;&#x7EDF;&#x8BA1;&#x7684;&#x6848;&#x4F8B;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -348,7 +337,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#liunx" title="liunx">liunx</a>
+                          <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
                         
                     </div>
                 </section>
