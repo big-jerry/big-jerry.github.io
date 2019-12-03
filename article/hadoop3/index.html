@@ -95,7 +95,7 @@
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-09-30
+                            2017-10-01
                         </span>
                     </div>
                 
@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -212,20 +212,36 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <h1 id="block的理解">block的理解</h1>
+<p>配置块和副本参数的文件：hdfs-site.xml<br>
+dfs块规格的大小：<code>dfs.blocksize 134217728 128M</code><br>
+dfs块副本数量：<code>dfs.replication 	3~512</code><br>
+集群中设置的副本是3（最小值3,最大值512），dfs会将每个块分成3份，备份到不同的机器中。<br>
+伪分布式的副本是1.因为伪分布式只有一个<code>datanode</code>节点。<br>
+例如：某集群上传一个300M的文件到HDFS，HDFS中块的规格是128M。300M的文件在HDFS会按照128M的规格切割成：文件块1：128M、文件块2：128M、文件块3：44M这三个大小的文件块（注意第三个文件块未满128M也会占用一个块），同时把这三个块备份成3份存储到其他节点中。如图：<br>
+<img src="https://github.com/big-jerry/big-jerry.github.io/blob/master/20191203215829.png" alt="block"></p>
+<h2 id="思考">思考</h2>
+<p>1、一个文件160M，HDFS块参数设置是128M，副本数是2份。<br>
+	问：上传到HDFS中实际存储多少块，占用空间是多少？</p>
+<h1 id="如何定义hdfs的小文件">如何定义Hdfs的小文件</h1>
+<h2 id="首先思考">首先思考：</h2>
+<p>1、生产上HDFS适合小文件存储吗？<br>
+答：不适合小文件存储。<br>
+2、为什么会不适合？<br>
+答：因为namenod管控所有节点存储块的元数据信息的记录，很多小的文件块会增加namenode的负担，例如 10个10M的文件分别上传到HDFS，因为每个文件不足128M不会被切割，HDFS将10个文件分成10个块存储，每个块的大小10M,10个块每个块生成3个副本，分别存储到3个节点中，每个节点都存储了10个10M的块。namenode需要管控3个节点共30个块的元数据信息。如果上万的小文件块很快就会消耗完namenode的内存。<br>
+3、如果需要存储小文件，该如何处理？<br>
+答：在上传前将小文件合并成大文件，文件大小 &lt; <code>128M</code>。</p>
+<h1 id="hdfs架构">HDFS架构</h1>
+
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/Yarn/" data-toggle="tooltip" data-placement="top" title="Yarn伪分布式部署+jps原理+oom kill和clear机制">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/hadoop1/" data-toggle="tooltip" data-placement="top" title="hadoop fs 命令介绍">Next Post &rarr;</a>
+                            <a href="/article/Yarn/" data-toggle="tooltip" data-placement="top" title="Yarn伪分布式部署+jps原理+oom kill和clear机制">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -275,7 +291,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#block的理解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">block&#x7684;&#x7406;&#x89E3;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#思考"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x601D;&#x8003;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#如何定义hdfs的小文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5B9A;&#x4E49;Hdfs&#x7684;&#x5C0F;&#x6587;&#x4EF6;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#首先思考"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x9996;&#x5148;&#x601D;&#x8003;&#xFF1A;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs架构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">HDFS&#x67B6;&#x6784;</span></a></li></ol>
         
         </div>
       </aside>

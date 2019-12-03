@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -211,6 +211,41 @@
 
 <div class="post-preview">
 
+    <a href="/article/hadoop3/">
+        <h2 class="post-title">
+                                 
+            block+小文件+dnfs架构+SecondaryNameNode流程的梳理
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            block的理解
+配置块和副本参数的文件：hdfs-site.xml
+dfs块规格的大小：dfs.blocksize 134217728 128M
+dfs块副本数量：dfs.replication 	3~512
+集群中设置的副本是3（最小值3,最大值512），dfs会将每个块分成3份，备份到不同的机器中。
+伪分布式的副本是1.因为伪分布式只有一个datanode节点。
+例如：某集群上传一个3......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-10-01
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/Yarn/">
         <h2 class="post-title">
                                  
@@ -226,35 +261,6 @@ mapred-site.xml和yarn-site.xml这两个文件。
 配置mapred-site.xml文件参数
 默认的是一个空的模板，需要做复制并更改名称。
 123456hadoop01:hadoop:#/home/hadoop/app/hadoop/etc/hadoop:&gt;ll m......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-30
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/hadoop3/">
-        <h2 class="post-title">
-                                 
-            block+小文件+dnfs架构+SecondaryNameNode流程的梳理
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            ...
         </div>
     </a>
     
@@ -655,11 +661,11 @@ groupmod 修改用户组
     <ul>
       
         <li>
-          <a href="/article/Yarn/">Yarn伪分布式部署+jps原理+oom kill和clear机制</a>
+          <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
         </li>
       
         <li>
-          <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
+          <a href="/article/Yarn/">Yarn伪分布式部署+jps原理+oom kill和clear机制</a>
         </li>
       
         <li>
@@ -694,7 +700,7 @@ groupmod 修改用户组
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">12</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
