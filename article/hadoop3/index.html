@@ -219,7 +219,7 @@ dfs块副本数量：<code>dfs.replication 	3~512</code><br>
 集群中设置的副本是3（最小值3,最大值512），dfs会将每个块分成3份，备份到不同的机器中。<br>
 伪分布式的副本是1.因为伪分布式只有一个<code>datanode</code>节点。<br>
 例如：某集群上传一个300M的文件到HDFS，HDFS中块的规格是128M。300M的文件在HDFS会按照128M的规格切割成：文件块1：128M、文件块2：128M、文件块3：44M这三个大小的文件块（注意第三个文件块未满128M也会占用一个块），同时把这三个块备份成3份存储到其他节点中。如图：<br>
-<img src="https://github.com/big-jerry/big-jerry.github.io/blob/master/20191203215829.png" alt="block"></p>
+<img src="https://github.com/big-jerry/big-jerry.github.io/blob/master/sxd_first_repository/images/20191203215829.png" alt="block"></p>
 <h2 id="思考">思考</h2>
 <p>1、一个文件160M，HDFS块参数设置是128M，副本数是2份。<br>
 	问：上传到HDFS中实际存储多少块，占用空间是多少？</p>
