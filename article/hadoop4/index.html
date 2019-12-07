@@ -213,7 +213,7 @@
                 post-container">
 
                 <h1 id="hdfs副本放置策略">HDFS副本放置策略</h1>
-<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/replication.png" alt="replication"><br>
+<p><img src="img/replication.png" alt="replication"><br>
 图片中按照默认3个副本来标识<br>
 第一个副本:假如上传节点为DN节点，优先放置本节点,不占用网络消耗。否则就随机挑选一台磁盘不太慢  CPU不太繁忙的节点放置。<br>
 第二个副本:放置在于第一个副本的不同的机架的DN节点上。<br>

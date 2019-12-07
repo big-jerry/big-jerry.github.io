@@ -219,7 +219,7 @@ dfs块副本数量：<code>dfs.replication 	3~512</code><br>
 集群中设置的副本是3（最小值3,最大值512），dfs会将每个块分成3份，备份到不同的机器中。<br>
 伪分布式的副本是1.因为伪分布式只有一个<code>datanode</code>节点。<br>
 例如：某集群上传一个300M的文件到HDFS，HDFS中块的规格是128M。300M的文件在HDFS会按照128M的规格切割成：文件块1：128M、文件块2：128M、文件块3：44M这三个大小的文件块（注意第三个文件块未满128M也会占用一个块），同时把这三个块备份成3份存储到其他节点中。如图：<br>
-<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/20191203215829.png" alt="block"></p>
+<img src="img/20191203215829.png" alt="block"></p>
 <h2 id="思考">思考</h2>
 <p>1、一个文件160M，HDFS块参数设置是128M，副本数是2份。<br>
 	问：上传到HDFS中实际存储多少块，占用空间是多少？</p>
@@ -232,7 +232,7 @@ dfs块副本数量：<code>dfs.replication 	3~512</code><br>
 3、如果需要存储小文件，该如何处理？<br>
 答：在上传前将小文件合并成大文件，文件大小 &lt; <code>128M</code>。</p>
 <h1 id="hdfs架构">HDFS架构</h1>
-<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/hdfsarchitecture.png" alt="2"><br>
+<p><img src="img/hdfsarchitecture.png" alt="2"><br>
 HDFS架构图-应用程序通过Client与NameNode和DataNode进行交互</p>
 <h2 id="namenode-hdfs架构中的主节点">NameNode      – HDFS架构中的主节点</h2>
 <p>存储: 文件系统的命名空间<br>
@@ -270,14 +270,14 @@ PS：但是有可能: 手动修复 + 自动修复都是失败的 ，可以使用
 2、作用:定期合并fsimage+editlog 为新的fsimage推送给NN 简称为checkpoint 检查点<br>
 3、目的：为了解决单点故障，只有NN，后来加了一个SNN角色 1小时的备份机制，虽然能够减轻单点故障，但是还会有风险，那1小时元数据是恢复不了。<br>
 参数配置：dfs.name.checkpoint.period 3600s<br>
-<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/SecondaryNameNode.png" alt="secondary"><br>
+<img src="img/SecondaryNameNode.png" alt="secondary"><br>
 1.生成 edit_inprogress正在编辑中的文件<br>
 2.传输 fsimage+edits到SecondaryNameNode<br>
 3.合并 fsimage+edits这两个文件fsimage.ckpt<br>
 4.传输 fsimage.ckpt文件到NameNode<br>
 5.回滚 fsimage.ckpt==&gt;fsimage，同时edit.new==&gt;edit<br>
-<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/NN.png" alt="NN"><br>
-<img src="https://github.com/big-jerry/big-jerry.github.io/blob/master/img/SNN.png" alt="SNN"></p>
+<img src="img/NN.png" alt="NN"><br>
+<img src="img/SNN.png" alt="SNN"></p>
 
                 
 
