@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -220,7 +220,23 @@
 第三个副本:放置于第二个副本相同机架的不同DN节点上。<br>
 PS：CDH机架有一个默认机架 虚拟的概念，CDH一般不调整这种默认机架。</p>
 <h1 id="文件写流程">文件写流程</h1>
+<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/write.png" alt="write"><br>
+1、客户端调用<code>FileSystem.create()</code>方法。<br>
+2、与<code>NameNode</code>进行<code>rpc</code>通信，检查是否存在和是否有权限,条件不成立返回错误信息。条件成立就创建一个新文件，不关联任何的<code>block</code>块，返回一个<code>FSDataOutputStream</code>对象。<br>
+3、<code>Client</code>调用<code>FSDataOutputStream</code>对象的<code>write()</code>方法。<br>
+4、先将第一个快的第一个副本写到DN1节点，依次写入DN2、DN3节点。<br>
+5、DN3节点的副本块写入完成后返回一个ACK确认包给DN2节点，DN2接到ACK确认包后将自身状态更新到DN3节点传回的ACK确认包并返回给DN1节点，DN1接到ACK确认包后将自身状态更新到DN2节点传回的ACK确认包，并将ACK确认包返回给<code>FSDataOutputStream</code>。标志第一个块三个副本写入完成，剩余的块依次按照以上方式写入各DN节点。<br>
+6、当向文件写入数据完成后，Client调用FSDataOutputStream.close()方法，关闭输出流。<br>
+7、再调用FileSystem.complete()方法，告诉NN该文件写入成功。</p>
 <h1 id="文件读流程">文件读流程</h1>
+<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/read.png" alt="read"><br>
+1、<code>Client</code>调用<code>FileSystem.open(filePath)</code>方法。<br>
+2、与<code>NameNode</code>进行<code>rpc</code>通信，返回该文件的部分或者全部的<code>block</code>列表，也就是返回<code>FSDataInputStream</code>对象。<br>
+3、<code>Client</code>调用<code>FSDataInputStream</code>对象<code>read()</code>方法；<br>
+4、与第一个块最近的DN节点进行read,读取完成后，会check，假如ok，就关闭与当前DN的通信；假如失败，会记录失败块和DN节点信息，下次不会再读取；那么会去该块的第二个DN地址读取。<br>
+5、然后去第二个块的最近的DN上通信读取，check后，关闭通信。<br>
+PS：假如<code>block</code>列表读取完成后，文件还未结束，就再次调用<code>FileSystem.open(filePath)</code>方法，从NN获取该文件的下一批次的<code>block</code>列表。<br>
+6、Client调用<code>FSDataInputStream.close()</code>方法，关闭输入流。</p>
 
                 
 
