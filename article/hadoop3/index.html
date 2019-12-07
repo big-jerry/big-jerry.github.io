@@ -248,20 +248,46 @@ d.文件对应被切割为哪些数据块加副本数，数据块分布在哪些
 <h2 id="datanode-hdfs的从节点">DataNode		--HDFS的从节点</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 subdir0]$ ll</span><br><span class="line">总用量 408</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop    251 12月  1 19:19 blk_1073741825 #数据块</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop     11 12月  1 19:19 blk_1073741825_1001.meta #数据块校验和</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop    119 12月  1 19:51 blk_1073741834</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop     11 12月  1 19:51 blk_1073741834_1010.meta</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop    349 12月  1 19:51 blk_1073741835</span><br><span class="line">-rw-rw-r-- 1 hadoop hadoop     11 12月  1 19:51 blk_1073741835_1011.meta</span><br></pre></td></tr></table></figure>
 <p>DataNode也称作数据节点，存储数据块和数据块的校验和，与NameNode通信，通过官方文件<code>hdfs-default.xml</code>中<code>dfs.heartbeat.interval</code>参数，DN每3秒定时发送一个心跳给NN ,告知NN是否存活。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dfs.heartbeat.interval			3s				</span><br><span class="line">确定datanode心跳间隔(以秒为单位)。可以使用以下后缀(大小写不敏感):ms(millis)， s(sec)， m(min)， h(小时)，d(天)来指定时间(如2s, 2m, 1h等)。或者以秒为单位提供完整的数字(例如30表示30秒)。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dfs.heartbeat.interval			3s		</span><br><span class="line"></span><br><span class="line">确定datanode心跳间隔(以秒为单位)。可以使用以下后缀(大小写不敏感):ms(millis)， s(sec)， m(min)，</span><br><span class="line"> h(小时)，d(天)来指定时间(如2s, 2m, 1h等)。或者以秒为单位提供完整的数字(例如30表示30秒)。</span><br></pre></td></tr></table></figure>
 <p>Datanode扫描数据目录并协调内存块和磁盘块之间的差异，会定时发送块报告给NN。根据官方<code>hdfs-default.xml</code>文件中<code>dfs.blockreport.intervalMsec</code>参数显示，每个6小时向一次报告，根据<code>dfs.datanode.directoryscan.interval</code>显示每隔6小时扫描数据目录并协调内存块和磁盘块之间的差异，两个参数的时间根据实际情况调整间隔时长。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dfs.blockreport.intervalMsec	21600000	</span><br><span class="line">确定以毫秒为单位的块报告间隔。</span><br><span class="line">dfs.datanode.directoryscan.interval		21600s		</span><br><span class="line">Datanode扫描数据目录并协调内存块和磁盘块之间的差异的时间间隔(以秒为单位)。支持多个时间单位后缀(大小写不敏感)，如dfs.heartbeat.interval中所述。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dfs.blockreport.intervalMsec	21600000ms	等于6小时</span><br><span class="line">确定以毫秒为单位的块报告间隔。</span><br><span class="line">dfs.datanode.directoryscan.interval		21600s	等于6小时	</span><br><span class="line">Datanode扫描数据目录并协调内存块和磁盘块之间的差异的时间间隔(以秒为单位)。</span><br><span class="line">支持多个时间单位后缀(大小写不敏感)，如dfs.heartbeat.interval中所述。</span><br></pre></td></tr></table></figure>
 <p>PS：DN存储在本地磁盘上，一个DN节点上不可能存储一个块的多个副本，只能1个</p>
-<p>SecondaryNameNode     – Check  NN<br>
-1、存储:命名空间镜像fsimage + 编辑日志editlog<br>
-2、作用:定期合并fsimage+editlog 为新的fsimage推送给NN 称为 chenkpoint<br>
-参数配置：dfs.name.checkpoint.period 3600s</p>
+<h2 id="dn集群中某个节点的一个块的副本误删或丢失了怎么办">DN集群中某个节点的一个块的副本误删或丢失了怎么办？</h2>
+<p>答：可以使用<code>hdfs debug</code>的命令进行手动修复，或者配置自动修复<br>
+PS：[hadoop@hadoop01 ~]$ hdfs |grep debug<br>
+没有输出<code>debug</code>参数的任何信息结果！<br>
+故<code>hdfs</code>命令帮助是没有<code>debug</code>的，但是确实有<code>hdfs debug</code>这个组合命令，切记。<br>
+<code>hdfs debug</code>命令用途：<code>hdfs debug recoverLease -path &lt;path&gt; [-retries &lt;num-retries&gt;]</code><br>
+命令选项	描述<br>
+[-路径路径 ]	用于恢复的HDFS路径。<br>
+[-重试重试 ]	客户端将重试调用恢复权限的次数。默认重试次数为1次。<br>
+恢复指定路径上的块。路径必须驻留在HDFS文件系统上。默认重试次数为1次。<br>
+例如：hdfs debug  recoverLease  -path <code>/blockrecover/hadoop01.md</code>#块存放的路径 -<code>retries 10</code>#重试10次<br>
+自动修复方法推荐参考文章：<code>https://ruozedata.github.io/2019/06/06/%E7%94%9F%E4%BA%A7HDFS%20Block%E6%8D%9F%E5%9D%8F%E6%81%A2%E5%A4%8D%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5(%E5%90%AB%E6%80%9D%E8%80%83%E9%A2%98)/</code><br>
+PS：但是有可能: 手动修复 + 自动修复都是失败的 ，可以使用<code>FULL OUTER JOIN</code>方法做数据重刷的机制来保障数据质量。</p>
+<h2 id="secondarynamenode-check-nn">SecondaryNameNode     – Check  NN</h2>
+<p>1、存储:命名空间镜像fsimage + 编辑日志editlog<br>
+2、作用:定期合并fsimage+editlog 为新的fsimage推送给NN 简称为checkpoint 检查点<br>
+3、目的：为了解决单点故障，只有NN，后来加了一个SNN角色 1小时的备份机制，虽然能够减轻单点故障，但是还会有风险，那1小时元数据是恢复不了。<br>
+参数配置：dfs.name.checkpoint.period 3600s<br>
+<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/SecondaryNameNode.png" alt="secondary"><br>
+1.生成 edit_inprogress正在编辑中的文件<br>
+2.传输 fsimage+edits到SecondaryNameNode<br>
+3.合并 fsimage+edits这两个文件fsimage.ckpt<br>
+4.传输 fsimage.ckpt文件到NameNode<br>
+5.回滚 fsimage.ckpt==&gt;fsimage，同时edit.new==&gt;edit<br>
+<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/NN.png" alt="NN"><br>
+<img src="https://github.com/big-jerry/big-jerry.github.io/blob/master/img/SNN.png" alt="SNN"></p>
 
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/hadoop4/" data-toggle="tooltip" data-placement="top" title="HDFS副本放置策略+HDFS文件写、读流程">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -315,7 +341,7 @@ d.文件对应被切割为哪些数据块加副本数，数据块分布在哪些
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#block的理解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">block&#x7684;&#x7406;&#x89E3;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#思考"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x601D;&#x8003;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#如何定义hdfs的小文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5B9A;&#x4E49;Hdfs&#x7684;&#x5C0F;&#x6587;&#x4EF6;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#首先思考"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x9996;&#x5148;&#x601D;&#x8003;&#xFF1A;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs架构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">HDFS&#x67B6;&#x6784;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#namenode-hdfs架构中的主节点"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">NameNode      &#x2013; HDFS&#x67B6;&#x6784;&#x4E2D;&#x7684;&#x4E3B;&#x8282;&#x70B9;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#datanode-hdfs的从节点"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">DataNode		--HDFS&#x7684;&#x4ECE;&#x8282;&#x70B9;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#block的理解"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">block&#x7684;&#x7406;&#x89E3;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#思考"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x601D;&#x8003;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#如何定义hdfs的小文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5B9A;&#x4E49;Hdfs&#x7684;&#x5C0F;&#x6587;&#x4EF6;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#首先思考"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x9996;&#x5148;&#x601D;&#x8003;&#xFF1A;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs架构"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">HDFS&#x67B6;&#x6784;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#namenode-hdfs架构中的主节点"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">NameNode      &#x2013; HDFS&#x67B6;&#x6784;&#x4E2D;&#x7684;&#x4E3B;&#x8282;&#x70B9;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#datanode-hdfs的从节点"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">DataNode		--HDFS&#x7684;&#x4ECE;&#x8282;&#x70B9;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#dn集群中某个节点的一个块的副本误删或丢失了怎么办"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">DN&#x96C6;&#x7FA4;&#x4E2D;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x4E00;&#x4E2A;&#x5757;&#x7684;&#x526F;&#x672C;&#x8BEF;&#x5220;&#x6216;&#x4E22;&#x5931;&#x4E86;&#x600E;&#x4E48;&#x529E;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#secondarynamenode-check-nn"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">SecondaryNameNode     &#x2013; Check  NN</span></a></li></ol></li></ol>
         
         </div>
       </aside>

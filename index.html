@@ -211,6 +211,44 @@
 
 <div class="post-preview">
 
+    <a href="/article/hadoop4/">
+        <h2 class="post-title">
+                                 
+            HDFS副本放置策略+HDFS文件写、读流程
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            HDFS副本放置策略
+
+图片中按照默认3个副本来标识
+第一个副本:假如上传节点为DN节点，优先放置本节点,不占用网络消耗。否则就随机挑选一台磁盘不太慢  CPU不太繁忙的节点放置。
+第二个副本:放置在于第一个副本的不同的机架的DN节点上。
+第三个副本:放置于第二个副本相同机架的不同DN节点上。
+PS：CDH机架有一个默认机架 虚拟的概念，CDH一般不调整这种默认机架。
+文件写流程
+文件读流程
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-10-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/hadoop3/">
         <h2 class="post-title">
                                  
@@ -528,45 +566,6 @@ vi 命令的使用
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/liunx3/">
-        <h2 class="post-title">
-                                 
-            liunx基本命令使用方法（三）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            liunx基本命令使用方法（三）
-用户、用户组
-useradd 新增用户
-userdel 删除用户
-usermod 修改用户
-groupadd 新增用户组
-groupdel 删除用户组
-groupmod 修改用户组
-添加用户
-[root@localhost ~]# useradd hadoop
-[root@localhost home]# id hadoop uid=1000(hadoop)......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-14
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#liunx" title="liunx">liunx</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -608,7 +607,7 @@ groupmod 修改用户组
     <div class="tags">
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="4">hadoop</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="5">hadoop</a>
             
         
             
@@ -661,6 +660,10 @@ groupmod 修改用户组
     <ul>
       
         <li>
+          <a href="/article/hadoop4/">HDFS副本放置策略+HDFS文件写、读流程</a>
+        </li>
+      
+        <li>
           <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
         </li>
       
@@ -674,10 +677,6 @@ groupmod 修改用户组
       
         <li>
           <a href="/article/hadoop/">hadoop-2.6.0伪分布式部署</a>
-        </li>
-      
-        <li>
-          <a href="/article/sql1/">SQL语句的使用（二）</a>
         </li>
       
     </ul>
@@ -700,7 +699,7 @@ groupmod 修改用户组
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
