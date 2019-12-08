@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          HDFS副本放置策略+HDFS文件写、读流程 - 杰瑞的博客 | Blog
+          HDFS常用命令+安全模式+单节点、多节点的磁盘均衡 - 杰瑞的博客 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/hadoop4/">
+    <link rel="canonical" href="http://yoursite.com/article/hadoop5/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
                             
                         </div>
-                        <h1>HDFS副本放置策略+HDFS文件写、读流程</h1>
+                        <h1>HDFS常用命令+安全模式+单节点、多节点的磁盘均衡</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-10-04
+                            2017-10-08
                         </span>
                     </div>
                 
@@ -212,31 +212,85 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="hdfs副本放置策略">HDFS副本放置策略</h1>
-<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/replication.png" alt="replication"><br>
-图片中按照默认3个副本来标识<br>
-第一个副本:假如上传节点为DN节点，优先放置本节点,不占用网络消耗。否则就随机挑选一台磁盘不太慢  CPU不太繁忙的节点放置。<br>
-第二个副本:放置在于第一个副本的不同的机架的DN节点上。<br>
-第三个副本:放置于第二个副本相同机架的不同DN节点上。<br>
-PS：CDH机架有一个默认机架 虚拟的概念，CDH一般不调整这种默认机架。</p>
-<h1 id="文件写流程">文件写流程</h1>
-<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/write.png" alt="write"><br>
-1、客户端调用<code>FileSystem.create()</code>方法。<br>
-2、与<code>NameNode</code>进行<code>rpc</code>通信，检查是否存在和是否有权限,条件不成立返回错误信息。条件成立就创建一个新文件，不关联任何的<code>block</code>块，返回一个<code>FSDataOutputStream</code>对象。<br>
-3、<code>Client</code>调用<code>FSDataOutputStream</code>对象的<code>write()</code>方法。<br>
-4、先将第一个快的第一个副本写到DN1节点，依次写入DN2、DN3节点。<br>
-5、DN3节点的副本块写入完成后返回一个ACK确认包给DN2节点，DN2接到ACK确认包后将自身状态更新到DN3节点传回的ACK确认包并返回给DN1节点，DN1接到ACK确认包后将自身状态更新到DN2节点传回的ACK确认包，并将ACK确认包返回给<code>FSDataOutputStream</code>。标志第一个块三个副本写入完成，剩余的块依次按照以上方式写入各DN节点。<br>
-6、当向文件写入数据完成后，<code>Client</code>调用<code>FSDataOutputStream.close()</code>方法，关闭输出流。<br>
-7、再调用<code>FileSystem.complete()</code>方法，告诉NN该文件写入成功。</p>
-<h1 id="文件读流程">文件读流程</h1>
-<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/read.png" alt="read"><br>
-1、<code>Client</code>调用<code>FileSystem.open(filePath)</code>方法。<br>
-2、与<code>NameNode</code>进行<code>rpc</code>通信，返回该文件的部分或者全部的<code>block</code>列表，也就是返回<code>FSDataInputStream</code>对象。<br>
-3、<code>Client</code>调用<code>FSDataInputStream</code>对象<code>read()</code>方法；<br>
-4、与第一个块最近的DN节点进行read,读取完成后，会check，假如ok，就关闭与当前DN的通信；假如失败，会记录失败块和DN节点信息，下次不会再读取；那么会去该块的第二个DN地址读取。<br>
-5、然后去第二个块的最近的DN上通信读取，check后，关闭通信。<br>
-PS：假如<code>block</code>列表读取完成后，文件还未结束，就再次调用<code>FileSystem.open(filePath)</code>方法，从NN获取该文件的下一批次的<code>block</code>列表。<br>
-6、Client调用<code>FSDataInputStream.close()</code>方法，关闭输入流。</p>
+                <h1 id="hdfs常用命令">HDFS常用命令</h1>
+<p>[hadoop@hadoop01 ~]$ hdfs dfs<br>
+Usage: hadoop fs [generic options]<br>
+PS：hdfs dfs 命令等价于 hadoop fs 命令<br>
+[-mkdir [-p] <path></path> …]#创建文件夹<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -mkdir -p wordcount</code><br>
+[-cat [-ignoreCrc] <src> …]</src></p>
+<p>[-chmod [-R] &lt;MODE[,MODE]… | OCTALMODE&gt; PATH…] #修改文件、文件夹权限<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -chmod 777 -R /wordcount</code><br>
+[-chown [-R] [OWNER][:[GROUP]] PATH…]# 修改用户及用户组权限<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -chown hadoop:hadoop -R /wordcount</code><br>
+[-ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [<path></path> …]]<br>
+例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 logs]$ hdfs dfs -ls /</span><br><span class="line">19/12/08 17:09:21 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 2 items</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-12-08 17:01 /user</span><br><span class="line">drwxr-xr-x   - hadoop supergroup          0 2019-12-08 17:09 /wordcount</span><br></pre></td></tr></table></figure></p>
+<p>[-put [-f] [-p] [-l] <localsrc> … <dst>] #上传文件<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -put /home/hadoop/data/1.log /wordcount/input</code></dst></localsrc></p>
+<p>[-get [-p] [-ignoreCrc] [-crc] <src> … <localdst>]#下载文件<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs - get /wordcount/input/1.log /home/hadoop/data/1.log</code><br>
+[-copyFromLocal [-f] [-p] [-l] <localsrc> … <dst>]<br>
+[-copyToLocal [-p] [-ignoreCrc] [-crc] <src> … <localdst>]</localdst></src></dst></localsrc></localdst></src></p>
+<p>[-rm [-f] [-r|-R] [-skipTrash] <src> …]# 删除文件及文件夹<br>
+例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -rm /wordcount/input/1.log</code><br>
+hdfs fsck #用于检查HDFS上文件和目录的健康状态<br>
+例：<figure class="highlight plain"><figcaption><span>19:26:14 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Connecting to namenode via http://hadoop01:50070/fsck?ugi=hadoop&amp;path=%2F</span><br><span class="line">FSCK started by hadoop (auth:SIMPLE) from /192.168.0.253 for path / at Sun Dec 08 19:26:15 CST 2019</span><br><span class="line">..Status: HEALTHY</span><br><span class="line"> Total size:	502 B</span><br><span class="line"> Total dirs:	7</span><br><span class="line"> Total files:	2</span><br><span class="line"> Total symlinks:		0</span><br><span class="line"> Total blocks (validated):	2 (avg. block size 251 B)</span><br><span class="line"> Minimally replicated blocks:	2 (100.0 %)</span><br><span class="line"> Over-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Under-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Mis-replicated blocks:		0 (0.0 %)</span><br><span class="line"> Default replication factor:	1</span><br><span class="line"> Average block replication:	1.0</span><br><span class="line"> Corrupt blocks:		0</span><br><span class="line"> Missing replicas:		0 (0.0 %)</span><br><span class="line"> Number of data-nodes:		1</span><br><span class="line"> Number of racks:		1</span><br><span class="line">FSCK ended at Sun Dec 08 19:26:15 CST 2019 in 9 milliseconds</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The filesystem under path &apos;/&apos; is HEALTHY</span><br></pre></td></tr></table></figure></src></p>
+<h1 id="hdfs回收站机制">HDFS回收站机制</h1>
+<p>[hadoop@hadoop01 logs]$ hdfs dfs -rm /wordcount/input/1.log<br>
+19/12/08 17:27:28 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
+Deleted /wordcount/input/1.log #删除成功，并没有放到回收站，表示当前环境并没有配置回收站<br>
+通过官方<code>core-default.xml</code>文件了解到<code>fs.trash.interval</code>的参数控制是否开启回收站机制。</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fs.trash.interval</td>
+<td>0</td>
+<td>Number of minutes after which the checkpoint gets deleted. If zero, the trash feature is disabled. This option may be configured both on the server and the client.</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;property&gt;
+    &lt;name&gt;fs.trash.interval&lt;/name&gt;
+    &lt;value&gt;10080&lt;/value&gt; #保存7天
+&lt;/property&gt;
+</code></pre>
+<p>重启DFS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -rm /1.log </span><br><span class="line">19/12/08 18:53:54 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">19/12/08 18:53:54 INFO fs.TrashPolicyDefault: Moved: &apos;hdfs://hadoop01:9000/1.log&apos; to trash at: hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log #系统将文件移到该目录。</span><br><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -ls hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log #验证文件是否存在。</span><br><span class="line">19/12/08 18:57:57 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">-rw-r--r--   1 hadoop supergroup        251 2019-12-08 18:52 hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log</span><br></pre></td></tr></table></figure>
+<h2 id="如何在开启回收站的情况下删除文件而文件不进入回收站">如何在开启回收站的情况下删除文件，而文件不进入回收站？</h2>
+<p>[-rm [-f] [-r|-R] [-skipTrash]#跳过回收站 <src> …]<br>
+例：</src></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -rm -skipTrash /1.log</span><br><span class="line">19/12/08 19:07:24 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Deleted /1.log</span><br></pre></td></tr></table></figure>
+<p>PS：切记生产环境是否开启回收站，CDH默认开启。在生产环境中删除文件慎用<code>-skipTrash</code>参数，建议配置回收站文件保留7天。</p>
+<h1 id="安全模式">安全模式</h1>
+<p>如果NameNode log显示NN集群进入<code>safe mode</code>(安全模式)，正常情况手动让其离开安全模式。<br>
+离开安全模式的命令：<code>hdfs dfsadmin -safemode leave</code><br>
+PS：安全模式不能写入数据，只能读取数据。</p>
+<h1 id="单节点-多节点的磁盘均衡">单节点、多节点的磁盘均衡</h1>
+<p>磁盘均衡参考官方文件<code>hdfs-default.xml</code>中<code>dfs.datanode.balance.bandwidthPerSec</code>参数配置。</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dfs.datanode.balance.bandwidthPerSec</td>
+<td>10m</td>
+<td>Specifies the maximum amount of bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. You can use the following suffix (case insensitive): k(kilo), m(mega), g(giga), t(tera), p(peta), e(exa)to specify the size (such as 128k, 512m, 1g, etc.). Or provide complete size in bytes (such as 134217728 for 128 MB)</td>
+</tr>
+</tbody>
+</table>
+<p>通过<code>hadoop-hadoop-balancer-hadoop01.log</code>中的<code>threshold = 10.0</code>可以发现默认的阀值等于10。也就是所有节点的磁盘使用比例与集群的平均使用比例之差要小于这个阈值。</p>
 
                 
 
@@ -244,13 +298,9 @@ PS：假如<code>block</code>列表读取完成后，文件还未结束，就再
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/hadoop5/" data-toggle="tooltip" data-placement="top" title="HDFS常用命令+安全模式+单节点、多节点的磁盘均衡">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/hadoop3/" data-toggle="tooltip" data-placement="top" title="block+小文件+dnfs架构+SecondaryNameNode流程的梳理">Next Post &rarr;</a>
+                            <a href="/article/hadoop4/" data-toggle="tooltip" data-placement="top" title="HDFS副本放置策略+HDFS文件写、读流程">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -300,7 +350,7 @@ PS：假如<code>block</code>列表读取完成后，文件还未结束，就再
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs副本放置策略"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HDFS&#x526F;&#x672C;&#x653E;&#x7F6E;&#x7B56;&#x7565;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#文件写流程"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x6587;&#x4EF6;&#x5199;&#x6D41;&#x7A0B;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#文件读流程"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x6587;&#x4EF6;&#x8BFB;&#x6D41;&#x7A0B;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs常用命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HDFS&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs回收站机制"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">HDFS&#x56DE;&#x6536;&#x7AD9;&#x673A;&#x5236;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何在开启回收站的情况下删除文件而文件不进入回收站"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5728;&#x5F00;&#x542F;&#x56DE;&#x6536;&#x7AD9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x6587;&#x4EF6;&#x4E0D;&#x8FDB;&#x5165;&#x56DE;&#x6536;&#x7AD9;&#xFF1F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#安全模式"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x5B89;&#x5168;&#x6A21;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#单节点-多节点的磁盘均衡"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x5355;&#x8282;&#x70B9;&#x3001;&#x591A;&#x8282;&#x70B9;&#x7684;&#x78C1;&#x76D8;&#x5747;&#x8861;</span></a></li></ol>
         
         </div>
       </aside>
