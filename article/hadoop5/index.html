@@ -142,6 +142,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archive/">Archives</a>
                         </li>
                         
@@ -150,13 +157,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -234,12 +234,10 @@ PS：hdfs dfs 命令等价于 hadoop fs 命令<br>
 <p>[-rm [-f] [-r|-R] [-skipTrash] <src> …]# 删除文件及文件夹<br>
 例：<code>[hadoop@hadoop01 logs]$ hdfs dfs -rm /wordcount/input/1.log</code><br>
 hdfs fsck #用于检查HDFS上文件和目录的健康状态<br>
-例：<figure class="highlight plain"><figcaption><span>19:26:14 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Connecting to namenode via http://hadoop01:50070/fsck?ugi=hadoop&amp;path=%2F</span><br><span class="line">FSCK started by hadoop (auth:SIMPLE) from /192.168.0.253 for path / at Sun Dec 08 19:26:15 CST 2019</span><br><span class="line">..Status: HEALTHY</span><br><span class="line"> Total size:	502 B</span><br><span class="line"> Total dirs:	7</span><br><span class="line"> Total files:	2</span><br><span class="line"> Total symlinks:		0</span><br><span class="line"> Total blocks (validated):	2 (avg. block size 251 B)</span><br><span class="line"> Minimally replicated blocks:	2 (100.0 %)</span><br><span class="line"> Over-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Under-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Mis-replicated blocks:		0 (0.0 %)</span><br><span class="line"> Default replication factor:	1</span><br><span class="line"> Average block replication:	1.0</span><br><span class="line"> Corrupt blocks:		0</span><br><span class="line"> Missing replicas:		0 (0.0 %)</span><br><span class="line"> Number of data-nodes:		1</span><br><span class="line"> Number of racks:		1</span><br><span class="line">FSCK ended at Sun Dec 08 19:26:15 CST 2019 in 9 milliseconds</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The filesystem under path &apos;/&apos; is HEALTHY</span><br></pre></td></tr></table></figure></src></p>
+例：<figure class="highlight plain"><figcaption><span>data]$ hdfs fsck /</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">19/12/08 19:26:14 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Connecting to namenode via http://hadoop01:50070/fsck?ugi=hadoop&amp;path=%2F</span><br><span class="line">FSCK started by hadoop (auth:SIMPLE) from /192.168.0.253 for path / at Sun Dec 08 19:26:15 CST 2019</span><br><span class="line">..Status: HEALTHY</span><br><span class="line"> Total size:	502 B</span><br><span class="line"> Total dirs:	7</span><br><span class="line"> Total files:	2</span><br><span class="line"> Total symlinks:		0</span><br><span class="line"> Total blocks (validated):	2 (avg. block size 251 B)</span><br><span class="line"> Minimally replicated blocks:	2 (100.0 %)</span><br><span class="line"> Over-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Under-replicated blocks:	0 (0.0 %)</span><br><span class="line"> Mis-replicated blocks:		0 (0.0 %)</span><br><span class="line"> Default replication factor:	1</span><br><span class="line"> Average block replication:	1.0</span><br><span class="line"> Corrupt blocks:		0  #损坏的块</span><br><span class="line"> Missing replicas:		0 (0.0 %) #丢失的副本</span><br><span class="line"> Number of data-nodes:		1</span><br><span class="line"> Number of racks:		1</span><br><span class="line">FSCK ended at Sun Dec 08 19:26:15 CST 2019 in 9 milliseconds</span><br><span class="line">The filesystem under path &apos;/&apos; is HEALTHY</span><br></pre></td></tr></table></figure></src></p>
 <h1 id="hdfs回收站机制">HDFS回收站机制</h1>
-<p>[hadoop@hadoop01 logs]$ hdfs dfs -rm /wordcount/input/1.log<br>
-19/12/08 17:27:28 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>
-Deleted /wordcount/input/1.log #删除成功，并没有放到回收站，表示当前环境并没有配置回收站<br>
-通过官方<code>core-default.xml</code>文件了解到<code>fs.trash.interval</code>的参数控制是否开启回收站机制。</p>
+<figure class="highlight plain"><figcaption><span>logs]$ hdfs dfs -rm</span><a href="/wordcount/input/1.log">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">19/12/08 17:27:28 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Deleted /wordcount/input/1.log #删除成功，并没有放到回收站，表示当前环境并没有配置回收站</span><br></pre></td></tr></table></figure>
+<p>通过官方<code>core-default.xml</code>文件了解到<code>fs.trash.interval</code>的参数控制是否开启回收站机制。</p>
 <table>
 <thead>
 <tr>
@@ -256,16 +254,16 @@ Deleted /wordcount/input/1.log #删除成功，并没有放到回收站，表示
 </tr>
 </tbody>
 </table>
-<pre><code>&lt;property&gt;
-    &lt;name&gt;fs.trash.interval&lt;/name&gt;
-    &lt;value&gt;10080&lt;/value&gt; #保存7天
-&lt;/property&gt;
-</code></pre>
-<p>重启DFS</p>
+<p>将下列配置参数添加到 <code>core-default.xml</code>。<br>
+<property><br>
+<name>fs.trash.interval</name><br>
+<value>10080</value> #保存7天<br>
+</property><br>
+重启DFS</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -rm /1.log </span><br><span class="line">19/12/08 18:53:54 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">19/12/08 18:53:54 INFO fs.TrashPolicyDefault: Moved: &apos;hdfs://hadoop01:9000/1.log&apos; to trash at: hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log #系统将文件移到该目录。</span><br><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -ls hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log #验证文件是否存在。</span><br><span class="line">19/12/08 18:57:57 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">-rw-r--r--   1 hadoop supergroup        251 2019-12-08 18:52 hdfs://hadoop01:9000/user/hadoop/.Trash/Current/1.log</span><br></pre></td></tr></table></figure>
 <h2 id="如何在开启回收站的情况下删除文件而文件不进入回收站">如何在开启回收站的情况下删除文件，而文件不进入回收站？</h2>
-<p>[-rm [-f] [-r|-R] [-skipTrash]#跳过回收站 <src> …]<br>
-例：</src></p>
+<p><code>[-rm [-f] [-r|-R] [-skipTrash]#跳过回收站 &lt;src&gt; ...]</code><br>
+例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 data]$ hdfs dfs -rm -skipTrash /1.log</span><br><span class="line">19/12/08 19:07:24 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Deleted /1.log</span><br></pre></td></tr></table></figure>
 <p>PS：切记生产环境是否开启回收站，CDH默认开启。在生产环境中删除文件慎用<code>-skipTrash</code>参数，建议配置回收站文件保留7天。</p>
 <h1 id="安全模式">安全模式</h1>
@@ -291,6 +289,10 @@ PS：安全模式不能写入数据，只能读取数据。</p>
 </tbody>
 </table>
 <p>通过<code>hadoop-hadoop-balancer-hadoop01.log</code>中的<code>threshold = 10.0</code>可以发现默认的阀值等于10。也就是所有节点的磁盘使用比例与集群的平均使用比例之差要小于这个阈值。</p>
+<h2 id="多节点磁盘均衡">多节点磁盘均衡</h2>
+<p>每日执行<code>./start-balancer.sh</code>或<code>./start-balancer.sh -threshold 5</code>shell脚本，来实现磁盘均衡。</p>
+<h2 id="一个dn节点多个磁盘的数据均衡">一个DN节点多个磁盘的数据均衡</h2>
+<p>推荐参考该博客：<a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HDFSDiskbalancer.html" target="_blank" rel="noopener">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HDFSDiskbalancer.html</a></p>
 
                 
 
@@ -350,7 +352,7 @@ PS：安全模式不能写入数据，只能读取数据。</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs常用命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HDFS&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs回收站机制"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">HDFS&#x56DE;&#x6536;&#x7AD9;&#x673A;&#x5236;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何在开启回收站的情况下删除文件而文件不进入回收站"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5728;&#x5F00;&#x542F;&#x56DE;&#x6536;&#x7AD9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x6587;&#x4EF6;&#x4E0D;&#x8FDB;&#x5165;&#x56DE;&#x6536;&#x7AD9;&#xFF1F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#安全模式"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x5B89;&#x5168;&#x6A21;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#单节点-多节点的磁盘均衡"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x5355;&#x8282;&#x70B9;&#x3001;&#x591A;&#x8282;&#x70B9;&#x7684;&#x78C1;&#x76D8;&#x5747;&#x8861;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs常用命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HDFS&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hdfs回收站机制"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">HDFS&#x56DE;&#x6536;&#x7AD9;&#x673A;&#x5236;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何在开启回收站的情况下删除文件而文件不进入回收站"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x5728;&#x5F00;&#x542F;&#x56DE;&#x6536;&#x7AD9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x5220;&#x9664;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x6587;&#x4EF6;&#x4E0D;&#x8FDB;&#x5165;&#x56DE;&#x6536;&#x7AD9;&#xFF1F;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#安全模式"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x5B89;&#x5168;&#x6A21;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#单节点-多节点的磁盘均衡"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">&#x5355;&#x8282;&#x70B9;&#x3001;&#x591A;&#x8282;&#x70B9;&#x7684;&#x78C1;&#x76D8;&#x5747;&#x8861;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#多节点磁盘均衡"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">&#x591A;&#x8282;&#x70B9;&#x78C1;&#x76D8;&#x5747;&#x8861;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一个dn节点多个磁盘的数据均衡"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">&#x4E00;&#x4E2A;DN&#x8282;&#x70B9;&#x591A;&#x4E2A;&#x78C1;&#x76D8;&#x7684;&#x6570;&#x636E;&#x5747;&#x8861;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
