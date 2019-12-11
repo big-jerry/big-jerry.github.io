@@ -7,8 +7,16 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/article/mapreduce/</loc>
+        <lastmod>2019-12-10T16:24:30.364Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/article/hadoop5/</loc>
-        <lastmod>2019-12-09T08:48:30.118Z</lastmod>
+        <lastmod>2019-12-09T08:52:04.937Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
