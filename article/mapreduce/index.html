@@ -142,14 +142,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -223,7 +223,8 @@
 *<code>NodeManager</code>包含很多的<code>container</code>,是专门用来MR、spark等计算的最小单元。</li>
 </ul>
 <h2 id="mapreduce-on-yarn-的流程">MapReduce on Yarn 的流程</h2>
-<p>*简略的分为两步：<br>
+<p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/MR%20on%20Yarn.png" alt="map on yarn"><br>
+*简略的分为两步：<br>
 *启动Applications Master，向resource scheduler申请资源；<br>
 *运行作业，直到作业运行完成。<br>
 *详细分8个步骤：<br>
@@ -244,6 +245,70 @@
 <h1 id="文件格式和压缩格式的优缺点">文件格式和压缩格式的优缺点</h1>
 <p>##文件格式的优缺点</p>
 <h2 id="压缩的好处和坏处">压缩的好处和坏处</h2>
+<table>
+<thead>
+<tr>
+<th>压缩格式</th>
+<th>工具</th>
+<th>算法</th>
+<th>扩展名</th>
+<th>是否支持分割</th>
+<th>Hadoop编码/解码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEFLATE</td>
+<td>N/A</td>
+<td>DEFLATE</td>
+<td>.deflate</td>
+<td>No</td>
+<td>org.apache.hadoop.io.compress.DefalutCodec</td>
+</tr>
+<tr>
+<td>gzip</td>
+<td>gzip</td>
+<td>DEFLATE</td>
+<td>.gz</td>
+<td>No</td>
+<td>org.apache.hadoop.io.compress.GzipCodec</td>
+</tr>
+<tr>
+<td>bzip2</td>
+<td>bzip2</td>
+<td>bzip2</td>
+<td>.bz2</td>
+<td>Yes</td>
+<td>org.apache.hadoop.io.compress.Bzip2Codec</td>
+</tr>
+<tr>
+<td>LZO</td>
+<td>Lzop</td>
+<td>LZO</td>
+<td>.lzo</td>
+<td>Yes(if index)</td>
+<td>com.hadoop.compression.lzo.LzoCodec</td>
+</tr>
+<tr>
+<td>LZ4</td>
+<td>N/A</td>
+<td>LZ4</td>
+<td>.lz4</td>
+<td>No</td>
+<td>org.apache.hadoop.io.compress.Lz4Codec</td>
+</tr>
+<tr>
+<td>Snappy</td>
+<td>N/A</td>
+<td>Snappy</td>
+<td>.snappy</td>
+<td>No</td>
+<td>org.apache.hadoop.io.compress.SnappyCodec</td>
+</tr>
+</tbody>
+</table>
+<p><img src="" alt=""><br>
+<img src="" alt=""></p>
 <p>:好处<br>
 :减少存储磁盘空间<br>
 :降低IO(网络的IO和磁盘的IO)<br>
@@ -253,6 +318,12 @@
 <blockquote>
 <blockquote>
 <p>==可以看出，压缩比越高，压缩时间越长，压缩比：Snappy&gt;LZ4&gt;LZO&gt;GZIP&gt;BZIP2==&lt;&lt;<br>
+|压缩格式|优点|缺点|<br>
+|-|-|-|<br>
+|gzip|压缩比在四种压缩方式中较高；hadoop本身支持，在应用中处理gzip格式的文件就和直接处理文本一样；有hadoop native库；大部分linux系统都自带gzip命令，使用方便|不支持split|<br>
+|lzo|压缩/解压速度也比较快，合理的压缩率；支持split，是hadoop中最流行的压缩格式；支持hadoop native库；需要在linux系统下自行安装lzop命令，使用方便|压缩率比gzip要低；hadoop本身不支持，需要安装；lzo虽然支持split，但需要对lzo文件建索引，否则hadoop也是会把lzo文件看成一个普通文件（为了支持split需要建索引，需要指定inputformat为lzo格式）|<br>
+|snappy|压缩速度快；支持hadoop native库|不支持split；压缩比低；hadoop本身不支持，需要安装；linux系统下没有对应的命令d. bzip2|<br>
+|bzip2|支持split；具有很高的压缩率，比gzip压缩率都高；hadoop本身支持，但不支持native；在linux系统下自带bzip2命令，使用方便|压缩/解压速度慢；不支持native|<br>
 :总结：不同的场景选择不同的压缩方式，肯定没有一个一劳永逸的方法，如果选择高压缩比，那么对于cpu的性能要求要高，同时压缩、解压时间耗费也多；选择压缩比低的，对于磁盘io、网络io的时间要多，空间占据要多；对于支持分割的，可以实现并行处理。</p>
 </blockquote>
 </blockquote>
