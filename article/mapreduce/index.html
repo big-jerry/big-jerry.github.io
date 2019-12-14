@@ -219,7 +219,7 @@
 <li>Reduce 是聚合，默认1个</li>
 <li><code>MapReduce</code>是基于<code>Yarn</code>的架构去运行的。</li>
 <li>包含<code>RsourceManager</code>节点和<code>NodeManager</code>节点。</li>
-<li><code>RsourceManager</code> 分管2个进程：<code>Applications Manager</code>(应用程序管理器)和<code>resource scheduler</code>(资源调度器)。</li>
+<li><code>RsourceManager</code> 分管2个组件：<code>Applications Manager</code>(应用程序管理器)和<code>resource scheduler</code>(资源调度器)。</li>
 <li><code>NodeManager</code>包含很多的<code>container</code>,是专门用来MR、spark等计算的最小单元。</li>
 </ul>
 <h2 id="mapreduce-on-yarn-的流程">MapReduce on Yarn 的流程</h2>
@@ -359,6 +359,10 @@
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">

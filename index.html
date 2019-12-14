@@ -211,6 +211,41 @@
 
 <div class="post-preview">
 
+    <a href="/article/yarn1/">
+        <h2 class="post-title">
+                                 
+            Yarn调优方法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Yarn调优方法及调度器介绍
+Container的介绍
+
+container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。
+Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。
+
+Yar......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-10-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/mapreduce/">
         <h2 class="post-title">
                                  
@@ -227,7 +262,7 @@ Map 是映射
 Reduce 是聚合，默认1个
 MapReduce是基于Yarn的架构去运行的。
 包含RsourceManager节点和NodeManager节点。
-RsourceManager 分管2个进程：Applications Manager(应用程序管理器)和resource scheduler(资源调度器)。......
+RsourceManager 分管2个组件：Applications Manager(应用程序管理器)和resource scheduler(资源调度器)。......
         </div>
     </a>
     
@@ -531,41 +566,6 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/mysql/">
-        <h2 class="post-title">
-                                 
-            MySQL 5.6离线二进制部署
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            MySQL 5.6离线二进制部署
-下载压缩包并上传至liunx
-下载 mysql-5.6.23-linux-glibc2.5-x86_64.tar.gz压缩包
-百度云链接：https://pan.baidu.com/s/14I_i-i7D1S5rIfSmbeNpVg
-提取码：fktz
-使用rz命令上传至/usr/local目录。
-1234567[root@localhost local]# ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-17
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -607,7 +607,7 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
     <div class="tags">
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="7">hadoop</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="8">hadoop</a>
             
         
             
@@ -660,6 +660,10 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
     <ul>
       
         <li>
+          <a href="/article/yarn1/">Yarn调优方法</a>
+        </li>
+      
+        <li>
           <a href="/article/mapreduce/">MapReduce设计原理+task+压缩格式</a>
         </li>
       
@@ -673,10 +677,6 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
       
         <li>
           <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
-        </li>
-      
-        <li>
-          <a href="/article/Yarn/">Yarn伪分布式部署+jps原理+oom kill和clear机制</a>
         </li>
       
     </ul>
@@ -699,7 +699,7 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
