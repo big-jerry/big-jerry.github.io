@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Yarn调优方法 - 杰瑞的博客 | Blog
+          杰瑞的博客 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/yarn1/">
+    <link rel="canonical" href="http://yoursite.com/article/hive/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,12 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
-                            
                         </div>
-                        <h1>Yarn调优方法</h1>
+                        <h1></h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-10-12
+                            2019-12-15
                         </span>
                     </div>
                 
@@ -212,128 +210,16 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="yarn调优方法及调度器介绍">Yarn调优方法及调度器介绍</h1>
-<h2 id="container的介绍">Container的介绍</h2>
-<ul>
-<li>container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。<br>
-*Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。</li>
-<li>Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。</li>
-</ul>
-<h2 id="yarn调优方法">Yarn调优方法</h2>
-<p><code>生产上如何调优container参数？container调优即yarn的调优。</code></p>
-<ul>
-<li>开始布置环境时给系统预留15%-20%内存(包含安装系统消耗的内存)目的是防全部使用导致系统宕机和 oom机制事件，或者给未来部署组件预留点空间。</li>
-<li>计算安装hadoop相关组件需要多少内存，及剩余多少内存供container使用，例如：128G内存-系统预留20%-DN内存2G-NM内存4G剩下96G内存即是container可分配的内存。</li>
-<li>container内存：</li>
-<li>具体修改参数，根据官方<code>yarn-default.xml</code>提供的参数进行修改。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.memory-mb</td>
-<td>-1</td>
-<td>Amount of physical memory, in MB, that can be allocated for containers. If set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically calculated(in case of Windows and Linux). In other cases, the default is 8192MB.</td>
-<td>可以分配给容器的物理内存总量(以MB为单位)。如果设置为-1，且yarn.nodemana .resource.detect-hardware- capability为true，则自动计算(在Windows和Linux中)。在其他情况下，默认为8192MB。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-mb</td>
-<td>1024</td>
-<td>The minimum allocation for every container request at the RM in MBs. Memory requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have less memory than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小分配。低于此值的内存请求将被设置为此属性的值。此外，将节点管理器配置为内存少于此值的节点管理器将被资源管理器关闭。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-mb</td>
-<td>8192</td>
-<td>The maximum allocation for every container request at the RM in MBs. Memory requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>每个容器请求在RM上的最大分配。高于此值的内存请求将抛出invalidresourcer请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>N个1G内存的container</code>和<code>N个8G内存的container</code>，这个N的值由内存大小决定。</p>
-<ul>
-<li>container虚拟核（官方默认物理核与虚拟核的比例是1:2）官方参数：yarn.nodemanager.resource.pcores-vcores-multiplier 2</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.cpu-vcores</td>
-<td>-1</td>
-<td>Number of vcores that can be allocated for containers. This is used by the RM scheduler when allocating resources for containers. This is not used to limit the number of CPUs used by YARN containers. If it is set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically determined from the hardware in case of Windows and Linux. In other cases, number of vcores is 8 by default.</td>
-<td>可以为容器分配的vcore数量。RM调度器在为容器分配资源时使用它。这并不用于限制纱线容器使用的cpu数量。如果它被设置为-1，并且yarn.nodemana .resource.detect-hardware- capability为真，那么在Windows和Linux中，它将从硬件自动确定。在其他情况下，vcore的默认数量是8。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-vcores</td>
-<td>1</td>
-<td>The minimum allocation for every container request at the RM in terms of virtual CPU cores. Requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have fewer virtual cores than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小虚拟CPU核心分配。低于此值的请求将被设置为此属性的值。此外，如果将节点管理器配置为拥有比这个值更少的虚拟内核，则资源管理器将关闭该节点管理器。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-vcores</td>
-<td>4</td>
-<td>The maximum allocation for every container request at the RM in terms of virtual CPU cores. Requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>在RM上为每个容器请求分配的最大虚拟CPU核心。高于此值的请求将抛出<code>invalidresourcer</code>请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>1个vcore给container</code>和<code>N个vcore给container</code>，这个N的值由Vcore的数量决定。</p>
-<ul>
-<li>官方建议：cloudera公司推荐，一个container的vcore最好不要超过5，那么我们设置4</li>
-</ul>
-<h1 id="假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置">假如 256G内存 56core，默认物理core和虚拟core比例是1:2，请问参数如何设置？</h1>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，剩余可用最大内存204G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     204G	#可分配总内存204G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	7 		#最大分配内存7G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-</ul>
-<h2 id="假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置">假如该节点还有组件，比如hbase regionserver = 30G进程，那么该如何设置？</h2>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，hbase regionserver = 30G，剩余可用最大内存174G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     174G	#可分配总内存174G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	6		#最大分配内存6G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-<li>以上是理想的调优分配参数。</li>
-</ul>
-
+                
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/yarn2/" data-toggle="tooltip" data-placement="top" title="Yarn的调度器+Yarn的常用命令">Next Post &rarr;</a>
+                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -377,18 +263,6 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-  
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn调优方法及调度器介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;&#x53CA;&#x8C03;&#x5EA6;&#x5668;&#x4ECB;&#x7ECD;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#container的介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Container&#x7684;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5047;&#x5982; 256G&#x5185;&#x5B58; 56core&#xFF0C;&#x9ED8;&#x8BA4;&#x7269;&#x7406;core&#x548C;&#x865A;&#x62DF;core&#x6BD4;&#x4F8B;&#x662F;1:2&#xFF0C;&#x8BF7;&#x95EE;&#x53C2;&#x6570;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5047;&#x5982;&#x8BE5;&#x8282;&#x70B9;&#x8FD8;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;hbase regionserver = 30G&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a></li></ol></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -403,8 +277,6 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
-                        
                     </div>
                 </section>
                 

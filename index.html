@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -211,6 +211,33 @@
 
 <div class="post-preview">
 
+    <a href="/article/hive/">
+        <h2 class="post-title">
+                                 
+            Untitled
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            ...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2019-12-15
+        </p>
+        <div class="tags">
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/article/yarn1/">
         <h2 class="post-title">
                                  
@@ -224,9 +251,42 @@
 Container的介绍
 
 container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。
-Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。
+*Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。
+Container是YARN里......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-10-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#hadoop" title="hadoop">hadoop</a>
+            
+        </div>
+    
 
-Yar......
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/yarn2/">
+        <h2 class="post-title">
+                                 
+            Yarn的调度器+Yarn的常用命令
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Yarn的调度器+Yarn的常用命令
+Yarn的调度器
+
+Yarn的调度器分别有FIFO、Capacity、Fair这三种。
+FIFO调度器
+FIFO调度器简称先进先出调度器，如图中i：这是一个先进先出队列，在进行资源分配的时候，先给队列中最头上的应用进行分配资源，待最头上的应用需求满足后再给下一个分配，以此类推。FIFO Scheduler是最简单也是最容易理解的调度器，也不需要任何配置，......
         </div>
     </a>
     
@@ -494,78 +554,6 @@ jdk-8u45-linux-x64.gz的压缩包
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/article/sql1/">
-        <h2 class="post-title">
-                                 
-            SQL语句的使用（二）
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            SQL语句的使用（二）
-创建数据库
-use hadoop;#切换到hadoop数据库
-创建部门表并注释字段
-列：create table 表名 (
-	列名 定义数据类型 定义数据属性 注释，
-	列名 定义数据类型 定义数据属性 注释
-)；
-12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apo......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-20
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/article/sql/">
-        <h2 class="post-title">
-                                 
-            SQL语句的使用(一)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            SQL语句的使用(一)
-创建DB user
-create database hadoop; #创建hadoop数据库。
-show databases; #查看数据库是否创建成功。
-grant all privileges on \*.\* to jerry@'%' identified by 'centos';
-GRANT语法：     
-GRANT 权限 ON 数据库.* TO 用户名@'......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by 杰瑞 on
-            2017-09-18
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#mysql" title="mysql">mysql</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -607,7 +595,7 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
     <div class="tags">
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="8">hadoop</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="9">hadoop</a>
             
         
             
@@ -660,7 +648,15 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
     <ul>
       
         <li>
+          <a href="/article/hive/">(no title)</a>
+        </li>
+      
+        <li>
           <a href="/article/yarn1/">Yarn调优方法</a>
+        </li>
+      
+        <li>
+          <a href="/article/yarn2/">Yarn的调度器+Yarn的常用命令</a>
         </li>
       
         <li>
@@ -669,14 +665,6 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
       
         <li>
           <a href="/article/hadoop5/">HDFS常用命令+安全模式+单节点、多节点的磁盘均衡</a>
-        </li>
-      
-        <li>
-          <a href="/article/hadoop4/">HDFS副本放置策略+HDFS文件写、读流程</a>
-        </li>
-      
-        <li>
-          <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
         </li>
       
     </ul>
@@ -699,7 +687,7 @@ GRANT 权限 ON 数据库.* TO 用户名@'......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>

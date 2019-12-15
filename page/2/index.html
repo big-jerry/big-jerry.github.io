@@ -141,14 +141,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -208,6 +208,78 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/article/sql1/">
+        <h2 class="post-title">
+                                 
+            SQL语句的使用（二）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            SQL语句的使用（二）
+创建数据库
+use hadoop;#切换到hadoop数据库
+创建部门表并注释字段
+列：create table 表名 (
+	列名 定义数据类型 定义数据属性 注释，
+	列名 定义数据类型 定义数据属性 注释
+)；
+12345create table dept (deptno numeric(2) default null comment &apos;部门编号&apo......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-20
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/article/sql/">
+        <h2 class="post-title">
+                                 
+            SQL语句的使用(一)
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            SQL语句的使用(一)
+创建DB user
+create database hadoop; #创建hadoop数据库。
+show databases; #查看数据库是否创建成功。
+grant all privileges on \*.\* to jerry@'%' identified by 'centos';
+GRANT语法：     
+GRANT 权限 ON 数据库.* TO 用户名@'......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by 杰瑞 on
+            2017-09-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#mysql" title="mysql">mysql</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -466,7 +538,7 @@ cd /etc/sysconfig/network-......
     <div class="tags">
         
             
-            <a href="/tags/#hadoop" title="hadoop" rel="8">hadoop</a>
+            <a href="/tags/#hadoop" title="hadoop" rel="9">hadoop</a>
             
         
             
@@ -519,7 +591,15 @@ cd /etc/sysconfig/network-......
     <ul>
       
         <li>
+          <a href="/article/hive/">(no title)</a>
+        </li>
+      
+        <li>
           <a href="/article/yarn1/">Yarn调优方法</a>
+        </li>
+      
+        <li>
+          <a href="/article/yarn2/">Yarn的调度器+Yarn的常用命令</a>
         </li>
       
         <li>
@@ -528,14 +608,6 @@ cd /etc/sysconfig/network-......
       
         <li>
           <a href="/article/hadoop5/">HDFS常用命令+安全模式+单节点、多节点的磁盘均衡</a>
-        </li>
-      
-        <li>
-          <a href="/article/hadoop4/">HDFS副本放置策略+HDFS文件写、读流程</a>
-        </li>
-      
-        <li>
-          <a href="/article/hadoop3/">block+小文件+dnfs架构+SecondaryNameNode流程的梳理</a>
         </li>
       
     </ul>
@@ -558,7 +630,7 @@ cd /etc/sysconfig/network-......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
 
         <hr>
