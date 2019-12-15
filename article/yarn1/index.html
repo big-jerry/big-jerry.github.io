@@ -212,11 +212,11 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="yarn调优方法及调度器介绍">Yarn调优方法及调度器介绍</h1>
+                <h1 id="yarn调优方法">Yarn调优方法</h1>
 <h2 id="container的介绍">Container的介绍</h2>
 <ul>
-<li>container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。<br>
-*Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。</li>
+<li>container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。</li>
+<li>Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。</li>
 <li>Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。</li>
 </ul>
 <h2 id="yarn调优方法">Yarn调优方法</h2>
@@ -328,7 +328,7 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="">&larr; Previous Post</a>
+                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="HIVE介绍及部署+HIVE的基本命令">&larr; Previous Post</a>
                         </li>
                     
                     
@@ -383,7 +383,7 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn调优方法及调度器介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;&#x53CA;&#x8C03;&#x5EA6;&#x5668;&#x4ECB;&#x7ECD;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#container的介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Container&#x7684;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5047;&#x5982; 256G&#x5185;&#x5B58; 56core&#xFF0C;&#x9ED8;&#x8BA4;&#x7269;&#x7406;core&#x548C;&#x865A;&#x62DF;core&#x6BD4;&#x4F8B;&#x662F;1:2&#xFF0C;&#x8BF7;&#x95EE;&#x53C2;&#x6570;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5047;&#x5982;&#x8BE5;&#x8282;&#x70B9;&#x8FD8;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;hbase regionserver = 30G&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#container的介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Container&#x7684;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5047;&#x5982; 256G&#x5185;&#x5B58; 56core&#xFF0C;&#x9ED8;&#x8BA4;&#x7269;&#x7406;core&#x548C;&#x865A;&#x62DF;core&#x6BD4;&#x4F8B;&#x662F;1:2&#xFF0C;&#x8BF7;&#x95EE;&#x53C2;&#x6570;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5047;&#x5982;&#x8BE5;&#x8282;&#x70B9;&#x8FD8;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;hbase regionserver = 30G&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

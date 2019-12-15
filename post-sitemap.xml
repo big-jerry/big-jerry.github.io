@@ -7,16 +7,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/article/yarn2/</loc>
-        <lastmod>2019-12-15T05:00:10.386Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yoursite.com/article/hive/</loc>
-        <lastmod>2019-12-15T04:53:16.575Z</lastmod>
+        <lastmod>2019-12-15T05:03:58.757Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -24,7 +16,15 @@
 
     <url>
         <loc>http://yoursite.com/article/yarn1/</loc>
-        <lastmod>2019-12-14T10:58:29.280Z</lastmod>
+        <lastmod>2019-12-15T05:01:56.725Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/yarn2/</loc>
+        <lastmod>2019-12-15T05:00:10.386Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
