@@ -215,14 +215,14 @@
                 <h1 id="yarn的调度器yarn的常用命令">Yarn的调度器+Yarn的常用命令</h1>
 <h2 id="yarn的调度器">Yarn的调度器</h2>
 <ul>
-<li>Yarn的调度器分别有FIFO、Capacity、Fair这三种。</li>
+<li>Yarn的调度器分别有FIFO、Capacity、Fair这三种。<br>
+<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/%E4%B8%89%E7%A7%8D%E8%B0%83%E5%BA%A6%E5%99%A8.png" alt="三种调度器对比图"></li>
 <li>FIFO调度器<br>
 <code>FIFO调度器简称先进先出调度器，如图中i：这是一个先进先出队列，在进行资源分配的时候，先给队列中最头上的应用进行分配资源，待最头上的应用需求满足后再给下一个分配，以此类推。FIFO Scheduler是最简单也是最容易理解的调度器，也不需要任何配置，但它并不适用于共享集群。大的应用可能会占用所有集群资源，这就导致其它应用被阻塞。在共享集群中，更适合采用Capacity Scheduler或Fair Scheduler，这两个调度器都允许大任务和小任务在提交的同时获得一定的系统资源。</code></li>
 <li>Capacity调度器<br>
 <code>Capacity调度器简称计算调度器，如图中ii:有一个专门的队列用来运行小任务，但是为小任务专门设置一个队列会预先占用一定的集群资源，这就导致大任务的执行时间会落后于使用FIFO调度器时的时间。</code></li>
 <li>Fair调度器<br>
-<code>Fair调度器简称公平调度器，如图中iii：每当提交一个作业的时候，就会占用整个资源。如果再提交一个作业，那么第一个作业就会分给第二个作业一部分资源，第一个作业也就释放一部分资源。再提交其他的作业时，也同理。也就是说每一个作业进来，都有机会获取资源。</code><br>
-<img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/%E4%B8%89%E7%A7%8D%E8%B0%83%E5%BA%A6%E5%99%A8.png" alt="三种调度器对比图"></li>
+<code>Fair调度器简称公平调度器，如图中iii：每当提交一个作业的时候，就会占用整个资源。如果再提交一个作业，那么第一个作业就会分给第二个作业一部分资源，第一个作业也就释放一部分资源。再提交其他的作业时，也同理。也就是说每一个作业进来，都有机会获取资源。</code></li>
 </ul>
 
                 
