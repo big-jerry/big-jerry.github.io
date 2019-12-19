@@ -142,14 +142,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -223,6 +223,18 @@
 <code>Capacity调度器简称计算调度器，如图中ii:有一个专门的队列用来运行小任务，但是为小任务专门设置一个队列会预先占用一定的集群资源，这就导致大任务的执行时间会落后于使用FIFO调度器时的时间。</code></li>
 <li>Fair调度器<br>
 <code>Fair调度器简称公平调度器，如图中iii：每当提交一个作业的时候，就会占用整个资源。如果再提交一个作业，那么第一个作业就会分给第二个作业一部分资源，第一个作业也就释放一部分资源。再提交其他的作业时，也同理。也就是说每一个作业进来，都有机会获取资源。</code></li>
+<li>各版本hadoop默认的调度器<br>
+apache hadoop默认使用的是FIFO调度器<br>
+CDH 版本默认使用的是Fair调度器<br>
+可以根据官方<code>yarn-default.xml</code>提供的参数修改调度器。<br>
+|name|value|description|注释|<br>
+|-|-|-|-|<br>
+|yarn.resourcemanager.scheduler.class|org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler|The class to use as the resource scheduler.<br>
+|用作资源调度器的类。|</li>
+</ul>
+<h2 id="yarn的常用命令">Yarn的常用命令</h2>
+<ul>
+<li></li>
 </ul>
 
                 
@@ -287,7 +299,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn的调度器yarn的常用命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x7684;&#x8C03;&#x5EA6;&#x5668;+Yarn&#x7684;&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn的调度器"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Yarn&#x7684;&#x8C03;&#x5EA6;&#x5668;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn的调度器yarn的常用命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x7684;&#x8C03;&#x5EA6;&#x5668;+Yarn&#x7684;&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn的调度器"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Yarn&#x7684;&#x8C03;&#x5EA6;&#x5668;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn的常用命令"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x7684;&#x5E38;&#x7528;&#x547D;&#x4EE4;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

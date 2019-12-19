@@ -142,14 +142,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -278,7 +278,7 @@ datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 �
 DML 数据操作语言: insert update delete select 增删改查<br>
 DCL 数据控制语言: grant</p>
 <h2 id="使用sql语句创建列表">使用SQL语句创建列表</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">	use hadoop;#切换到hadoop数据库</span><br><span class="line">	create table employee (</span><br><span class="line">    -&gt; id int(11) not null auto_increment,</span><br><span class="line">    -&gt; name varchar(200),</span><br><span class="line">    -&gt; age int(3),</span><br><span class="line">    -&gt; create_user varchar(200),</span><br><span class="line">    -&gt; create_time timestamp not null default current_timestamp,</span><br><span class="line">    -&gt; update_user varchar(200),</span><br><span class="line">    -&gt; update_time timestamp not null default current_timestamp on update current_timestamp,</span><br><span class="line">    -&gt; primary key (id)</span><br><span class="line">    -&gt; );</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;#查看列表是否新增</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_hadoop |</span><br><span class="line">+------------------+</span><br><span class="line">| employee         |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">	use hadoop;#切换到hadoop数据库</span><br><span class="line">	create table employee (</span><br><span class="line">    -&gt; id int(11) not null auto_increment,</span><br><span class="line">    -&gt; name varchar(200),</span><br><span class="line">    -&gt; age int(3),</span><br><span class="line">    -&gt; create_user varchar(200),</span><br><span class="line">    -&gt; create_time timestamp not null default current_timestamp,</span><br><span class="line">    -&gt; update_user varchar(200),</span><br><span class="line">    -&gt; update_time timestamp not null default current_timestamp on update current_timestamp,</span><br><span class="line">    -&gt; primary key (id)</span><br><span class="line">    -&gt; );</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;#查看列表是否新增</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_hadoop |</span><br><span class="line">+------------------+</span><br><span class="line">| employee         |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line">mysql&gt; desc employee;#查看表结构</span><br></pre></td></tr></table></figure>
 <h2 id="往列表插入数据">往列表插入数据</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;insert into employee (name,age,create_user,update_user) values (&apos;jerry&apos;,&apos;22&apos;,&apos;admin&apos;,&apos;admin&apos;);</span><br><span class="line">mysql&gt; select * from employee ;</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">| id | name  | age  | create_user | create_time         | update_user | update_time         |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">|  1 | jerry |   22 | admin       | 2017-11-23 17:54:24 | admin       | 2017-11-23 17:54:24 |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line">mysql&gt; update employee set age=25 where id=&apos;1&apos;;#修改列表age字段的值</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line">mysql&gt; select * from employee ;#查询列表</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">| id | name  | age  | create_user | create_time         | update_user | update_time         |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">|  1 | jerry |   25 | admin       | 2019-11-23 17:54:24 | admin       | 2019-11-23 17:58:09 |</span><br><span class="line">+----+-------+------+-------------+---------------------+-------------+---------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line">mysql&gt; delete from employee where name=&apos;kaka&apos;;#删除表格中名为kaka的数据行</span><br><span class="line">update,select,delete注意事项:</span><br><span class="line">	select * from #切记生产写查询sql不要加*。</span><br><span class="line">	#建议使用</span><br><span class="line">	select id,name,age from rzdata WHERE ID=1;  </span><br><span class="line">	select id,name,age from rzdata limit 1000;  </span><br><span class="line">	</span><br><span class="line">	执行update和delete语句必须加where条件。</span><br></pre></td></tr></table></figure>
 <h2 id="创建列表需要注意的事项">创建列表需要注意的事项：</h2>
@@ -299,46 +299,51 @@ DCL 数据控制语言: grant</p>
 <code>e.后四个字段建议都要加（create_user,create_time,update_user,update_time)</code><br>
 <code>f.业务字段 注释加上</code><br>
 ALTER TABLE hadoop.employee MODIFY COLUMN name varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL COMMENT ‘用户姓名’ ;<br>
-ALTER TABLE hadoop.employee MODIFY COLUMN age int(3) NULL COMMENT ‘用户年龄’ ;</p>
+ALTER TABLE hadoop.employee MODIFY COLUMN age int(3) NULL COMMENT ‘用户年龄’ ;<br>
+g.ENGINE=InnoDB 引擎 CHARSET 字符集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `rzdata` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(200) DEFAULT NULL COMMENT &apos;用户名称&apos;,</span><br><span class="line">  `age` int(3) DEFAULT NULL COMMENT &apos;用户年龄&apos;,</span><br><span class="line">  `createuser` varchar(200) DEFAULT NULL,</span><br><span class="line">  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,</span><br><span class="line">  `updateuser` varchar(200) DEFAULT NULL,</span><br><span class="line">  `updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  UNIQUE KEY `rzdata_un` (`name`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1</span><br></pre></td></tr></table></figure>
+<p>PS:ENGINE=INNODB 表示将数据库的引擎设置为InnoDB,从MySQL 5.6开始默认使用该引擎。<br>
+AUTO_INCREMENT=6 表示自动增长的起始值为6<br>
+DEFAULT CHARSET=latin1 表示设置数据库的默认字符集为latin1</p>
 <h2 id="字符集">字符集</h2>
 <pre><code>database#数据库	字符集
 table#表		字符集 
 column#列		字符集
 </code></pre>
-<pre><code>mysql&gt; show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| hadoop             |
-| mysql              |
-| performance_schema |
-| test               |
-+--------------------+
-5 rows in set (0.00 sec)
-
-mysql&gt; show create database hadoop;
-+----------+-------------------------------------------------------------------+
-| Database | Create Database                                                   |
-+----------+-------------------------------------------------------------------+
-| hadoop   | CREATE DATABASE `hadoop` /*!40100 DEFAULT CHARACTER SET latin1 */ |
-+----------+-------------------------------------------------------------------+
-1 row in set (0.00 sec)
-mysql&gt; show variables like '%char%'#查询变量的字符集
-    -&gt; ;
-+--------------------------+---------------------------------------------------------------+
-| Variable_name            | Value                                                         |
-+--------------------------+---------------------------------------------------------------+
-| character_set_client     | utf8                                                          |
-| character_set_connection | utf8                                                          |
-| character_set_database   | latin1                                                        |
-| character_set_filesystem | binary                                                        |
-| character_set_results    | utf8                                                          |
-| character_set_server     | latin1                                                        |
-| character_set_system     | utf8                                                          |
-| character_sets_dir       | /usr/local/mysql-5.6.23-linux-glibc2.5-x86_64/share/charsets/ |
-+--------------------------+---------------------------------------------------------------+
-8 rows in set (0.00 sec)</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &apos;%char%&apos;#查询mysql的字符集。</span><br><span class="line">    -&gt; ;</span><br><span class="line">+--------------------------+---------------------------------------------------------------+</span><br><span class="line">| Variable_name            | Value                                                         |</span><br><span class="line">+--------------------------+---------------------------------------------------------------+</span><br><span class="line">| character_set_client     | utf8                                                          |</span><br><span class="line">| character_set_connection | utf8                                                          |</span><br><span class="line">| character_set_database   | latin1                                                        |</span><br><span class="line">| character_set_filesystem | binary                                                        |</span><br><span class="line">| character_set_results    | utf8                                                          |</span><br><span class="line">| character_set_server     | latin1                                                        |</span><br><span class="line">| character_set_system     | utf8                                                          |</span><br><span class="line">| character_sets_dir       | /usr/local/mysql-5.6.23-linux-glibc2.5-x86_64/share/charsets/ |</span><br><span class="line">+--------------------------+---------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<p>mysql&gt; show databases;<br>
+±-------------------+<br>
+| Database           |<br>
+±-------------------+<br>
+| information_schema |<br>
+| hadoop             |<br>
+| mysql              |<br>
+| performance_schema |<br>
+| test               |<br>
+±-------------------+<br>
+5 rows in set (0.00 sec)</p>
+<p>mysql&gt; show create database hadoop;<br>
+±---------±------------------------------------------------------------------+<br>
+| Database | Create Database                                                   |<br>
+±---------±------------------------------------------------------------------+<br>
+| hadoop   | CREATE DATABASE <code>hadoop</code> /*!40100 DEFAULT CHARACTER SET latin1 */ |<br>
+±---------±------------------------------------------------------------------+<br>
+1 row in set (0.00 sec)<br>
+mysql&gt; show variables like ‘%char%’#查询变量的字符集<br>
+-&gt; ;<br>
+±-------------------------±--------------------------------------------------------------+<br>
+| Variable_name            | Value                                                         |<br>
+±-------------------------±--------------------------------------------------------------+<br>
+| character_set_client     | utf8                                                          |<br>
+| character_set_connection | utf8                                                          |<br>
+| character_set_database   | latin1                                                        |<br>
+| character_set_filesystem | binary                                                        |<br>
+| character_set_results    | utf8                                                          |<br>
+| character_set_server     | latin1                                                        |<br>
+| character_set_system     | utf8                                                          |<br>
+| character_sets_dir       | /usr/local/mysql-5.6.23-linux-glibc2.5-x86_64/share/charsets/ |<br>
+±-------------------------±--------------------------------------------------------------+<br>
+8 rows in set (0.00 sec)</p>
 
                 
 

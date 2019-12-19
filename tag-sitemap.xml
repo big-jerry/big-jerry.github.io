@@ -10,14 +10,14 @@
 
     <url>
         <loc>http://yoursite.com/tags/mysql/</loc>
-        <lastmod>2019-12-12T13:59:58.746Z</lastmod>
+        <lastmod>2019-12-15T05:26:10.109Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/hadoop/</loc>
-        <lastmod>2019-12-15T05:06:16.762Z</lastmod>
+        <lastmod>2019-12-19T15:25:18.713Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

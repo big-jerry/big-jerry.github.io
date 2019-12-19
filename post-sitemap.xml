@@ -7,16 +7,24 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/article/yarn2/</loc>
-        <lastmod>2019-12-15T05:06:16.762Z</lastmod>
+        <loc>http://yoursite.com/article/hive/</loc>
+        <lastmod>2019-12-19T15:25:18.713Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://yoursite.com/article/hive/</loc>
-        <lastmod>2019-12-15T05:03:58.757Z</lastmod>
+        <loc>http://yoursite.com/article/sql/</loc>
+        <lastmod>2019-12-15T05:26:10.109Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/article/yarn2/</loc>
+        <lastmod>2019-12-15T05:20:26.893Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,14 +33,6 @@
     <url>
         <loc>http://yoursite.com/article/yarn1/</loc>
         <lastmod>2019-12-15T05:01:56.725Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/article/sql/</loc>
-        <lastmod>2019-12-12T13:59:58.746Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

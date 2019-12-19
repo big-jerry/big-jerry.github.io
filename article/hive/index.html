@@ -95,7 +95,7 @@
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-10-12
+                            2017-10-15
                         </span>
                     </div>
                 
@@ -142,14 +142,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -213,6 +213,96 @@
                 post-container">
 
                 <h1 id="hive介绍及部署hive的基本命令">HIVE介绍及部署+HIVE的基本命令</h1>
+<h2 id="hive-介绍">hive 介绍</h2>
+<ul>
+<li>hive是由Facebook开源，Facebook开源，用于解决海量结构化的日志数据统计问题。构建在Hadoop（HDFS/MapReduce/YARN）之上的数据仓库软件，有助于使用SQL读取，写入和管理驻留在分布式HDFS中的大型数据集。可以将结构投影到已经存储的数据上。提供了命令行工具和JDBC驱动程序连接到Hive进行通信。</li>
+<li>Hive的数据是存放在HDFS之上。</li>
+<li>Hive底层执行引擎：MapReduce/Tez/Spark，只需要通过一个参数就能够切换底层的执行引擎。</li>
+<li>Hive作业提交到YARN上运行，提供了HQL查询语言，和SQL类似，但不完全相同，适用于离线处理/批处理。</li>
+<li>Hive的数据包含数据+元数据</li>
+</ul>
+<h2 id="hive的优缺点">hive的优缺点</h2>
+<h3 id="优点">优点：</h3>
+<ul>
+<li>简单容易上手：提供了类似SQL查询语言HQL</li>
+<li>可扩展：为超大数据集设计了计算/扩展能力（MR作为计算引擎，HDFS作为存储系统）一般情况下不需要重启服务Hive可以自由的扩展集群的规模。</li>
+<li>提供统一的元数据管理</li>
+<li>延展性：Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数</li>
+<li>容错：良好的容错性，节点出现问题SQL仍可完成执行</li>
+</ul>
+<h3 id="缺点">缺点：</h3>
+<ul>
+<li>如果底层引擎是基于MR，性能必然不高。</li>
+<li>hive的HQL表达能力有限</li>
+<li>hive的效率比较低</li>
+</ul>
+<h3 id="hive和rdbms的对比">Hive和RDBMS的对比</h3>
+<p>|对比项|Hive|RDBMS|<br>
+|-|-|-|		<br>
+|查询语言|	HQL	|SQL|<br>
+|数据存储|	HDFS|	Raw Device or Local FS|<br>
+|执行器|MapReduce	|Executor|<br>
+|数据插入|	支持批量导入/单条插入|	支持单条或者批量导入|<br>
+|数据操作	|覆盖追加	|行级更新删除|<br>
+|处理数据规模	|大	|小|<br>
+|执行延迟|	|高|	低|<br>
+|分区|	支持|	支持|<br>
+|索引	|0.8版本之后加入简单索引	|支持复杂的索引<br>
+|扩展性	|高（好）|	有限（差）|<br>
+|数据加载模式	|读模式（快）|	写模式（慢）|<br>
+|应用场景	|海量数据查询	|实时查询|</p>
+<h2 id="hive架构">Hive架构</h2>
+<ul>
+<li>用户提交查询等任务给Driver。</li>
+<li>Driver为查询操作创建一个session handler，接着dirver会发送查询操作到compiler去生成一个execute plan</li>
+<li>Compiler根据用户任务去MetaStore中获取需要的Hive的元数据信息。这些元数据在后续stage中用作抽象语法树的类型检测和修剪。</li>
+<li>Compiler得到元数据信息，对task进行编译，先将HiveQL转换为抽象语法树，然后将抽象语法树转换成查询块，将查询块转化为逻辑的查询plan，重写逻辑查询plan，将逻辑plan转化为物理的plan（MapReduce）, 最后选择最佳策略。</li>
+<li>将最终的plan提交给Driver。</li>
+<li>Driver将plan转交给ExecutionEngine去执行，将获取到的元数据信息，提交到JobTracker或者RsourceManager执行该task，任务会直接读取到HDFS中进行相应的操作。</li>
+<li>获取执行的结果。</li>
+<li>取得并返回执行结果。</li>
+</ul>
+<h2 id="hive-部署">hive 部署</h2>
+<ul>
+<li>根据官网部署 <a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a></li>
+<li>下载Hive压缩包 wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz</a></li>
+<li>解压Hive压缩包<br>
+[hadoop@hadoop01 software]$ tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz -C /home/hadoop/app/</li>
+<li>解压完成创建软链接<br>
+[hadoop@hadoop01 app]$ ln -s hive-1.1.0-cdh5.16.2/ hive<br>
+[hadoop@hadoop01 app]$ ll<br>
+lrwxrwxrwx.  1 hadoop hadoop   21 12月 19 14:01 hive -&gt; hive-1.1.0-cdh5.16.2/<br>
+drwxr-xr-x. 11 hadoop hadoop 4096 6月   3 2019 hive-1.1.0-cdh5.16.2</li>
+<li>配置变量环境<br>
+[hadoop@hadoop01 ~]$ vi .bashrc</li>
+<li>插入一下PATH参数</li>
+</ul>
+<h1 id="hive-env">HIVE env</h1>
+<p>export HIVE_HOME=/home/hadoop/app/hive<br>
+export PATH=$HIVE_HOME/bin:$PATH<br>
+思考把bin配置到环境变量里面有什么好处？答：可以在当前用户任意位置运行bin文件夹里面的文件。</p>
+<ul>
+<li>
+<p>立即生效配置环境<br>
+[hadoop@hadoop01 ~]$ source .bashrc</p>
+</li>
+<li>
+<p>$HIVE_HOME下目录说明<br>
+bin：脚本<br>
+lib：依赖包<br>
+conf：配置文件</p>
+</li>
+<li>
+<p>拷贝关系数据库的驱动包到lib目录<br>
+[hadoop@hadoop01 ~]$ cp mysql-connector-java-5.1.27-bin.jar  home/hadoop/app/hive/lib/</p>
+</li>
+<li>
+<p>配置Hive-site.xml参数<br>
+默认Hive的conf目录下没有Hive-site.xml文件，需要自行创建并插入下列参数：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt; #配置连接mysql的地址</span><br><span class="line">	  &lt;value&gt;jdbc:mysql://ruozedata001:3306/ruozedata_hive?createDatabaseIfNotExist=true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt; #配置mysql的驱动器</span><br><span class="line">	  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt; #配置mysql的用户名</span><br><span class="line">	  &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt; #配置mysql的用户密码</span><br><span class="line">	  &lt;value&gt;ruozedata&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hive.cli.print.current.db&lt;/name&gt; #配置是否在命令行显示当前数据库</span><br><span class="line">		&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hive.cli.print.header&lt;/name&gt; #配置是否显示表的列名</span><br><span class="line">		&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="hive-基本命令">hive 基本命令</h2>
 
                 
 
@@ -272,7 +362,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive介绍及部署hive的基本命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE&#x4ECB;&#x7ECD;&#x53CA;&#x90E8;&#x7F72;+HIVE&#x7684;&#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive介绍及部署hive的基本命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE&#x4ECB;&#x7ECD;&#x53CA;&#x90E8;&#x7F72;+HIVE&#x7684;&#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">hive &#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive的优缺点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">hive&#x7684;&#x4F18;&#x7F3A;&#x70B9;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优点"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x4F18;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#缺点"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">&#x7F3A;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hive和rdbms的对比"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Hive&#x548C;RDBMS&#x7684;&#x5BF9;&#x6BD4;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive架构"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Hive&#x67B6;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-部署"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">hive &#x90E8;&#x7F72;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive-env"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">HIVE env</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-基本命令"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">hive &#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
