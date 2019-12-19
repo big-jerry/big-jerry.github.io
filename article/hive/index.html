@@ -266,24 +266,34 @@
 </ul>
 <h2 id="hive-部署">hive 部署</h2>
 <ul>
-<li>根据官网部署 <a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a></li>
-<li>下载Hive压缩包 wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz</a></li>
-<li>解压Hive压缩包<br>
-[hadoop@hadoop01 software]$ tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz -C /home/hadoop/app/</li>
-<li>解压完成创建软链接<br>
+<li>
+<p>根据官网部署 <a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</a></p>
+</li>
+<li>
+<p>下载Hive压缩包 wget <a href="http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.16.2.tar.gz</a></p>
+</li>
+<li>
+<p>解压Hive压缩包<br>
+[hadoop@hadoop01 software]$ tar -xzvf hadoop-2.6.0-cdh5.16.2.tar.gz -C /home/hadoop/app/</p>
+</li>
+<li>
+<p>解压完成创建软链接<br>
 [hadoop@hadoop01 app]$ ln -s hive-1.1.0-cdh5.16.2/ hive<br>
 [hadoop@hadoop01 app]$ ll<br>
 lrwxrwxrwx.  1 hadoop hadoop   21 12月 19 14:01 hive -&gt; hive-1.1.0-cdh5.16.2/<br>
-drwxr-xr-x. 11 hadoop hadoop 4096 6月   3 2019 hive-1.1.0-cdh5.16.2</li>
-<li>配置变量环境<br>
-[hadoop@hadoop01 ~]$ vi .bashrc</li>
-<li>插入一下PATH参数</li>
-</ul>
-<h1 id="hive-env">HIVE env</h1>
-<p>export HIVE_HOME=/home/hadoop/app/hive<br>
+drwxr-xr-x. 11 hadoop hadoop 4096 6月   3 2019 hive-1.1.0-cdh5.16.2</p>
+</li>
+<li>
+<p>配置变量环境<br>
+[hadoop@hadoop01 ~]$ vi .bashrc</p>
+</li>
+<li>
+<p>插入一下PATH参数<br>
+# HIVE env<br>
+export HIVE_HOME=/home/hadoop/app/hive<br>
 export PATH=$HIVE_HOME/bin:$PATH<br>
 思考把bin配置到环境变量里面有什么好处？答：可以在当前用户任意位置运行bin文件夹里面的文件。</p>
-<ul>
+</li>
 <li>
 <p>立即生效配置环境<br>
 [hadoop@hadoop01 ~]$ source .bashrc</p>
@@ -364,7 +374,7 @@ conf：配置文件</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive介绍及部署hive的基本命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE&#x4ECB;&#x7ECD;&#x53CA;&#x90E8;&#x7F72;+HIVE&#x7684;&#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">hive &#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive的优缺点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">hive&#x7684;&#x4F18;&#x7F3A;&#x70B9;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优点"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x4F18;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#缺点"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">&#x7F3A;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hive和rdbms的对比"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Hive&#x548C;RDBMS&#x7684;&#x5BF9;&#x6BD4;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive架构"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Hive&#x67B6;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-部署"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">hive &#x90E8;&#x7F72;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive-env"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">HIVE env</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-基本命令"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">hive &#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive介绍及部署hive的基本命令"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE&#x4ECB;&#x7ECD;&#x53CA;&#x90E8;&#x7F72;+HIVE&#x7684;&#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">hive &#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive的优缺点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">hive&#x7684;&#x4F18;&#x7F3A;&#x70B9;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优点"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">&#x4F18;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#缺点"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">&#x7F3A;&#x70B9;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#hive和rdbms的对比"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Hive&#x548C;RDBMS&#x7684;&#x5BF9;&#x6BD4;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive架构"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">Hive&#x67B6;&#x6784;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-部署"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">hive &#x90E8;&#x7F72;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hive-基本命令"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">hive &#x57FA;&#x672C;&#x547D;&#x4EE4;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
