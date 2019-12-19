@@ -237,21 +237,77 @@
 <li>hive的效率比较低</li>
 </ul>
 <h3 id="hive和rdbms的对比">Hive和RDBMS的对比</h3>
-<p>||||<br>
-|-|-|-|	<br>
-|对比项|Hive|RDBMS|<br>
-|查询语言|	HQL	|SQL|<br>
-|数据存储|	HDFS|	Raw Device or Local FS|<br>
-|执行器|MapReduce	|Executor|<br>
-|数据插入|	支持批量导入/单条插入|	支持单条或者批量导入|<br>
-|数据操作	|覆盖追加	|行级更新删除|<br>
-|处理数据规模	|大	|小|<br>
-|执行延迟|	|高|	低|<br>
-|分区|	支持|	支持|<br>
-|索引	|0.8版本之后加入简单索引	|支持复杂的索引<br>
-|扩展性	|高（好）|	有限（差）|<br>
-|数据加载模式	|读模式（快）|	写模式（慢）|<br>
-|应用场景	|海量数据查询	|实时查询|</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>Hive</th>
+<th>RDBMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询语言</td>
+<td>HQL</td>
+<td>SQL</td>
+</tr>
+<tr>
+<td>数据存储</td>
+<td>HDFS</td>
+<td>Raw Device or Local FS</td>
+</tr>
+<tr>
+<td>执行器</td>
+<td>MapReduce</td>
+<td>Executor</td>
+</tr>
+<tr>
+<td>数据插入</td>
+<td>支持批量导入/单条插入</td>
+<td>支持单条或者批量导入</td>
+</tr>
+<tr>
+<td>数据操作</td>
+<td>覆盖追加</td>
+<td>行级更新删除</td>
+</tr>
+<tr>
+<td>处理数据规模</td>
+<td>大</td>
+<td>小</td>
+</tr>
+<tr>
+<td>执行延迟</td>
+<td></td>
+<td>高</td>
+</tr>
+<tr>
+<td>分区</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>0.8版本之后加入简单索引</td>
+<td>支持复杂的索引</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>高（好）</td>
+<td>有限（差）</td>
+</tr>
+<tr>
+<td>数据加载模式</td>
+<td>读模式（快）</td>
+<td>写模式（慢）</td>
+</tr>
+<tr>
+<td>应用场景</td>
+<td>海量数据查询</td>
+<td>实时查询</td>
+</tr>
+</tbody>
+</table>
 <h2 id="hive架构">Hive架构</h2>
 <p><img src="https://raw.githubusercontent.com/big-jerry/big-jerry.github.io/master/img/hive.png" alt="hive"></p>
 <ul>
