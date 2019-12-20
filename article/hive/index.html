@@ -142,14 +142,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -365,12 +365,76 @@ conf：配置文件</p>
 [hadoop@hadoop01 ~]$ cp mysql-connector-java-5.1.27-bin.jar  home/hadoop/app/hive/lib/</p>
 </li>
 <li>
-<p>配置Hive-site.xml参数<br>
+<p>配置<code>Hive-site.xml</code>全局属性<br>
 默认Hive的conf目录下没有Hive-site.xml文件，需要自行创建并插入下列参数：</p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt; #配置连接mysql的地址</span><br><span class="line">	  &lt;value&gt;jdbc:mysql://ruozedata001:3306/ruozedata_hive?createDatabaseIfNotExist=true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt; #配置mysql的驱动器</span><br><span class="line">	  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt; #配置mysql的用户名</span><br><span class="line">	  &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt; #配置mysql的用户密码</span><br><span class="line">	  &lt;value&gt;ruozedata&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hive.cli.print.current.db&lt;/name&gt; #配置是否在命令行显示当前数据库</span><br><span class="line">		&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;hive.cli.print.header&lt;/name&gt; #配置是否显示表的列名</span><br><span class="line">		&lt;value&gt;true&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改Hive日志路径</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@hadoop01 conf]$ cp hive-log4j.properties.template  hive-log4j.properties #将官方默认的文档备份</span><br><span class="line">[hadoop@hadoop01 conf]$ vi hive-log4j.properties</span><br><span class="line"></span><br><span class="line">hive.log.dir=$&#123;java.io.tmpdir&#125;/$&#123;user.name&#125; #修改该参数的路径</span><br><span class="line">hive.log.file=hive.log</span><br><span class="line">$&#123;java.io.tmpdir&#125;/$&#123;user.name&#125;$&#123;hive.log.file&#125;=/tmp/hadoop/hive.log</span><br><span class="line">PS：生产上建议不要将日志文件存放在/tmp 目录。</span><br><span class="line">[root@hadoop01 ~]# cd /tmp/hadoop #去该目录验证文件是否存在</span><br><span class="line">[root@hadoop01 hadoop]# ll</span><br><span class="line">总用量 44</span><br><span class="line">-rw-rw-r--. 1 hadoop hadoop 12672 12月 20 19:48 hive.log</span><br><span class="line">-rw-rw-r--. 1 hadoop hadoop 26594 12月 19 15:32 hive.log.2019-12-19</span><br></pre></td></tr></table></figure>
 <h2 id="hive-基本命令">hive 基本命令</h2>
+<ul>
+<li>use ‘数据库名称’;切换数据库<br>
+hive (default)&gt; use default ;</li>
+<li>!clear ;清屏</li>
+<li>exit ;退出</li>
+<li>show tables; 查看当前数据库下的所有表</li>
+<li>创建表：create table stu(id int, name string, age int);<br>
+<code>创建stu表，默认存储在HDFS的目录是	hdfs://ruozedata001:8020/user/hive/warehouse/stu</code><br>
+`官方文档介绍：<a href="https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties%EF%BC%8C" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties，</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hive.metastore.warehouse.dir #配置参数</span><br><span class="line">Default Value: /user/hive/warehouse #默认的参数路径。</span><br><span class="line">Added In: Hive 0.2.0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看表结构：<br>
+		desc stu;<br>
+		desc extended stu;<br>
+		desc formatted stu;</li>
+</ul>
+<pre><code>hive (default)&gt; desc stu;
+OK
+col_name	data_type	comment
+id                  	int                 	                    
+name                	string              	                    
+age                 	int    
+</code></pre>
+<ul>
+<li>set key ;临时修改当前session配置属性。<br>
+查看当前的属性：set key;<br>
+修改当前的属性：set key=value;</li>
+<li>Hive中的交互式命令
+<ul>
+<li>-e 	<quoted-query-string>         SQL from command line #不需要进入hive命令后，就可以跟上sql语句查询</quoted-query-string></li>
+<li>-f 		<filename>                    SQL from files		#执行指定文件（内容是SQL语句）</filename></li>
+</ul>
+</li>
+<li>拓展：基于Hive的离线统计/数据仓库
+<ul>
+<li>把SQL封装到shell脚本中去，使用hive -e “query sql…”</li>
+<li>定时调度：crontab</li>
+</ul>
+</li>
+<li>创建数据库<br>
+CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name<br>
+[COMMENT database_comment]<br>
+[LOCATION hdfs_path]<br>
+[WITH DBPROPERTIES (property_name=property_value, …)];</li>
+<li>删除数据库<br>
+DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT|CASCADE #级联删除，慎用];</li>
+<li>基本数据类型 官方文档 <a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types</a><br>
+HDFS上的文件来说：string<br>
+数值类型：int bigint float double  decimal<br>
+字符串类型：string  90%<br>
+布尔类型：boolean： true/false<br>
+日期类型：date  timestamp …</li>
+<li>分隔符<br>
+delimiter   code<br>
+^A          \001  字段之间的分隔符<br>
+\n          \n    记录分隔符<br>
+^B          \002  ARRAY/STRUCT (Hive中的复杂数据类型)<br>
+^C          \003  key/value of MAP (Hive中的复杂数据类型)</li>
+</ul>
 
                 
 
@@ -380,7 +444,7 @@ conf：配置文件</p>
                     
                     
                         <li class="next">
-                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">Next Post &rarr;</a>
+                            <a href="/article/yarn2/" data-toggle="tooltip" data-placement="top" title="Yarn的调度器+Yarn的常用命令">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
