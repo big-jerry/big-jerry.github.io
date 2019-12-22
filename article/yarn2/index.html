@@ -142,13 +142,6 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -157,6 +150,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -226,15 +226,38 @@
 <li>各版本hadoop默认的调度器<br>
 apache hadoop默认使用的是FIFO调度器<br>
 CDH 版本默认使用的是Fair调度器<br>
-可以根据官方<code>yarn-default.xml</code>提供的参数修改调度器。<br>
-|name|value|description|注释|<br>
-|-|-|-|-|<br>
-|yarn.resourcemanager.scheduler.class|org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler|The class to use as the resource scheduler.<br>
-|用作资源调度器的类。|</li>
+可以根据官方<code>yarn-default.xml</code>提供的参数修改调度器。</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>yarn.resourcemanager.scheduler.class</td>
+<td>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</td>
+<td>The class to use as the resource scheduler.</td>
+<td></td>
+</tr>
+<tr>
+<td>用作资源调度器的类。</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="yarn的常用命令">Yarn的常用命令</h2>
 <ul>
-<li></li>
+<li>yarn jar<br>
+*等价于hadoop jar</li>
+<li>yarn application   -kill <application id="">  #杀死作业进程</application></li>
+<li>yarn logs #查看作业日志</li>
 </ul>
 
                 
@@ -244,12 +267,12 @@ CDH 版本默认使用的是Fair调度器<br>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="HIVE介绍及部署+HIVE的基本命令">&larr; Previous Post</a>
+                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">Next Post &rarr;</a>
+                            <a href="/article/mapreduce/" data-toggle="tooltip" data-placement="top" title="MapReduce设计原理+task+压缩格式">Next Post &rarr;</a>
                         </li>
                     
                 </ul>

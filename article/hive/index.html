@@ -142,13 +142,6 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -157,6 +150,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -278,8 +278,8 @@
 </tr>
 <tr>
 <td>执行延迟</td>
-<td></td>
 <td>高</td>
+<td>低</td>
 </tr>
 <tr>
 <td>分区</td>
@@ -298,7 +298,7 @@
 </tr>
 <tr>
 <td>数据加载模式</td>
-<td>读模式（快）</td>
+<td>读模式（快</td>
 <td>写模式（慢）</td>
 </tr>
 <tr>
@@ -381,6 +381,8 @@ hive (default)&gt; use default ;</li>
 <li>!clear ;清屏</li>
 <li>exit ;退出</li>
 <li>show tables; 查看当前数据库下的所有表</li>
+<li>show tables in hadoop; 在不切换数据库的情况查看hadoop数据库下的所有表</li>
+<li>show create table emp; 查看创建emp表的语句。</li>
 <li>创建表：create table stu(id int, name string, age int);<br>
 <code>创建stu表，默认存储在HDFS的目录是	hdfs://ruozedata001:8020/user/hive/warehouse/stu</code><br>
 `官方文档介绍：<a href="https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties%EF%BC%8C" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/Configuration+Properties，</a></li>
@@ -420,8 +422,12 @@ CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name<br>
 [COMMENT database_comment]<br>
 [LOCATION hdfs_path]<br>
 [WITH DBPROPERTIES (property_name=property_value, …)];</li>
-<li>删除数据库<br>
-DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT|CASCADE #级联删除，慎用];</li>
+<li>删除数据库
+<ul>
+<li>默认情况下数据库中存在表示无法删除。可以加C<code>ASCADE</code>参数进行级联删除。<br>
+<code>DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT|CASCADE #级联删除，慎用];</code></li>
+</ul>
+</li>
 <li>基本数据类型 官方文档 <a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types</a><br>
 HDFS上的文件来说：string<br>
 数值类型：int bigint float double  decimal<br>
@@ -442,9 +448,13 @@ delimiter   code<br>
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/article/hive1/" data-toggle="tooltip" data-placement="top" title="HIVE 的Table DDL语句介绍">&larr; Previous Post</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/article/yarn2/" data-toggle="tooltip" data-placement="top" title="Yarn的调度器+Yarn的常用命令">Next Post &rarr;</a>
+                            <a href="/article/yarn1/" data-toggle="tooltip" data-placement="top" title="Yarn调优方法">Next Post &rarr;</a>
                         </li>
                     
                 </ul>

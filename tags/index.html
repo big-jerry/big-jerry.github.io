@@ -134,13 +134,6 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -149,6 +142,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -198,7 +198,7 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
-                    <a href="#hadoop" title="hadoop" rel="10">hadoop</a>
+                    <a href="#hadoop" title="hadoop" rel="11">hadoop</a>
                 
                     <a href="#liunx" title="liunx" rel="5">liunx</a>
                 
@@ -213,6 +213,21 @@
                 <span class="fa fa-tag listing-seperator" id="hadoop">
                     <span class="tag-text">hadoop</span>
                 </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/article/hive1/">
+                        <h2 class="post-title">
+                            HIVE 的Table DDL语句介绍
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
                 
                   <!-- <li class="listing-item">
                   <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
@@ -234,9 +249,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/yarn2/">
+                     <a href="/article/yarn1/">
                         <h2 class="post-title">
-                            Yarn的调度器+Yarn的常用命令
+                            Yarn调优方法
                         </h2>
                         
                     </a>
@@ -249,9 +264,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/article/yarn1/">
+                     <a href="/article/yarn2/">
                         <h2 class="post-title">
-                            Yarn调优方法
+                            Yarn的调度器+Yarn的常用命令
                         </h2>
                         
                     </a>

@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Yarn调优方法 - 杰瑞的博客 | Blog
+          HIVE 的Table DDL语句介绍 - 杰瑞的博客 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/yarn1/">
+    <link rel="canonical" href="http://yoursite.com/article/hive1/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
                             
                         </div>
-                        <h1>Yarn调优方法</h1>
+                        <h1>HIVE 的Table DDL语句介绍</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-10-12
+                            2017-10-16
                         </span>
                     </div>
                 
@@ -212,113 +212,54 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="yarn调优方法">Yarn调优方法</h1>
-<h2 id="container的介绍">Container的介绍</h2>
+                <h1 id="hive-ddl-创建表的语句介绍">HIVE DDL 创建表的语句介绍</h1>
 <ul>
-<li>container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。</li>
-<li>Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。</li>
-<li>Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。</li>
+<li>创建列表：</li>
 </ul>
-<h2 id="yarn调优方法">Yarn调优方法</h2>
-<p><code>生产上如何调优container参数？container调优即yarn的调优。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE [TEMPORARY（临时表）] [EXTERNAL（外部表）] TABLE [IF NOT EXISTS] [db_name.]table_name    -- (Note: TEMPORARY available in Hive 0.14.0 and later)</span><br><span class="line">  [(col_name data_type  # 列的名称及类型  [column_constraint_specification] # 列的约束  [COMMENT col_comment], ...# 列的注释</span><br><span class="line">  [constraint_specification])] # 表的约束</span><br><span class="line">  [COMMENT table_comment]表的注释</span><br><span class="line">  [PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]# 分区</span><br><span class="line">  [CLUSTERED BY (col_name, col_name, ...) [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]</span><br><span class="line">  [SKEWED BY (col_name, col_name, ...)                  -- (Note: Available in Hive 0.10.0 and later)]</span><br><span class="line">     ON ((col_value, col_value, ...), (col_value, col_value, ...), ...)</span><br><span class="line">     [STORED AS DIRECTORIES]</span><br><span class="line">  [</span><br><span class="line">   [ROW FORMAT row_format] #表中分隔符</span><br><span class="line">   [STORED AS file_format] #存储的格式</span><br><span class="line">     | STORED BY &apos;storage.handler.class.name&apos; [WITH SERDEPROPERTIES (...)]  -- (Note: Available in Hive 0.6.0 and later)</span><br><span class="line">  ]</span><br><span class="line">  [LOCATION hdfs_path]存储的路径</span><br><span class="line">  [TBLPROPERTIES (property_name=property_value, ...)]   -- (Note: Available in Hive 0.6.0 and later)</span><br><span class="line">  [AS select_statement];   -- (Note: Available in Hive 0.5.0 and later; not supported for external tables)</span><br></pre></td></tr></table></figure>
+<p>例：创建emp表并制定分隔符和路径</p>
+ <figure class="highlight plain"><figcaption><span>(hadoop)> create table if not exists emp (</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">             &gt; empno int,</span><br><span class="line">             &gt; ename string,</span><br><span class="line">             &gt; job string,</span><br><span class="line">             &gt; mgr int,</span><br><span class="line">             &gt; hiredate string,</span><br><span class="line">             &gt; sal double,</span><br><span class="line">             &gt; comm double,</span><br><span class="line">             &gt; deptno int</span><br><span class="line">             &gt; ) row format delimited fields terminated by &apos;\t&apos; location &apos;/hadoop/emp&apos;;</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
 <ul>
-<li>开始布置环境时给系统预留15%-20%内存(包含安装系统消耗的内存)目的是防全部使用导致系统宕机和 oom机制事件，或者给未来部署组件预留点空间。</li>
-<li>计算安装hadoop相关组件需要多少内存，及剩余多少内存供container使用，例如：128G内存-系统预留20%-DN内存2G-NM内存4G剩下96G内存即是container可分配的内存。</li>
-<li>container内存：</li>
-<li>具体修改参数，根据官方<code>yarn-default.xml</code>提供的参数进行修改。</li>
+<li>加载文件数据到列表：<br>
+LOAD DATA <code>LOCAL</code> INPATH ‘/home/hadoop/data/emp.txt’ into table emp;<br>
+<code>PS：有LOCAL 是从本机Liunx文件系统导入，无LOCAL 默认从HDFS文件系统导入</code></li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.memory-mb</td>
-<td>-1</td>
-<td>Amount of physical memory, in MB, that can be allocated for containers. If set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically calculated(in case of Windows and Linux). In other cases, the default is 8192MB.</td>
-<td>可以分配给容器的物理内存总量(以MB为单位)。如果设置为-1，且yarn.nodemana .resource.detect-hardware- capability为true，则自动计算(在Windows和Linux中)。在其他情况下，默认为8192MB。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-mb</td>
-<td>1024</td>
-<td>The minimum allocation for every container request at the RM in MBs. Memory requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have less memory than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小分配。低于此值的内存请求将被设置为此属性的值。此外，将节点管理器配置为内存少于此值的节点管理器将被资源管理器关闭。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-mb</td>
-<td>8192</td>
-<td>The maximum allocation for every container request at the RM in MBs. Memory requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>每个容器请求在RM上的最大分配。高于此值的内存请求将抛出invalidresourcer请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>N个1G内存的container</code>和<code>N个8G内存的container</code>，这个N的值由内存大小决定。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hive (hadoop)&gt; LOAD DATA LOCAL INPATH &apos;/home/hadoop/data/emp.txt&apos; into table emp;</span><br><span class="line">Loading data to table hadoop.emp</span><br><span class="line">Table hadoop.emp stats: [numFiles=0, numRows=0, totalSize=0, rawDataSize=0]</span><br><span class="line">OK</span><br><span class="line">Time taken: 0.952 seconds</span><br></pre></td></tr></table></figure>
+<p><code>PS:加载文件数据到列表如果显示为NULL，基本都是分隔符的问题引起。</code></p>
 <ul>
-<li>container虚拟核（官方默认物理核与虚拟核的比例是1:2）官方参数：yarn.nodemanager.resource.pcores-vcores-multiplier 2</li>
+<li>
+<p>快速创建列表的方式：</p>
+<ul>
+<li>根据已经存在的列表创建新的列表：<br>
+CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name<br>
+LIKE existing_table_or_view_name<br>
+[LOCATION hdfs_path];</li>
+<li>例：根据epm表创建emp1表，仅拷贝emp表的结构。</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.cpu-vcores</td>
-<td>-1</td>
-<td>Number of vcores that can be allocated for containers. This is used by the RM scheduler when allocating resources for containers. This is not used to limit the number of CPUs used by YARN containers. If it is set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically determined from the hardware in case of Windows and Linux. In other cases, number of vcores is 8 by default.</td>
-<td>可以为容器分配的vcore数量。RM调度器在为容器分配资源时使用它。这并不用于限制纱线容器使用的cpu数量。如果它被设置为-1，并且yarn.nodemana .resource.detect-hardware- capability为真，那么在Windows和Linux中，它将从硬件自动确定。在其他情况下，vcore的默认数量是8。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-vcores</td>
-<td>1</td>
-<td>The minimum allocation for every container request at the RM in terms of virtual CPU cores. Requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have fewer virtual cores than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小虚拟CPU核心分配。低于此值的请求将被设置为此属性的值。此外，如果将节点管理器配置为拥有比这个值更少的虚拟内核，则资源管理器将关闭该节点管理器。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-vcores</td>
-<td>4</td>
-<td>The maximum allocation for every container request at the RM in terms of virtual CPU cores. Requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>在RM上为每个容器请求分配的最大虚拟CPU核心。高于此值的请求将抛出<code>invalidresourcer</code>请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>1个vcore给container</code>和<code>N个vcore给container</code>，这个N的值由Vcore的数量决定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hive (hadoop)&gt; create table emp1 like emp;</span><br><span class="line">  OK</span><br><span class="line">  hive (hadoop)&gt; desc emp1;</span><br><span class="line">OK</span><br><span class="line">col_name	data_type	comment</span><br><span class="line">empno               	int                 	                    </span><br><span class="line">ename               	string              	                    </span><br><span class="line">job                 	string              	                    </span><br><span class="line">mgr                 	int                 	                    </span><br><span class="line">hiredate            	string              	                    </span><br><span class="line">sal                 	double              	                    </span><br><span class="line">comm                	double              	                    </span><br><span class="line">deptno              	int</span><br></pre></td></tr></table></figure>
 <ul>
-<li>官方建议：cloudera公司推荐，一个container的vcore最好不要超过5，那么我们设置4</li>
+<li>例：根据epm表创建emp2表，并拷贝emp表的结构和数据。</li>
 </ul>
-<h1 id="假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置">假如 256G内存 56core，默认物理core和虚拟core比例是1:2，请问参数如何设置？</h1>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，剩余可用最大内存204G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     204G	#可分配总内存204G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	7 		#最大分配内存7G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-</ul>
-<h2 id="假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置">假如该节点还有组件，比如hbase regionserver = 30G进程，那么该如何设置？</h2>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，hbase regionserver = 30G，剩余可用最大内存174G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     174G	#可分配总内存174G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	6		#最大分配内存6G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-<li>以上是理想的调优分配参数。</li>
+<figure class="highlight plain"><figcaption><span>(hadoop)> create table emp2 as select * from emp;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hive (hadoop)&gt; select * from emp2;</span><br><span class="line">OK</span><br><span class="line">emp2.empno	emp2.ename	emp2.job	emp2.mgr	emp2.hiredate	emp2.sal	emp2.comm	emp2.deptno</span><br><span class="line">7369	SMITH	CLERK	7902	1980-12-17	800.0	NULL	20</span><br><span class="line">7499	ALLEN	SALESMAN	7698	1981-2-20	1600.0	300.0	30</span><br><span class="line">7521	WARD	SALESMAN	7698	1981-2-22	1250.0	500.0	30</span><br><span class="line">7566	JONES	MANAGER	7839	1981-4-2	2975.0	NULL	20</span><br><span class="line">7654	MARTIN	SALESMAN	7698	1981-9-28	1250.0	1400.0	30</span><br><span class="line">7698	BLAKE	MANAGER	7839	1981-5-1	2850.0	NULL	30</span><br><span class="line">7782	CLARK	MANAGER	7839	1981-6-9	2450.0	NULL	10</span><br><span class="line">7788	SCOTT	ANALYST	7566	1987-4-19	3000.0	NULL	20</span><br><span class="line">7839	KING	PRESIDENT	NULL	1981-11-17	5000.0	NULL	10</span><br><span class="line">7844	TURNER	SALESMAN	7698	1981-9-8	1500.0	0.0	30</span><br><span class="line">7876	ADAMS	CLERK	7788	1987-5-23	1100.0	NULL	20</span><br><span class="line">7900	JAMES	CLERK	7698	1981-12-3	950.0	NULL	30</span><br><span class="line">7902	FORD	ANALYST	7566	1981-12-3	3000.0	NULL	20</span><br><span class="line">7934	MILLER	CLERK	7782	1982-1-23	1300.0	NULL	10</span><br><span class="line">8888	HIVE	PROGRAM	7839	1988-1-23	10300.0	NULL	NULL</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改列表名称<br>
+ALTER TABLE table_name RENAME TO new_table_name;<br>
+例：修改emp2表名为emp_new。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hive (hadoop)&gt; alter table emp2 rename to emp_new;</span><br><span class="line">OK</span><br><span class="line">hive (hadoop)&gt; show tables;</span><br><span class="line">OK</span><br><span class="line">tab_name</span><br><span class="line">emp</span><br><span class="line">emp1</span><br><span class="line">emp_new</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>删除列表<br>
+DROP TABLE [IF EXISTS] table_name [PURGE];<br>
+例：删除emp_new表<br>
+<code>hive (hadoop)&gt; drop table emp_new;</code></p>
+</li>
+<li>
+<p>清空列表数据<br>
+TRUNCATE TABLE table_name [PARTITION partition_spec];<br>
+例：清空emp1列表的数据<br>
+hive (hadoop)&gt; truncate table emp1;</p>
+</li>
 </ul>
 
                 
@@ -327,13 +268,9 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="HIVE介绍及部署+HIVE的基本命令">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/yarn2/" data-toggle="tooltip" data-placement="top" title="Yarn的调度器+Yarn的常用命令">Next Post &rarr;</a>
+                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="HIVE介绍及部署+HIVE的基本命令">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -383,7 +320,7 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#container的介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Container&#x7684;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5047;&#x5982; 256G&#x5185;&#x5B58; 56core&#xFF0C;&#x9ED8;&#x8BA4;&#x7269;&#x7406;core&#x548C;&#x865A;&#x62DF;core&#x6BD4;&#x4F8B;&#x662F;1:2&#xFF0C;&#x8BF7;&#x95EE;&#x53C2;&#x6570;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5047;&#x5982;&#x8BE5;&#x8282;&#x70B9;&#x8FD8;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;hbase regionserver = 30G&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive-ddl-创建表的语句介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE DDL &#x521B;&#x5EFA;&#x8868;&#x7684;&#x8BED;&#x53E5;&#x4ECB;&#x7ECD;</span></a></li></ol>
         
         </div>
       </aside>
