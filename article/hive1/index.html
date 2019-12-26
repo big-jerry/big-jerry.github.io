@@ -149,14 +149,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -261,12 +261,151 @@ TRUNCATE TABLE table_name [PARTITION partition_spec];<br>
 hive (hadoop)&gt; truncate table emp1;</p>
 </li>
 </ul>
+<h2 id="创建内部表和外部表">创建内部表和外部表</h2>
+<h3 id="创建内部表">创建内部表;</h3>
+<pre><code>CREATE TABLE emp2 as select * from emp;
+* 查看表结构
+desc formatted emp2;
+`Table Type:         	MANAGED_TABLE       	 `
+`PS:默认创建的是内部表`
+* 查看关系数据库中元数据；
+元数据默认存放在关系数据库中的tbls表中，数据库名称可以在`hive-site.xml`中设置
+mysql&gt; select * from tbls \G ;
+	*************************** 4. row ***************************
+			TBL_ID: 11
+	   CREATE_TIME: 1577015393
+			 DB_ID: 6
+  LAST_ACCESS_TIME: 0
+			 OWNER: hadoop
+		OWNER_TYPE: USER
+		 RETENTION: 0
+			 SD_ID: 11
+		  TBL_NAME: emp2
+		  TBL_TYPE: MANAGED_TABLE
+VIEW_EXPANDED_TEXT: NULL
+VIEW_ORIGINAL_TEXT: NULL
+4 rows in set (0.00 sec)
+</code></pre>
+<h3 id="创建外部表">创建外部表;</h3>
+<pre><code>*创建名为`emp_external`的外部表；
+hive (hadoop)&gt; create external table if not exists emp_external (
+         &gt; empno int,
+         &gt; ename string,
+         &gt; job string,
+         &gt; mgr int,
+         &gt; hiredate string,
+         &gt; sal double,
+         &gt; comm double,
+         &gt; deptno int
+         &gt; ) row format delimited fields terminated by '\t' location '/hadoop/emp_external/';
+</code></pre>
+<p>*************************** 5. row ***************************  关系数据库中的元数据<br>
+		TBL_ID: 17<br>
+		CREATE_TIME: 1577017281<br>
+		DB_ID: 6<br>
+		LAST_ACCESS_TIME: 0<br>
+		OWNER: hadoop<br>
+		OWNER_TYPE: USER<br>
+		RETENTION: 0<br>
+		SD_ID: 17<br>
+		TBL_NAME: emp_external<br>
+		TBL_TYPE: EXTERNAL_TABLE<br>
+		VIEW_EXPANDED_TEXT: NULL</p>
+<h3 id="修改外部和内部表">修改外部和内部表</h3>
+<pre><code>ALTER TABLE table_name SET TBLPROPERTIES table_properties;
+table_properties:&lt;font&gt;&lt;/font&gt;
+</code></pre>
+<p>(property_name = property_value, property_name = property_value, … )<br>
+例：把emp2内部表修改成外部表</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">   *************************** 4. row ***************************</span><br><span class="line">				TBL_ID: 11</span><br><span class="line">		   CREATE_TIME: 1577015393</span><br><span class="line">				 DB_ID: 6</span><br><span class="line">	  LAST_ACCESS_TIME: 0</span><br><span class="line">				 OWNER: hadoop</span><br><span class="line">			OWNER_TYPE: USER</span><br><span class="line">			 RETENTION: 0</span><br><span class="line">				 SD_ID: 11</span><br><span class="line">			  TBL_NAME: emp2</span><br><span class="line">			  TBL_TYPE: MANAGED_TABLE</span><br><span class="line">	VIEW_EXPANDED_TEXT: NULL</span><br><span class="line">	VIEW_ORIGINAL_TEXT: NULL</span><br><span class="line">	修改前</span><br><span class="line">	hive (hadoop)&gt; alter table emp2 set tblproperties (&apos;EXTERNAL&apos;=&apos;TRUE&apos;); # 修改成外部表，注意key和value不能小写。</span><br><span class="line">	hive (hadoop)&gt; desc formatted emp2; # 查看表的格式</span><br><span class="line">*************************** 4. row ***************************</span><br><span class="line">				TBL_ID: 11</span><br><span class="line">		   CREATE_TIME: 1577015393</span><br><span class="line">				 DB_ID: 6</span><br><span class="line">	  LAST_ACCESS_TIME: 0</span><br><span class="line">				 OWNER: hadoop</span><br><span class="line">			OWNER_TYPE: USER</span><br><span class="line">			 RETENTION: 0</span><br><span class="line">				 SD_ID: 11</span><br><span class="line">			  TBL_NAME: emp2</span><br><span class="line">			  TBL_TYPE: EXTERNAL_TABLE</span><br><span class="line">	VIEW_EXPANDED_TEXT: NULL</span><br><span class="line">	VIEW_ORIGINAL_TEXT: NULL</span><br></pre></td></tr></table></figure>
+<h3 id="外部表和内部表的区别">外部表和内部表的区别</h3>
+<pre><code>* 内部表删除时: HDFS 和元数据META 都被删除
+* 外部表删除时: HDFS不删除 ，仅元数据被删除
+</code></pre>
+<h2 id="创建分区表">创建分区表</h2>
+<pre><code>CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);
+例：创建一个分区表
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">hive (hadoop)&gt; </span><br><span class="line">            &gt; create table order_partition (</span><br><span class="line">            &gt; order_on string,</span><br><span class="line">            &gt; evernt_time string</span><br><span class="line">            &gt; )</span><br><span class="line">            &gt; partitioned by (event_month string) # 指定分区的名称</span><br><span class="line">            &gt; row format delimited fields terminated by &apos;\t&apos;; # 指定分隔符</span><br><span class="line">hive (hadoop)&gt; load data local inpath&apos;/home/hadoop/data/order_created.txt&apos;into table order_partition partition(event_month=&apos;2014-05&apos;);#从本地文件数据导入分区表</span><br><span class="line">hive (hadoop)&gt; select * from order_partition where event_month=&apos;2014-05&apos;; #查看分区表导入的数据</span><br><span class="line">OK</span><br><span class="line">order_partition.order_on	order_partition.evernt_time	order_partition.event_month</span><br><span class="line">10703007267488	2014-05-01 06:01:12.334+01	2014-05</span><br><span class="line">10101043505096	2014-05-01 07:28:12.342+01	2014-05</span><br><span class="line">10103043509747	2014-05-01 07:50:12.33+01	2014-05</span><br><span class="line">10103043501575	2014-05-01 09:27:12.33+01	2014-05</span><br><span class="line">10104043514061	2014-05-01 09:03:12.324+01	2014-05</span><br><span class="line">[hadoop@hadoop01 data]$ hadoop fs -ls/hadoop/emp/order_partition/event_month=2014-05</span><br><span class="line">19/12/24 21:14:09 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable</span><br><span class="line">Found 1 items</span><br><span class="line">-rwxr-xr-x   1 hadoop supergroup        213 2019-12-24 21:06 /hadoop/emp/order_partition/event_month=2014-05/order_created.txt</span><br></pre></td></tr></table></figure>
+
+`PS：分区列并不是一个“真正的”表字段，其实是HDFS上表对应的文件夹下的一个文件夹。`
+分区表加载数据一定要指定分区字段,对于分区表操作，如果你的数据是写入HDFS
+</code></pre>
+<p>默认sql是查询不到的.<br>
+	例：创建order_partition2分区表，并写入数据到该文件夹,查看分区表数据。<br>
+	<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">	create table order_partition2 (</span><br><span class="line">		order_on string,</span><br><span class="line">		evernt_time string</span><br><span class="line">		)</span><br><span class="line">		partitioned by (event_month string)</span><br><span class="line">		row format delimited fields terminated by &apos;\t&apos;;</span><br><span class="line">	[hadoop@hadoop01 data]$ hadoop fs -mkdir /hadoop/emp/order_partition2/event_month=2014-06 #创建分区文件夹</span><br><span class="line">	[hadoop@hadoop01 data]$ hadoop fs -put order_created.txt  /hadoop/emp/order_partition2/event_month=2014-06</span><br><span class="line">	#上传order_created.txt 到HDFS的order_partition2文件夹</span><br><span class="line">	[hadoop@hadoop01 data]$ hadoop fs -ls /hadoop/emp/order_partition2/event_month=2014-06</span><br><span class="line">	Found 1 items</span><br><span class="line">	-rw-r--r--   1 hadoop supergroup        213 2019-12-24 21:41 /hadoop/emp/order_partition2/event_month=2014-06/order_created.txt</span><br><span class="line">	hive (hadoop)&gt; select * from order_partition2 ;#查看Hive分区表数据</span><br><span class="line">	OK</span><br><span class="line">	order_partition2.order_on	order_partition2.evernt_time	order_partition2.event_month</span><br><span class="line">	Time taken: 0.046 seconds</span><br><span class="line">	查不到分区表数据的原因是因为关系数据库没有元数据。</span><br><span class="line">	</span><br><span class="line">mysql&gt; select * from partitions;</span><br><span class="line">+---------+-------------+------------------+---------------------+-------+--------+</span><br><span class="line">| PART_ID | CREATE_TIME | LAST_ACCESS_TIME | PART_NAME           | SD_ID | TBL_ID |</span><br><span class="line">+---------+-------------+------------------+---------------------+-------+--------+</span><br><span class="line">|       1 |  1577192764 |                0 | event_month=2014-05 |    23 |     22 |</span><br><span class="line">+---------+-------------+------------------+---------------------+-------+--------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：</p>
+<pre><code>MSCK [PEPAIR] TABLE table_name [ADD/DROP/SYNC [PARTITIONS];
+
+ALTER TABLE table_name ADD [IF NOT EXISTS] PARTITION partition_spec [LOCATION 'location'][, PARTITION partition_spec [LOCATION 'location'], ...];
+partition_spec:
+  : (partition_column = partition_col_value, partition_column = partition_col_value, ...)
+hive (hadoop)&gt; msck repair table order_partition2;
+OK
+Partitions not in metastore:	order_partition2:event_month=2014-06
+Repair: Added partition to metastore order_partition2:event_month=2014-06
+Time taken: 0.115 seconds, Fetched: 2 row(s)
+</code></pre>
+<p>再查看关系数据库分区表<br>
+mysql&gt; select * from partitions;<br>
+±--------±------------±-----------------±--------------------±------±-------+<br>
+| PART_ID | CREATE_TIME | LAST_ACCESS_TIME | PART_NAME           | SD_ID | TBL_ID |<br>
+±--------±------------±-----------------±--------------------±------±-------+<br>
+|       1 |  1577192764 |                0 | event_month=2014-05 |    23 |     22 |<br>
+|       2 |  1577195583 |                0 | event_month=2014-06 |    25 |     23 |<br>
+±--------±------------±-----------------±--------------------±------±-------+<br>
+<code>PS：在生产上禁用MSCK命令修复分区表元数据信息，请使用ALTER TABLE table_name ADD [IF NOT EXISTS] PARTITION的命令修复指定的分区表元数据信息。</code><br>
+<code>PS：使用分区表时，加载数据一定要指定我们的所有分区字段</code><br>
+作业：创建一个emp_partition二级分动态区列表，并插入数据。</p>
+<pre><code>	CREATE TABLE emp_partition(
+	ename string，
+	job string,
+	mgr int,
+	hiredate string,
+	sal double,
+	comm double
+	) PARTITIONED BY (deptno int,empno int)
+	ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+	
+	hive (hadoop)&gt; INSERT OVERWRITE TABLE emp_partition PARTITION (deptno,empno) select ename,job,mgr,hiredate,sal,comm,deptno,empno from emp2 where deptno=10;
+	FAILED: SemanticException [Error 10096]: Dynamic partition strict mode requires at least one static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict #动态分区严格模式需要至少一个静态分区列，需要关闭才能插入。
+	hive (hadoop)&gt; set hive.exec.dynamic.partition.mode=nonstrict；#设置关闭严格模式
+	hive (hadoop)&gt; INSERT OVERWRITE TABLE emp_partition PARTITION (deptno,empno) select ename,job,mgr,hiredate,sal,comm,deptno,empno from emp2;
+
+	hive (hadoop)&gt; show partitions emp_partition2;
+	OK
+	partition
+	event_month=2014-05/step=1/name=emp
+	Time taken: 0.044 seconds, Fetched: 1 row(s)
+	
+	hive (hadoop)&gt; show partitions emp_partition;#查询分区表
+	OK
+	partition
+	deptno=10/empno=7782
+	deptno=10/empno=7839
+	deptno=10/empno=7934
+	deptno=20/empno=7369
+	deptno=20/empno=7566
+	deptno=20/empno=7788
+	deptno=20/empno=7876
+	deptno=20/empno=7902
+	deptno=30/empno=7499
+	deptno=30/empno=7521
+	deptno=30/empno=7654
+	deptno=30/empno=7698
+	deptno=30/empno=7844
+	deptno=30/empno=7900
+	deptno=__HIVE_DEFAULT_PARTITION__/empno=8888
+	Time taken: 0.041 seconds, Fetched: 15 row(s)</code></pre>
 
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/hive2/" data-toggle="tooltip" data-placement="top" title="Hive 的Table DML语句介绍">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -320,7 +459,7 @@ hive (hadoop)&gt; truncate table emp1;</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive-ddl-创建表的语句介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE DDL &#x521B;&#x5EFA;&#x8868;&#x7684;&#x8BED;&#x53E5;&#x4ECB;&#x7ECD;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive-ddl-创建表的语句介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HIVE DDL &#x521B;&#x5EFA;&#x8868;&#x7684;&#x8BED;&#x53E5;&#x4ECB;&#x7ECD;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#创建内部表和外部表"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;&#x5185;&#x90E8;&#x8868;&#x548C;&#x5916;&#x90E8;&#x8868;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建内部表"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;&#x5185;&#x90E8;&#x8868;;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建外部表"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;&#x5916;&#x90E8;&#x8868;;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修改外部和内部表"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">&#x4FEE;&#x6539;&#x5916;&#x90E8;&#x548C;&#x5185;&#x90E8;&#x8868;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#外部表和内部表的区别"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">&#x5916;&#x90E8;&#x8868;&#x548C;&#x5185;&#x90E8;&#x8868;&#x7684;&#x533A;&#x522B;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#创建分区表"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x521B;&#x5EFA;&#x5206;&#x533A;&#x8868;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
