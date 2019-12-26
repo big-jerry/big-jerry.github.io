@@ -211,21 +211,20 @@
 
 <div class="post-preview">
 
-    <a href="/article/hive2/">
+    <a href="/article/hive1/">
         <h2 class="post-title">
                                  
-            Hive 的Table DML语句介绍
+            HIVE 的Table DDL语句介绍
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Hive DML 创建表的语句介绍
-Hive 加载数据
-LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)]
-LOAD DATA：加载数据
-LOCAL：&quot;本地&quot;  没有的话就HDFS
-INPATH......
+            HIVE DDL 创建表的语句介绍
+
+创建列表：
+
+1234567891011121314151617CREATE [TEMPORARY（临时表）] [EXTERNAL（外部表）] TABLE [IF NOT EXISTS] [db_name.]table_name    -- (Note: TEMPORARY available in Hive 0.14.0 and later)  [(c......
         </div>
     </a>
     
@@ -245,20 +244,21 @@ INPATH......
 
 <div class="post-preview">
 
-    <a href="/article/hive1/">
+    <a href="/article/hive2/">
         <h2 class="post-title">
                                  
-            HIVE 的Table DDL语句介绍
+            Hive 的Table DML语句介绍
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            HIVE DDL 创建表的语句介绍
-
-创建列表：
-
-1234567891011121314151617CREATE [TEMPORARY（临时表）] [EXTERNAL（外部表）] TABLE [IF NOT EXISTS] [db_name.]table_name    -- (Note: TEMPORARY available in Hive 0.14.0 and later)  [(c......
+            Hive DML 创建表的语句介绍
+Hive 加载数据
+LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)]
+LOAD DATA：加载数据
+LOCAL：&quot;本地&quot;  没有的话就HDFS
+INPATH......
         </div>
     </a>
     
@@ -311,22 +311,21 @@ hive是由Facebook开源，Facebook开源，用于解决海量结构化的日志
 
 <div class="post-preview">
 
-    <a href="/article/yarn2/">
+    <a href="/article/yarn1/">
         <h2 class="post-title">
                                  
-            Yarn的调度器+Yarn的常用命令
+            Yarn调优方法
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Yarn的调度器+Yarn的常用命令
-Yarn的调度器
+            Yarn调优方法
+Container的介绍
 
-Yarn的调度器分别有FIFO、Capacity、Fair这三种。
-
-FIFO调度器
-FIFO调度器简称先进先出调度器，如图中i：这是一个先进先出队列，在进行资源分配的时候，先给队列中最头上的应用进行分配资源，待最头上的应用需求满足后再给下一个分配，以此类推。FIFO Scheduler是最简单也是最容易理解的调度器，也不需要任何配置......
+container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。
+Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。
+Container是YARN里面资源分配的基......
         </div>
     </a>
     
@@ -346,21 +345,22 @@ FIFO调度器简称先进先出调度器，如图中i：这是一个先进先出
 
 <div class="post-preview">
 
-    <a href="/article/yarn1/">
+    <a href="/article/yarn2/">
         <h2 class="post-title">
                                  
-            Yarn调优方法
+            Yarn的调度器+Yarn的常用命令
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Yarn调优方法
-Container的介绍
+            Yarn的调度器+Yarn的常用命令
+Yarn的调度器
 
-container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。
-Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。
-Container是YARN里面资源分配的基......
+Yarn的调度器分别有FIFO、Capacity、Fair这三种。
+
+FIFO调度器
+FIFO调度器简称先进先出调度器，如图中i：这是一个先进先出队列，在进行资源分配的时候，先给队列中最头上的应用进行分配资源，待最头上的应用需求满足后再给下一个分配，以此类推。FIFO Scheduler是最简单也是最容易理解的调度器，也不需要任何配置......
         </div>
     </a>
     
@@ -650,11 +650,11 @@ mapred-site.xml和yarn-site.xml这两个文件。
     <ul>
       
         <li>
-          <a href="/article/hive2/">Hive 的Table DML语句介绍</a>
+          <a href="/article/hive1/">HIVE 的Table DDL语句介绍</a>
         </li>
       
         <li>
-          <a href="/article/hive1/">HIVE 的Table DDL语句介绍</a>
+          <a href="/article/hive2/">Hive 的Table DML语句介绍</a>
         </li>
       
         <li>
@@ -662,11 +662,11 @@ mapred-site.xml和yarn-site.xml这两个文件。
         </li>
       
         <li>
-          <a href="/article/yarn2/">Yarn的调度器+Yarn的常用命令</a>
+          <a href="/article/yarn1/">Yarn调优方法</a>
         </li>
       
         <li>
-          <a href="/article/yarn1/">Yarn调优方法</a>
+          <a href="/article/yarn2/">Yarn的调度器+Yarn的常用命令</a>
         </li>
       
     </ul>
