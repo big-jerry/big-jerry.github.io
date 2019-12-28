@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Yarn调优方法 - 杰瑞的博客 | Blog
+          Hive的JOIN连接语句及复杂数据类型 - 杰瑞的博客 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/article/yarn1/">
+    <link rel="canonical" href="http://yoursite.com/article/hive3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#hadoop" title="hadoop">hadoop</a>
                             
                         </div>
-                        <h1>Yarn调优方法</h1>
+                        <h1>Hive的JOIN连接语句及复杂数据类型</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 杰瑞 on
-                            2017-10-12
+                            2017-10-17
                         </span>
                     </div>
                 
@@ -212,114 +212,73 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="yarn调优方法">Yarn调优方法</h1>
-<h2 id="container的介绍">Container的介绍</h2>
-<ul>
-<li>container通俗描述是虚拟的容器，维度是内存和Vcore,用来运行task任务。</li>
-<li>Vcore:虚拟核是yarn自己引入的设计初衷是考虑不同节点的CPU的性能不一样，每个CPU的计算能力不一样。比如某个物理CPU是另外一个物理CPU的2倍，这时通过设置第一个物理CPU的虚拟core来弥补这种差异。</li>
-<li>Container是YARN里面资源分配的基本单位，具有一定的内存以及CPU资源。我们的应用在工作的时候，需要消耗内存和CPU，故当YARN收到application申请，则会根据application申请的资源，分配Container。</li>
-</ul>
-<h2 id="yarn调优方法">Yarn调优方法</h2>
-<p><code>生产上如何调优container参数？container调优即yarn的调优。</code></p>
-<ul>
-<li>开始布置环境时给系统预留15%-20%内存(包含安装系统消耗的内存)目的是防全部使用导致系统宕机和 oom机制事件，或者给未来部署组件预留点空间。</li>
-<li>计算安装hadoop相关组件需要多少内存，及剩余多少内存供container使用，例如：128G内存-系统预留20%-DN内存2G-NM内存4G剩下96G内存即是container可分配的内存。</li>
-<li>container内存：</li>
-<li>具体修改参数，根据官方<code>yarn-default.xml</code>提供的参数进行修改。</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.memory-mb</td>
-<td>-1</td>
-<td>Amount of physical memory, in MB, that can be allocated for containers. If set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically calculated(in case of Windows and Linux). In other cases, the default is 8192MB.</td>
-<td>可以分配给容器的物理内存总量(以MB为单位)。如果设置为-1，且yarn.nodemana .resource.detect-hardware- capability为true，则自动计算(在Windows和Linux中)。在其他情况下，默认为8192MB。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-mb</td>
-<td>1024</td>
-<td>The minimum allocation for every container request at the RM in MBs. Memory requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have less memory than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小分配。低于此值的内存请求将被设置为此属性的值。此外，将节点管理器配置为内存少于此值的节点管理器将被资源管理器关闭。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-mb</td>
-<td>8192</td>
-<td>The maximum allocation for every container request at the RM in MBs. Memory requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>每个容器请求在RM上的最大分配。高于此值的内存请求将抛出invalidresourcer请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>N个1G内存的container</code>和<code>N个8G内存的container</code>，这个N的值由内存大小决定。</p>
-<ul>
-<li>container虚拟核（官方默认物理核与虚拟核的比例是1:2）官方参数：yarn.nodemanager.resource.pcores-vcores-multiplier 2</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>value</th>
-<th>description</th>
-<th>注释</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>yarn.nodemanager.resource.cpu-vcores</td>
-<td>-1</td>
-<td>Number of vcores that can be allocated for containers. This is used by the RM scheduler when allocating resources for containers. This is not used to limit the number of CPUs used by YARN containers. If it is set to -1 and yarn.nodemanager.resource.detect-hardware-capabilities is true, it is automatically determined from the hardware in case of Windows and Linux. In other cases, number of vcores is 8 by default.</td>
-<td>可以为容器分配的vcore数量。RM调度器在为容器分配资源时使用它。这并不用于限制纱线容器使用的cpu数量。如果它被设置为-1，并且yarn.nodemana .resource.detect-hardware- capability为真，那么在Windows和Linux中，它将从硬件自动确定。在其他情况下，vcore的默认数量是8。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.minimum-allocation-vcores</td>
-<td>1</td>
-<td>The minimum allocation for every container request at the RM in terms of virtual CPU cores. Requests lower than this will be set to the value of this property. Additionally, a node manager that is configured to have fewer virtual cores than this value will be shut down by the resource manager.</td>
-<td>RM上每个容器请求的最小虚拟CPU核心分配。低于此值的请求将被设置为此属性的值。此外，如果将节点管理器配置为拥有比这个值更少的虚拟内核，则资源管理器将关闭该节点管理器。</td>
-</tr>
-<tr>
-<td>yarn.scheduler.maximum-allocation-vcores</td>
-<td>4</td>
-<td>The maximum allocation for every container request at the RM in terms of virtual CPU cores. Requests higher than this will throw an InvalidResourceRequestException.</td>
-<td>在RM上为每个容器请求分配的最大虚拟CPU核心。高于此值的请求将抛出<code>invalidresourcer</code>请求异常。</td>
-</tr>
-</tbody>
-</table>
-<p>PS：根据以上默认的配置参数可以判断在极限情况下会分配<code>1个vcore给container</code>和<code>N个vcore给container</code>，这个N的值由Vcore的数量决定。</p>
-<ul>
-<li>官方建议：cloudera公司推荐，一个container的vcore最好不要超过5，那么我们设置4</li>
-</ul>
-<h1 id="假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置">假如 256G内存 56core，默认物理core和虚拟core比例是1:2，请问参数如何设置？</h1>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，剩余可用最大内存204G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     204G	#可分配总内存204G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	7 		#最大分配内存7G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-</ul>
-<h2 id="假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置">假如该节点还有组件，比如hbase regionserver = 30G进程，那么该如何设置？</h2>
-<ul>
-<li>安装系统消耗1G内存，预留15%-20%内存51G，hbase regionserver = 30G，剩余可用最大内存174G。物理core=56,虚拟core：56*2=112。</li>
-<li>设置container内存分配参数：<br>
-yarn.nodemanager.resource.memory-mb     174G	#可分配总内存174G<br>
-yarn.scheduler.minimum-allocation-mb	1G  	#最小分配内存1G		   极限情况下只有204个container<br>
-yarn.scheduler.maximum-allocation-mb	6		#最大分配内存6G        极限情况下只有28个container</li>
-<li>设置container的Vcore分配参数：<br>
-yarn.nodemanager.resource.cpu-vcores 	    112	#可使用总Vcore 112个<br>
-yarn.scheduler.minimum-allocation-vcores	1	#最小分配vcore 1个		极限情况下只有112个container<br>
-yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况下只有28个container</li>
-<li>以上是理想的调优分配参数。</li>
-</ul>
+                <h1 id="hive的join连接语句及复杂数据类型">Hive的JOIN连接语句及复杂数据类型</h1>
+<h2 id="join-连接语句">JOIN 连接语句</h2>
+<pre><code>* join ；内连接语句仅支持等值连接，你想对N张表做join，连接条件有N-1个。
+	* 例：select a.empno,a.ename,b.deptno,b.dname from emp a join dept b on a.deptno=b.deptno;
+* left join ；左外连接，左表为基准
+	* 例：select a.empno,a.ename,b.deptno,b.dname from emp a left join dept b on a.deptno=b.deptno；
+* right join ；右外连接，右表为基准
+	* 例：select a.empno,a.ename,b.deptno,b.dname from emp a right join dept b on a.deptno=b.deptno;
+* full join ；全外连接
+	* 例：select a.empno,a.ename,b.deptno,b.dname from emp a full join dept b on a.deptno=b.deptno;
+</code></pre>
+<h2 id="如何通过beeline客户端连接hiveserver2">如何通过beeline客户端连接HiveServer2</h2>
+<pre><code>* 启动`HiveServer2`服务，默认端口是10000.
+	* cd $HIVE_HOME/bin #切换到hive bin目录
+	* ./hiveserver2	#启动`HiveServer2`服务或者使用后台启动命令`nohup hiveserver2 &amp;`
+	* 打开新的回话界面切换到hive bin目录
+	* ./beeline #运行beeline客户端
+		* 例：[hadoop@hadoop01 bin]$ ./beeline -u jdbc:hive2://hadoop01:10000/hadoop -n hadoop
+</code></pre>
+<h2 id="复杂数据类型arraysize-array_containsmap">复杂数据类型（ARRAY（size、array_contains），MAP）</h2>
+<pre><code>* arrays: ARRAY&lt;data_type&gt; (Note: negative values and non-constant expressions are allowed as of Hive 0.14.)#数组类型
+	* 例：创建一个含数组类型的列表
+	<figure class="highlight plain"><figcaption><span>table hive_array(name string, work_locations array<string>)</string></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">row format delimited #指定分隔符</span><br><span class="line">fields terminated by &apos;\t&apos; #字段与字段的分隔符</span><br><span class="line">COLLECTION ITEMS TERMINATED BY &apos;,&apos; #每个集合的分隔符</span><br><span class="line">导入数据到列表</span><br><span class="line">load data local inpath &apos;/home/hadoop/data/hive_array.txt&apos; overwrite into table hive_array</span><br><span class="line">查询列表数据</span><br><span class="line">0: jdbc:hive2://hadoop01:10000/hadoop&gt; select * from hive_array;</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br><span class="line">| hive_array.name  |          hive_array.work_locations           |</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br><span class="line">| pk               | [&quot;beijing&quot;,&quot;shanghai&quot;,&quot;tianjin&quot;,&quot;hangzhou&quot;]  |</span><br><span class="line">| jepson           | [&quot;changchu&quot;,&quot;chengdu&quot;,&quot;wuhan&quot;,&quot;beijing&quot;]     |</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br><span class="line">select name ,work_locations[0] from hive_array; #利用下标取work_kicatuibs中的字段，默认从0开始。</span><br><span class="line">+---------+-----------+--+</span><br><span class="line">|  name   |    _c1    |</span><br><span class="line">+---------+-----------+--+</span><br><span class="line">| pk      | beijing   |</span><br><span class="line">| jepson  | changchu  |</span><br><span class="line">+---------+-----------+--+</span><br><span class="line"> select name,size(work_locations) from hive_arryay; #size；查询数组的长度</span><br><span class="line">+---------+------+--+</span><br><span class="line">|  name   | _c1  |</span><br><span class="line">+---------+------+--+</span><br><span class="line">| pk      | 4    |</span><br><span class="line">| jepson  | 4    |</span><br><span class="line">+---------+------+--+</span><br><span class="line">select * form hive_array where array_contains(work_locations,&apos;tianjin&apos;); # array_contains；判断work_locations含tianjin元素的数据</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br><span class="line">| hive_array.name  |          hive_array.work_locations           |</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br><span class="line">| pk               | [&quot;beijing&quot;,&quot;shanghai&quot;,&quot;tianjin&quot;,&quot;hangzhou&quot;]  |</span><br><span class="line">+------------------+----------------------------------------------+--+</span><br></pre></td></tr></table></figure>
+
+	
+* maps: MAP&lt;primitive_type, data_type&gt; (Note: negative values and non-constant expressions are allowed as of Hive 0.14.)、
+	* 例：创建一个含MAP类型的列表，并导入下列数据：
+	```
+	1,zhangsan,father:xiaoming#mother:xiaohuang#brother:xiaoxu,28
+	2,lisi,father:mayun#mother:huangyi#brother:guanyu,22
+	3,wangwu,father:wangjianlin#mother:ruhua#sister:jingtian,29
+	4,mayun,father:mayongzhen#mother:angelababy,26
+	
+	创建列表：
+	create table hive_map(
+	id int ,name string,members map&lt;string,string&gt;,age int
+	)row format delimited
+	fields terminated by ',' #字段的分隔符
+	COLLECTION ITEMS TERMINATED BY '#' #每个集合的分隔符
+	MAP KEYS TERMINATED BY ':'; # K:V之间的分隔符
+	导入数据	
+	load data local inpath '/home/hadoop/data/hive_map.txt' overwrite into table hive_map;
+	查询列表数据
+	select * from hive_map;
+	+--------------+----------------+----------------------------------------------------+---------------+--+
+	| hive_map.id  | hive_map.name  |                  hive_map.members                  | hive_map.age  |
+	+--------------+----------------+----------------------------------------------------+---------------+--+
+	| 1            | zhangsan       | {&quot;father&quot;:&quot;xiaoming&quot;,&quot;mother&quot;:&quot;xiaohuang&quot;,&quot;brother&quot;:&quot;xiaoxu&quot;} | 28            |
+	| 2            | lisi           | {&quot;father&quot;:&quot;mayun&quot;,&quot;mother&quot;:&quot;huangyi&quot;,&quot;brother&quot;:&quot;guanyu&quot;} | 22            |
+	| 3            | wangwu         | {&quot;father&quot;:&quot;wangjianlin&quot;,&quot;mother&quot;:&quot;ruhua&quot;,&quot;sister&quot;:&quot;jingtian&quot;} | 29            |
+	| 4            | mayun          | {&quot;father&quot;:&quot;mayongzhen&quot;,&quot;mother&quot;:&quot;angelababy&quot;}      | 26            |
+	+--------------+----------------+----------------------------------------------------+---------------+--+
+	查询每行数据的father和mother字段
+	select id ,name,members['father']as father,members['mother']as mother,age from hive_map; 
+	+-----+-----------+--------------+-------------+------+--+
+	| id  |   name    |    father    |   mother    | age  |
+	+-----+-----------+--------------+-------------+------+--+
+	| 1   | zhangsan  | xiaoming     | xiaohuang   | 28   |
+	| 2   | lisi      | mayun        | huangyi     | 22   |
+	| 3   | wangwu    | wangjianlin  | ruhua       | 29   |
+	| 4   | mayun     | mayongzhen   | angelababy  | 26   |
+	+-----+-----------+--------------+-------------+------+--+
+	查询members的key和value
+* structs: STRUCT&lt;col_name : data_type [COMMENT col_comment], ...&gt;
+	* 
+* union: UNIONTYPE&lt;data_type, data_type, ...&gt; (Note: Only available starting with Hive 0.7.0.)
+	*</code></pre>
 
                 
 
@@ -327,13 +286,9 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/hive/" data-toggle="tooltip" data-placement="top" title="HIVE介绍及部署+HIVE的基本命令">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/yarn2/" data-toggle="tooltip" data-placement="top" title="Yarn的调度器+Yarn的常用命令">Next Post &rarr;</a>
+                            <a href="/article/hive1/" data-toggle="tooltip" data-placement="top" title="HIVE 的Table DDL语句介绍">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -383,7 +338,7 @@ yarn.scheduler.maximum-allocation-vcores	4	#最大分配vcore 4个		极限情况
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#container的介绍"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Container&#x7684;&#x4ECB;&#x7ECD;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#yarn调优方法"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Yarn&#x8C03;&#x4F18;&#x65B9;&#x6CD5;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#假如-256g内存-56core默认物理core和虚拟core比例是12请问参数如何设置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x5047;&#x5982; 256G&#x5185;&#x5B58; 56core&#xFF0C;&#x9ED8;&#x8BA4;&#x7269;&#x7406;core&#x548C;&#x865A;&#x62DF;core&#x6BD4;&#x4F8B;&#x662F;1:2&#xFF0C;&#x8BF7;&#x95EE;&#x53C2;&#x6570;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#假如该节点还有组件比如hbase-regionserver-30g进程那么该如何设置"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">&#x5047;&#x5982;&#x8BE5;&#x8282;&#x70B9;&#x8FD8;&#x6709;&#x7EC4;&#x4EF6;&#xFF0C;&#x6BD4;&#x5982;hbase regionserver = 30G&#x8FDB;&#x7A0B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#xFF1F;</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#hive的join连接语句及复杂数据类型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Hive&#x7684;JOIN&#x8FDE;&#x63A5;&#x8BED;&#x53E5;&#x53CA;&#x590D;&#x6742;&#x6570;&#x636E;&#x7C7B;&#x578B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#join-连接语句"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">JOIN &#x8FDE;&#x63A5;&#x8BED;&#x53E5;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#如何通过beeline客户端连接hiveserver2"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">&#x5982;&#x4F55;&#x901A;&#x8FC7;beeline&#x5BA2;&#x6237;&#x7AEF;&#x8FDE;&#x63A5;HiveServer2</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#复杂数据类型arraysize-array_containsmap"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">&#x590D;&#x6742;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF08;ARRAY&#xFF08;size&#x3001;array_contains&#xFF09;&#xFF0C;MAP&#xFF09;</span></a></li></ol></li></ol>
         
         </div>
       </aside>

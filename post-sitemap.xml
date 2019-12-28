@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/article/hive3/</loc>
+        <lastmod>2019-12-28T10:43:41.237Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/article/hive2/</loc>
         <lastmod>2019-12-26T15:29:56.226Z</lastmod>
         <changefreq>weekly</changefreq>
